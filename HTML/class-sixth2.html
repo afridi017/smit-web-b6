@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    line-height: 1.7;
+  }
+
+  header {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 18px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: 0.3s;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    transition: 0.3s;
+  }
+
+  nav a:hover {
+    color: #8b5cf6;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  section {
+    background: linear-gradient(135deg, #1e293b, #1e293b);
+    padding: 35px;
+    margin-bottom: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+  }
+
+  h1 {
+    font-size: 2rem;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+    color: transparent;
+  }
+
+  h2 {
+    color: #cbd5e1;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  p, li {
+    color: #94a3b8;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  a {
+    color: #3b82f6;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #8b5cf6;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1e293b;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    nav {
+      gap: 15px;
+      font-size: 0.9rem;
+    }
+    section {
+      padding: 25px 20px;
+    }
+  }
+</style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#resume">Resume</a>
+        <a href="#skills">Skills</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact Me</a>
+      </nav>
+    </header>
+    <main>
+      <!-- About start -->
+      <section id="about">
+        <h1>About</h1>
+        <article>
+              <p>
+                I am a passionate web developer with a strong background in HTML, CSS, and JavaScript. I have experience in creating responsive and user-friendly websites that provide an excellent user experience. I am always eager to learn new technologies and stay updated with the latest trends in web development.
+             </p>
+        </article>
+      </section>
+      <!-- About end -->
+      <!-- Resume start -->
+      <section id="resume">
+        <h1>Resume</h1>
+        <article>
+            <h2>Education</h2>
+            <p>Bachelor of Science in Computer Science, XYZ University, 2020-2024</p>
+            <h2>Experience</h2>
+            <p>Web Developer Intern, ABC Company, June 2023 - August 2023</p>
+            <ul>
+                <li>Developed and maintained the company website using HTML, CSS, and JavaScript.</li>
+                <li>Collaborated with the design team to implement responsive design features.</li>
+                <li>Optimized website performance and improved user experience.</li>
+            </ul>
+        </article>
+      </section>
+      <!-- Resume end -->
+    </main>
+      <!-- Skills start -->
+      <section id="skills">
+        <h1>Skills</h1>
+        <article>
+            <ul>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>Responsive Web Design</li>
+                <li>Version Control (Git)</li>
+            </ul>
+        </article>
+      </section>
+      <!-- Skills end -->
+       <!-- Services start -->
+      <section id="services">
+        <h1>Services</h1>
+        <article>
+            <ul>
+                <li>Web Development</li>
+                <li>Responsive Design</li>
+                <li>Website Maintenance</li>
+                <li>Performance Optimization</li>
+            </ul>
+        </article>
+      </section>
+      <!-- Services end -->
+       <!-- Projects start -->
+      <section id="projects">
+        <h1>Projects</h1>
+        <article>
+            <h2>Personal Portfolio Website</h2>
+            <p>Developed a personal portfolio website to showcase my skills, projects, and experience. The website is built using HTML, CSS, and JavaScript, and features a responsive design to ensure it looks great on all devices.</p>
+             <h2>Company Website Redesign</h2>
+            <p>Redesigned the company website for ABC Company to improve user experience and modernize the design. Implemented responsive design features and optimized the website for better performance.</p>
+        </article>
+      </section>
+      <!-- Projects end -->
+       <!-- Contact start -->
+      <section id="contact">
+        <h1>Contact</h1>
+        <article>
+            <p>Email: <a href="mailto:example@email.com">afridiishaq898@email.com</a></p>
+            <p>Phone: <a href="tel:+1234567890">+92 333 2149829</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/afridiishaq898" target="_blank">linkedin.com/in/ishaqafridi_</a></p>
+             <p>GitHub: <a href="https://github.com/afridi017" target="_blank">github.com/afridi017</a></p>
+        </article>
+      </section>
+      <!-- Contact end -->
+    </main>
+  </body>
+</html>

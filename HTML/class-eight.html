@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML FORM</title>
+</head>
+<body>
+<h1>HTML Form</h1>
+<form action="submit.php" method="post">
+    <label for="email">Email:</label> <br />
+    <input type="email" placeholder="example@example.com" id="email" required/> <br />
+
+    <label for="password">Password:</label> <br />
+    <input type="password" id="password" name="password" required/> <br />
+    <label for="department">Department:</label> <br />
+    <input name="department" type="text" id="department" name="department" required/> <br />
+
+    <label for="feedback">Feedback:</label> <br />
+    <textarea id="feedback" name="feedback" rows="4" cols="50"></textarea> <br />
+    <!-- <input type="button" value="login" /> -->
+    <input type="submit" value="login"/>
+</form>
+</body>
+</html>

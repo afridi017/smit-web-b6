@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML FORM</title>
+</head>
+<body>
+<form action="">
+    <labrl for="">Username:</labrl>"
+    <input type="text" readonly value="enter username" /><br />
+    <label for="">Email:</label>
+    <input type="email" />
+    <br />
+    <label for="">Password:</label>
+    <input type="password" minlength="2" maxlength="8" required/>
+    <br />
+    
+    <label for="gender" value="male" type="radio" /> male
+    <label for="gender" value="female" type="radio" /> female
+    <br />  
+
+    <label for="">Language:</label><br />
+    <input type="checkbox" id="english" />
+    <label for="english">English</label> <input type="checkbox" /> Urdu
+    <input type="checkbox" /> Pashto
+    <br />
+
+    <input type="button" value="test" />
+    <input type="reset" />
+    <button>test2</button>
+    <br />
+
+    <label for="">Countries:</label>
+    <select name="countries" id="">
+        <option value="Pak">Pakistan</option>
+        <option value="Ind">India</option>
+        <option value="Bang">Bangladesh</option>
+        <option value="Afg">Afghanistan</option>
+    </select>
+    <br />
+
+    <select name="country/city" id="">
+        <optgroup label="Pakistan">
+            <option value="Karachi">Karachi</option>
+            <option value="Lahore">Lahore</option>
+            <option value="Islamabad">Islamabad</option>
+            <option value="Peshawar">Peshawar</option>
+        </optgroup>
+        <optgroup label="India">
+            <option value="Delhi">Delhi</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Kolkata">Kolkata</option>
+        </optgroup>
+        <optgroup label="Bangladesh">
+            <option value="Dhaka">Dhaka</option>
+            <option value="Chittagong">Chittagong</option>
+            <option value="Khulna">Khulna</option>
+            <option value="Sylhet">Sylhet</option>
+        </optgroup>
+        <optgroup label="Afghanistan">
+            <option value="Kabul">Kabul</option>
+            <option value="Kandahar">Kandahar</option>
+            <option value="Herat">Herat</option>
+        </optgroup> 
+    </select>
+<br />
+    
+          <label for="cars">Choose a car:</label>
+          <select name="cars" id="cars" multiple>
+            <optgroup label="German Cars">
+                <option value="volvo">Volvo</option>
+                <option value="audi">Audi</option>
+                </optgroup>
+                <optgroup label="American Cars">
+                <option value="ford">Ford</option>
+                <option value="chevrolet">Chevrolet</option>
+                <option value="dodge">Dodge</option>
+                <option value="honda">Honda</option>
+                </optgroup>
+                <optgroup label="Japanese Cars">
+                <option value="toyota">Toyota</option>
+                <option value="nissan">Nissan</option>
+                </optgroup>
+          </select>
+          <input type="date" />
+          <input type="datetime-local" />
+            <input type="month" />
+            <input type="time" />
+            <input type="week" />
+            <input type="color" />
+            <input type="number" />
+            <input type="range" />
+            <input type="search" />
+            <input type="tel" />
+            <input type="url" />
+            
+            <br />
+            <input type="submit" value="Submit" />
+</form>
+</body>
+</html>

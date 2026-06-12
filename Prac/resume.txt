@@ -1,0 +1,22 @@
+Ishaq Ahmed
+Student Web Developer
+
+Objective:
+To become a skilled front-end web developer by learning HTML, CSS, JavaScript, and modern web development practices.
+
+Education:
+HTML Fundamentals Student
+
+Skills:
+HTML5, semantic structure, forms, tables, links, images, multimedia, accessibility basics, problem solving, communication.
+
+Projects:
+Personal Portfolio Website
+Student Registration Form
+Learning Timetable
+Media Practice Page
+FAQ Help Page
+
+Contact:
+Email: ishaq@example.com
+Phone: +92 300 1234567
