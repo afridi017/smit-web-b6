@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selector</title>
+  </head>
+  <style>
+    /* selector: element, class, id, universal, group */
+    * {
+      /* color: red; */
+      /* border: 2px solid black; */
+      /* padding: 10px; */
+      /* margin: 20px; */
+      padding: 10px;
+    }
+    /* type selector */
+    h2 {
+      color: blue;
+    }
+    /* p {
+         color: green;
+        } */
+    /* class selector */
+    /* .para {
+            font-size: 20px;
+            color: red;
+        } */
+    /* id selector */
+    /* #para1 {
+            color: cadetblue;
+        } */
+
+    /* child selector */
+    /* li > a {
+            color: orange;
+        } */
+    /* ul li a {
+            color: yellowgreen;
+        } */
+
+    /* div > p {
+            color: yellowgreen;
+        } */
+
+    /* Descendant selector */
+    /* div p {
+            color: black;
+        } */
+
+    ul li {
+      color: yellowgreen;
+    }
+
+    /* Adjacent sibling selector */
+    /* div + form {
+            color: purple;
+        } */
+    /* General sibling selector */
+    div ~ p {
+      color: purple;
+    }
+  </style>
+  <body>
+    <div>
+      <p class="para" id="para1">This is a paragraph.</p>
+      <div>
+        <p class="para" id="para2">This is another paragraph.</p>
+      </div>
+      <div>
+        <h2>IB AFRIDI</h2>
+      </div>
+    </div>
+    <form action="">
+      <label class="lab" for="">Name:</label>
+      <br />
+      <input type="text" />
+    </form>
+    <p>
+      I am a student of class 9th at Iqra International School and College. I am
+      a student of class 9th at Iqra International School and College. I am a
+      student of class 9th at Iqra International School and College. I am a
+      student of class 9th at Iqra International School and College. I am a
+      student of class 9th at Iqra International School and College. I am a
+      student of class 9th at Iqra International School and College. I am a
+      student of class 9th at Iqra International School and College. I am a
+      student of class 9th at Iqra International School and College. I am a
+      student of class 9th at Iqra International School and College. I am a
+      student of class 9th at Iqra International School and College.
+    </p>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <ol>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ol>
+    </ul>
+    <h1>Selector</h1>
+    <p>This is a paragraph.</p>
+    <p>This is another paragraph.</p>
+    <div>This is a div.</div>
+    <div>This is another div.</div>
+  </body>
+</html>
