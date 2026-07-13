@@ -1,0 +1,42 @@
+body {
+  background: #f5f5f5; /* Pura page halka grey */
+  font-family: Arial;
+  padding: 20px;
+}
+
+.container {
+  border: 2px solid #3b82f6; /* Blue border */
+  background: linear-gradient(135deg, #fef3c7, #fde68a); /* Peela gradient */
+  color: #1e293b; /* Text dark blue */
+  padding: 30px 40px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Halka shadow */
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border: 3px solid #10b981; /* Green border */
+  background: #d1fae5; /* Halka green */
+  border-radius: 50%; /* Perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.responsive {
+  border: 2px dashed #a855f7; /* Purple dashed */
+  background: #f3e8ff; /* Halka purple */
+  height: 100px;
+  max-width: 500px;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}

@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IB AFRIDI | Web Developer Portfolio</title>
+    <style>
+      /* ====== GLOBAL CSS ====== */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
+      header {
+        background: #0f172a;
+        color: white;
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      nav a:hover {
+        color: #3b82f6;
+      }
+      .container {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+      section {
+        background: white;
+        padding: 30px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #0f172a;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      h2 {
+        color: #3b82f6;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #3b82f6;
+        padding-bottom: 5px;
+      }
+      mark {
+        background: yellow;
+      }
+
+      /* ====== TABLE CSS ====== */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+      }
+      th {
+        background: #0f172a;
+        color: white;
+      }
+      tr:nth-child(even) {
+        background: #f2f2f2;
+      }
+      tr:hover {
+        background: #dbeafe;
+      }
+
+      /* ====== FORM CSS ====== */
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+      }
+      input:focus {
+        border-color: #3b82f6;
+        outline: none;
+      }
+      .btn {
+        background: lightgreen;
+        color: green;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100%;
+      }
+      .btn:hover {
+        background: green;
+        color: white;
+      }
+
+      /* ====== IMAGE CSS ====== */
+      .profile-img {
+        display: block;
+        margin: 20px auto;
+        border-radius: 50%;
+        border: 5px solid #3b82f6;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ====== HEADER + NAV ====== -->
+    <header>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#timetable">Time Table</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <!-- ====== SECTION 1: ABOUT + HEADINGS + TEXT TAGS ====== -->
+      <section id="about">
+        <h1>IB AFRIDI</h1>
+        <h2>Web Developer & Student</h2>
+
+        <img
+          src="ib-afridi.jpg"
+          alt="IB AFRIDI"
+          width="200"
+          height="200"
+          class="profile-img"
+          title="IB AFRIDI"
+        />
+
+        <p>Welcome to <mark>IB AFRIDI</mark> Portfolio Site</p>
+        <p>
+          My name is <b>IB AFRIDI</b> and I am a <i>student</i> of
+          <cite>SMIT</cite>.
+        </p>
+        <p>
+          I am learning <strong>HTML</strong>, <strong>CSS</strong> and
+          <strong>JavaScript</strong>.
+        </p>
+        <p>
+          Old Title: <del>Broken 017</del> | New Title: <ins>Web Developer</ins>
+        </p>
+        <p>H<sub>2</sub>O and 10<sup>2</sup> = 100</p>
+
+        <blockquote>
+          "Code is like humor. When you have to explain it, it's bad."
+        </blockquote>
+
+        <address>
+          <strong>Contact:</strong><br />
+          IB AFRIDI Company<br />
+          City: Peshawar<br />
+          Email: afridiishaq898@gmail.com
+        </address>
+      </section>
+
+      <!-- ====== SECTION 2: LISTS + SKILLS ====== -->
+      <section id="skills">
+        <h2>My Skills</h2>
+        <h3>Technical Skills - Unordered List</h3>
+        <ul>
+          <li>HTML5</li>
+          <li>
+            CSS3
+            <ul style="list-style-type: circle">
+              <li>Flexbox</li>
+              <li>Grid</li>
+            </ul>
+          </li>
+          <li>JavaScript</li>
+        </ul>
+
+        <h3>Learning Path - Ordered List</h3>
+        <ol>
+          <li>Learn HTML Basics</li>
+          <li>Learn CSS Styling</li>
+          <li>Learn JavaScript</li>
+          <li>Build Projects</li>
+        </ol>
+
+        <h3>Tools - Square List</h3>
+        <ul style="list-style-type: square">
+          <li>VS Code</li>
+          <li>Git & GitHub</li>
+          <li>Chrome DevTools</li>
+        </ul>
+      </section>
+
+      <!-- ====== SECTION 3: TABLE WITH COLSPAN ROWSPAN ====== -->
+      <section id="timetable">
+        <h2>Weekly Time Table</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Days</th>
+              <th>9:00 - 10:00</th>
+              <th>10:00 - 11:00</th>
+              <th>11:00 - 12:00</th>
+              <th>12:00 - 1:00</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Monday</th>
+              <td>HTML</td>
+              <td colspan="2">CSS</td>
+              <td rowspan="3">Break</td>
+            </tr>
+            <tr>
+              <th>Tuesday</th>
+              <td rowspan="2">JavaScript</td>
+              <td>HTML</td>
+              <td>CSS</td>
+            </tr>
+            <tr>
+              <th>Wednesday</th>
+              <td>CSS</td>
+              <td>HTML</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ====== SECTION 4: MULTIMEDIA ====== -->
+      <section>
+        <h2>Multimedia</h2>
+        <h3>Audio</h3>
+        <audio controls>
+          <source src="Bol Kaffara (Lofi Mix).mp3" type="audio/mpeg" />
+        </audio>
+
+        <h3>Video</h3>
+        <video
+          src="Bol Kaffara (Lofi Mix).mp4"
+          controls
+          width="400"
+          poster="video-poster.jpg"
+        ></video>
+
+        <h3>Iframe - My Website</h3>
+        <iframe
+          src="https://ib-afridi.netlify.app/"
+          width="100%"
+          height="300"
+          frameborder="1"
+        ></iframe>
+      </section>
+
+      <!-- ====== SECTION 5: FORM + INPUT TYPES ====== -->
+      <section id="contact">
+        <h2>Contact Me</h2>
+        <form action="">
+          <div class="form-group">
+            <label for="name">Full Name:</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="example@email.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" minlength="4" maxlength="10" />
+          </div>
+
+          <div class="form-group">
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="male" />
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female" />
+            <label for="female">Female</label>
+          </div>
+
+          <div class="form-group">
+            <label>Languages:</label>
+            <input type="checkbox" id="html" /> <label for="html">HTML</label>
+            <input type="checkbox" id="css" /> <label for="css">CSS</label>
+          </div>
+
+          <div class="form-group">
+            <label for="country">Country:</label>
+            <select id="country">
+              <optgroup label="Asia">
+                <option value="Pak">Pakistan</option>
+                <option value="Ind">India</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea
+              id="message"
+              rows="4"
+              placeholder="Your message..."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="file">Upload File:</label>
+            <input type="file" id="file" />
+          </div>
+
+          <input type="submit" value="Send Message" class="btn" />
+          <input
+            type="reset"
+            value="Reset"
+            class="btn"
+            style="background: #ccc; color: black; margin-top: 10px"
+          />
+        </form>
+      </section>
+
+      <!-- ====== SECTION 6: LINKS ====== -->
+      <section>
+        <h2>Important Links</h2>
+        <a href="https://www.google.com/" target="_blank">Google</a> <br />
+        <a href="list.html">Relative Link Example</a> <br />
+        <p>
+          Browser Suggestion: <input list="browsers" />
+          <datalist id="browsers">
+            <option value="Chrome"></option>
+            <option value="Firefox"></option>
+            <option value="Edge"></option>
+          </datalist>
+        </p>
+      </section>
+    </div>
+  </body>
+</html>

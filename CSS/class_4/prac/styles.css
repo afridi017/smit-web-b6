@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial;
+}
+
+.container {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  width: 400px;
+  height: 300px;
+  /* color: rgba(255, 255, 255, 0.5); */
+  /* opacity: 0.1; */ /* ye pure box ko transparent karega */
+
+  /* Background Properties ek ek karke */
+  /* background-image: url("images/logo.png"); */
+  /* background-repeat: no-repeat; */
+  /* background-attachment: fixed; */ /* scroll karo to image wahi rahe */
+  /* background-size: cover; */ /* cover = poora cover, contain = andar fit */
+  /* background-position: center; */
+
+  border: 3px solid black;
+  padding: 20px;
+  border-radius: 10px;
+
+  /* Shorthand - sab 1 line me: color image repeat attachment position */
+  background: red no-repeat fixed center url("images/logo.png");
+  background-size: cover; /* shorthand ke baad alag se dena parta */
+  color: white;
+  text-align: center;
+}
+
+/* .text-container ki spelling theek ki */
+.text-container {
+  background-color: rgba(0, 0, 0, 0.5); /* 50% transparent black */
+  width: 400px;
+  height: 200px;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+/* Scroll test ke liye */
+.extra-space {
+  height: 800px;
+  background: linear-gradient(to bottom, #fff, #ddd);
+  padding: 20px;
+  margin-top: 20px;
+}

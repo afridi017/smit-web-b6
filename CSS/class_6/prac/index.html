@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Max-Min Height + Text Properties</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #f5f5f5;
+        padding: 20px;
+      }
+
+      h2 {
+        color: #1e293b;
+        border-bottom: 2px solid #3b82f6;
+        padding-bottom: 5px;
+      }
+
+      /* ========== SECTION 1: MAX/MIN HEIGHT ========== */
+      .container {
+        width: 100%;
+        height: 100px; /* default height */
+        max-height: 200px; /* 200px se bara nahi hoga */
+        min-height: 50px; /* 50px se chota nahi hoga */
+        background-color: lightblue;
+        overflow: auto; /* text zyada ho to scroll aayega */
+        border: 2px solid #3b82f6;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 40px;
+      }
+
+      /* ========== SECTION 2: TEXT PROPERTIES ========== */
+      .para {
+        border: 2px solid black;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+
+        /* 1. Text Align */
+        /* text-align: left; */ /* default */
+        /* text-align: right; */
+        text-align: justify; /* dono side barabar */
+
+        /* 2. Text Decoration */
+        /* text-decoration: overline; */
+        text-decoration: underline;
+        text-decoration-color: blue;
+        text-decoration-style: wavy; /* line wali style */
+
+        /* 3. Text Transform */
+        /* text-transform: uppercase; */
+        text-transform: capitalize; /* har lafz ka pehla bara */
+
+        /* 4. Text Spacing */
+        text-indent: 30px; /* pehli line andar */
+        letter-spacing: 1px; /* har lafz ke beech space */
+        word-spacing: 5px; /* lafzon ke beech space */
+        line-height: 30px; /* line ke beech space - 50px zyada tha */
+
+        /* 5. Text Shadow */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* -10px bohat zyada tha */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Height + Text Properties</h1>
+
+    <!-- SECTION 1 -->
+    <h2>1. Max-Height / Min-Height + Overflow</h2>
+    <div class="container">
+      I am IB Afridi. I am a web developer. I love to code and create beautiful
+      websites. I have been working in the field of web development for over 5
+      years. I have experience in HTML, CSS, JavaScript, and various frameworks
+      like React and Angular. I enjoy learning new technologies and keeping up
+      with the latest trends in web development. In my free time, I like to read
+      books, play video games, and spend time with my family and friends.
+      <br /><br />
+      Extra text add kiya taake scroll test ho jaye.
+    </div>
+
+    <!-- SECTION 2 -->
+    <h2>2. Text Properties</h2>
+    <p class="para">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt sit
+      repudiandae maiores dolorum? Blanditiis cupiditate nemo enim ab iusto amet
+      officia deleniti ad aliquam, ipsa consequuntur voluptas ipsam odit itaque?
+    </p>
+  </body>
+</html>

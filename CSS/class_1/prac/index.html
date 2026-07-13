@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Types - Homework</title>
+
+    <!-- 3. EXTERNAL CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="header.css" />
+    <link rel="stylesheet" href="hero.css" />
+
+    <!-- 2. INTERNAL CSS -->
+    <style>
+      /* h2: selector */
+      /* {}: Declaration */
+      /* property_name: property_value; : property */
+      h2 {
+        color: blue;
+      }
+      .internal-box {
+        background: yellow;
+        padding: 10px;
+        border: 2px dashed black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS ke 3 Types</h1>
+
+    <!-- 1. INLINE CSS -->
+    <!-- use Style Attribute for Inline CSS -->
+    <p
+      style="
+        color: red;
+        font-size: 16px;
+        font-weight: bold;
+        border: 1px solid blue;
+        padding: 10px;
+      "
+    >
+      Ye INLINE CSS hai - style attribute ke andar
+    </p>
+
+    <!-- INTERNAL CSS -->
+    <!-- use Style Tag for Internal CSS -->
+    <h2 style="color: green">Ye INLINE + INTERNAL dono hai. Green jeet gaya</h2>
+    <h2>Ye sirf INTERNAL hai - Blue color aayega</h2>
+
+    <div class="internal-box">Ye INTERNAL CSS wala box hai</div>
+
+    <!-- EXTERNAL CSS -->
+    <div class="external-box">Ye EXTERNAL CSS wala box hai - Brown color</div>
+
+    <div class="header-box">Ye header.css se aayega</div>
+    <div class="hero-box">Ye hero.css se aayega</div>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* Universal Selector */
+      * {
+        /* color: red; */
+        /* border: 1px solid red; */
+        padding: 10px;
+      }
+      /* Type Selector */
+      h2 {
+        color: blue;
+      }
+      /* p {
+            color: green;
+        } */
+
+      /* Class Selector */
+      /* .para {
+            font-size: 20px;
+            color: red;
+        } */
+
+      /* ID Selector */
+      /* #paraid {
+            color: cadetblue;
+        } */
+
+      /* child Selector */
+      /* ul > li {
+            color: yellowgreen;
+        } */
+
+      /* div > p {
+            color: yellowgreen;
+        } */
+
+      /* Descendant Selector */
+      /* div p {
+            color: blueviolet;
+        } */
+
+      ul li {
+        color: yellowgreen;
+      }
+
+      /* Adjacent Sibling Selector */
+      /* div + form {
+            color: red;
+        } */
+
+      /* General Sibling Selector */
+      div ~ p {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <p class="para" id="paraid">1, I am IB Afridi.</p>
+      <div>
+        <p class="para" id="paraid">2, I am IB Afridi.</p>
+      </div>
+      <div>
+        <h2>I am IB Afridi.</h2>
+      </div>
+    </div>
+    <form action="">
+      <label class="lab" for="name">Name</label>
+      <br />
+      <input type="text" name="name" id="name" />
+    </form>
+    <p>
+      I am IB Afridi and I am a web developer. I have been working in this field
+      for 3 years. I have worked on many projects and have gained a lot of
+      experience. I am always eager to learn new things and improve my skills.
+    </p>
+
+    <ul>
+      <li><a href="">home</a></li>
+      <li><a href="">about</a></li>
+      <ol>
+        <li><a href="">sub-item 1</a></li>
+        <li><a href="">sub-item 2</a></li>
+      </ol>
+    </ul>
+  </body>
+</html>

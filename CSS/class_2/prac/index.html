@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Selectors - Homework</title>
+    <style>
+      /* 1. Universal Selector - sab pe lagta hai */
+      * {
+        margin: 0;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial;
+        background: #f5f5f5;
+      }
+
+      /* 2. Type Selector - tag ke naam se */
+      h2 {
+        color: blue;
+        border-bottom: 2px solid blue;
+      }
+
+      p {
+        color: green;
+      }
+
+      /* 3. Class Selector - . se start */
+      .para {
+        font-size: 18px;
+        color: red;
+        font-weight: bold;
+      }
+
+      /* 4. ID Selector - # se start. ID unique hoti hai */
+      #paraid {
+        color: cadetblue;
+        background: #e0f7fa;
+      }
+
+      /* 5. Child Selector - direct bacha > */
+      ul > li {
+        color: orange;
+        font-weight: bold;
+      }
+
+      div > p {
+        border-left: 3px solid purple;
+        padding-left: 10px;
+      }
+
+      /* 6. Descendant Selector - andar koi bhi bacha space */
+      div p {
+        color: blueviolet;
+      }
+
+      /* 7. Adjacent Sibling Selector - bilkul sath wala + */
+      div + form {
+        color: red;
+        background: #ffebee;
+        border: 2px dashed red;
+      }
+
+      /* 8. General Sibling Selector - baad me aane wale sab ~ */
+      div ~ p {
+        color: red;
+        background: #ffccbc;
+        border: 1px solid red;
+      }
+
+      /* Extra styling for beauty */
+      .box {
+        background: white;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">CSS Selectors Examples</h1>
+
+    <div class="box">
+      <p class="para" id="paraid">1. I am IB Afridi - Class + ID dono lage</p>
+      <div>
+        <p class="para" id="paraid2">2. I am IB Afridi - Descendant + Class</p>
+      </div>
+      <div>
+        <h2>I am IB Afridi - Type Selector</h2>
+      </div>
+    </div>
+
+    <form class="box" action="">
+      <label class="lab" for="name">Name</label>
+      <br />
+      <input type="text" name="name" id="name" placeholder="enter name" />
+    </form>
+
+    <p class="box">
+      Ye P tag hai. Ye DIV ke baad aaya hai is liye General Sibling `div ~ p`
+      wala red ho gaya
+    </p>
+
+    <ul class="box">
+      <li><a href="">home - Child Selector Orange</a></li>
+      <li><a href="">about - Child Selector Orange</a></li>
+      <ol>
+        <li><a href="">sub-item 1 - Normal</a></li>
+        <li><a href="">sub-item 2 - Normal</a></li>
+      </ol>
+    </ul>
+
+    <!-- Note: ID dobara use mat karna. ID unique hoti hai -->
+  </body>
+</html>

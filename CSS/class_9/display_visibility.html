@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Display and Visibility</title>
+    <style>
+      .section_1 {
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        background-color: lightblue;
+        margin: 10px;
+        visibility: hidden; /* This will hide the element but it will still take up space */
+      }
+      .section_2 {
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+        background-color: lightgreen;
+        margin: 10px;
+        display: none; /* This will hide the element and it will not take up any space */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section_1"></div>
+    <div class="section_2"></div>
+  </body>
+</html>

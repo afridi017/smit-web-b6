@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attribute Selector</title>
+    <style>
+      /* Existance */
+      div[id] {
+        color: red;
+      }
+
+      div[style] {
+        color: blue;
+      }
+      /* space */
+      div[class^="para"] {
+        border: 1px solid;
+      }
+      /* prefix */
+      div[class^="h"] {
+        border: 1px solid;
+      }
+      /* suffix */
+      div[class$="2"] {
+        border: 1px solid black;
+        color: yellow;
+      }
+      /* substring */
+      div[class*="desc"] {
+        border: 1px solid black;
+        color: green;
+      }
+      /* Equality */
+      input[type="text"] {
+        border: 5px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" />
+    <input type="text" />
+    <inout type="text" />
+    <input type="submit" />
+    <input type="password" />
+    <input type="email" />
+    <div class="paral">I am Ib Afridi</div>
+    <div class="hello para2">One-sidded</div>
+  </body>
+</html>

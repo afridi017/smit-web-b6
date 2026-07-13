@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+    <style>
+      form {
+        width: 300px;
+        height: 400px;
+        border: 1px solid black;
+        /* margin: auto; */
+        margin: 17vh auto;
+        padding: 40px 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      .input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .group {
+        margin-bottom: 20px;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 0;
+      }
+      #login {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        border: 1px solid gray;
+        background-color: lightgreen;
+        color: green;
+      }
+      #login:hover {
+        background-color: green;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="">
+      <h1>Login Form</h1>
+      <div class="group">
+        <label for="">Email:</label>
+        <input class="input" type="text" placeholder="enter your email..." />
+      </div>
+      <div class="group">
+        <label for=""
+          >Password:<Password:> <input class="input" type="" placeholder="enter your pasword..."/>
+      </div>
+      <input type="submit" id="login" value="Login" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML FORM</title>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <form action="">
+      <label for="username">Username:</label>
+      <input type="text" id="username" readonly value="IB Afridi" /><br /><br />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" /><br /><br />
+
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        minlength="2"
+        maxlength="8"
+        required
+      /><br /><br />
+
+      <label>Gender:</label>
+      <input type="radio" id="male" name="gender" value="male" />
+      <label for="male">Male</label>
+      <input type="radio" id="female" name="gender" value="female" />
+      <label for="female">Female</label> <br /><br />
+
+      <label>Language:</label><br />
+      <input type="checkbox" id="english" />
+      <label for="english">English</label> <input type="checkbox" id="urdu" />
+      <label for="urdu">Urdu</label> <input type="checkbox" id="pashto" />
+      <label for="pashto">Pashto</label> <br /><br />
+
+      <label for="country">Country:</label>
+      <select name="country" id="country">
+        <option value="Pak">Pakistan</option>
+        <option value="Ind">India</option>
+        <option value="Bang">Bangladesh</option>
+        <option value="Afg">Afghanistan</option>
+      </select>
+      <br /><br />
+
+      <input type="submit" value="Submit" />
+      <input type="reset" value="Reset" />
+    </form>
+
+    <h2>File Upload + Datalist</h2>
+    <form action="" autocomplete="on">
+      <label>Update Profile Image:</label>
+      <input type="file" multiple /> <br /><br />
+
+      <label>Name:</label>
+      <input type="text" /> <br /><br />
+
+      <label>Browser:</label>
+      <input list="browsers" type="text" />
+      <datalist id="browsers">
+        <option value="Google Chrome"></option>
+        <option value="Mozilla Firefox"></option>
+        <option value="Microsoft Edge"></option>
+        <option value="Safari"></option>
+      </datalist>
+    </form>
+  </body>
+</html>

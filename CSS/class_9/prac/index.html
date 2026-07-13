@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table + List + Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 20px;
+      }
+      h1,
+      h2 {
+        text-align: center;
+        color: #333;
+      }
+      section {
+        background: white;
+        padding: 30px;
+        margin-bottom: 40px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* ========== 1. TABLE ========== */
+      table {
+        border: 1px solid black;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+      }
+      th {
+        color: white;
+        background-color: black;
+      }
+      tr {
+        border-bottom: 1px solid #ddd;
+      }
+      tr:nth-child(even) {
+        background-color: lightgray;
+      }
+      tr:hover {
+        background-color: #dbeafe;
+      }
+
+      /* ========== 2. LIST ========== */
+      ul {
+        list-style-type: disc;
+        margin: 20px 0;
+        padding-left: 40px;
+      }
+      ol {
+        list-style-type: decimal;
+        margin: 20px 0;
+        padding-left: 40px;
+      }
+      li {
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+      li:hover {
+        color: #007bff;
+        font-weight: bold;
+      }
+      .nested-list {
+        list-style-type: circle;
+      }
+      .square-list {
+        list-style-type: square;
+      }
+
+      /* ========== 3. FORM ========== */
+      form {
+        width: 350px;
+        margin: 20px auto;
+        padding: 30px 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background: #fff;
+      }
+      .input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+      .input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+      }
+      #login {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        border-radius: 5px;
+        border: none;
+        background-color: lightgreen;
+        color: green;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #login:hover {
+        background-color: green;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Homework - Table, List, Form</h1>
+
+    <!-- SECTION 1: TABLE -->
+    <section>
+      <h2>1. Student Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>John Doe</td>
+            <td>john@example.com</td>
+            <td>123-456-7890</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jane Smith</td>
+            <td>jane@example.com</td>
+            <td>234-567-8901</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Bob Johnson</td>
+            <td>bob@example.com</td>
+            <td>345-678-9012</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Alice Brown</td>
+            <td>alice@example.com</td>
+            <td>456-789-0123</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SECTION 2: LIST -->
+    <section>
+      <h2>2. HTML Lists</h2>
+
+      <h3>Unordered List</h3>
+      <ul>
+        <li>Item One</li>
+        <li>Item Two</li>
+        <li>
+          Item Three
+          <ul class="nested-list">
+            <li>Nested Item 1</li>
+            <li>Nested Item 2</li>
+          </ul>
+        </li>
+        <li>Item Four</li>
+      </ul>
+
+      <h3>Ordered List</h3>
+      <ol>
+        <li>First Item</li>
+        <li>Second Item</li>
+        <li>Third Item</li>
+        <li>Fourth Item</li>
+      </ol>
+
+      <h3>Square List</h3>
+      <ul class="square-list">
+        <li>Square Item One</li>
+        <li>Square Item Two</li>
+        <li>Square Item Three</li>
+      </ul>
+    </section>
+
+    <!-- SECTION 3: FORM -->
+    <section>
+      <h2>3. Login Form</h2>
+      <form action="">
+        <h1>Login</h1>
+        <div class="group">
+          <label for="email">Email:</label>
+          <input
+            class="input"
+            type="email"
+            id="email"
+            placeholder="enter your email..."
+            required
+          />
+        </div>
+        <div class="group">
+          <label for="password">Password:</label>
+          <input
+            class="input"
+            type="password"
+            id="password"
+            placeholder="enter your password..."
+            required
+          />
+        </div>
+        <input type="submit" id="login" value="Login" />
+      </form>
+    </section>
+  </body>
+</html>

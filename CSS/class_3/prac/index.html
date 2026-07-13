@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Colors + Rules</title>
+
+    <!-- EXTERNAL CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- INTERNAL CSS -->
+    <style>
+      /* ========== SECTION 1: COLORS ========== */
+      /* color */
+      /* Foreground and background colors */
+
+      p {
+        /* 1. hex code */
+        /* color: #ff0000; */
+
+        /* 2. rgb color - values range from 0 to 255 */
+        /* color: rgb(50, 100, 150); */
+
+        /* 3. rgba - last wala opacity hai 0 to 1 */
+        color: rgba(0, 0, 255, 1);
+      }
+
+      .section_1 {
+        background-color: #f0f0f0; /* light gray */
+        opacity: 0.9; /* pure section ko halka karega */
+        /* background-color: rgba(255, 0, 0, 0.5); */ /* sirf background transparent */
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+      }
+
+      /* ========== SECTION 2: CSS RULES / SPECIFICITY ========== */
+
+      /* 1. Last Rule Wins - jo sab se neeche ho */
+      /* h1 { color: red; }
+      h1 { color: blue; }
+      h1 { color: yellow; } */ /* Ye yellow hoga */
+
+      /* 2. Specificity Rules - ID > Class > Tag > !important sab se taqatwar */
+      /* h1 { color: gray !important; } */ /* ye sab ko hara dega */
+      /* #title { color: gray; } */ /* ID ki power zyada */
+      /* .heading { color: bisque; } */ /* Class ki power beech me */
+
+      /* 3. Inheritance - bache parent se property le lete hain */
+      .parent {
+        color: red;
+        font-size: 20px;
+        border: 1px solid black;
+      }
+      .parent div {
+        color: inherit; /* parent ka red lega */
+        padding: 10px;
+      }
+      p {
+        color: blue; /* ye parent ko override kar dega */
+        border: inherit; /* parent se border lega */
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Colors + CSS Rules Homework</h1>
+
+    <!-- SECTION 1: COLORS -->
+    <div class="section_1">
+      <h1>CSS Colors</h1>
+      <p>This is a paragraph with a background color. Text blue hai</p>
+    </div>
+
+    <!-- SECTION 2: RULES -->
+    <h1 class="heading" id="title">CSS Rules - Specificity Test</h1>
+    <div class="parent">
+      <p>1. IB Afridi - p tag hai is liye blue + parent se border inherit</p>
+      <div>2. IB Afridi - div hai is liye parent ka red + border inherit</div>
+    </div>
+  </body>
+</html>

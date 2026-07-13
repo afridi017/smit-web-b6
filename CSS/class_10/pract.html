@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Homework - Afridi</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f5f5f5;
+      }
+
+      h1,
+      h2 {
+        color: #333;
+        border-bottom: 2px solid rebeccapurple;
+        padding-bottom: 5px;
+      }
+
+      section {
+        background: white;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* ========== 1. ATTRIBUTE SELECTOR ========== */
+      /* Existance */
+      div[id] {
+        color: red;
+      }
+
+      div[style] {
+        color: blue;
+      }
+      /* prefix - class jo "para" se start ho */
+      div[class^="para"] {
+        border: 1px solid orange;
+        padding: 5px;
+        margin: 5px 0;
+      }
+      /* prefix - class jo "h" se start ho */
+      div[class^="h"] {
+        border: 1px solid blue;
+        padding: 5px;
+        margin: 5px 0;
+      }
+      /* suffix - class jo "2" pe khatam ho */
+      div[class$="2"] {
+        border: 2px solid black;
+        color: purple;
+        font-weight: bold;
+      }
+      /* substring - class me "desc" word ho */
+      div[class*="desc"] {
+        border: 1px solid green;
+        color: green;
+      }
+      /* Equality */
+      input[type="text"] {
+        border: 3px solid black;
+        padding: 5px;
+      }
+
+      /* ========== 2. POSITION ========== */
+      .container {
+        border: 2px solid rebeccapurple;
+        height: 200px;
+        width: 400px;
+        background-color: #ddd0f0;
+        position: relative; /* parent relative */
+        margin: 20px auto;
+      }
+
+      .box-absolute {
+        width: 100px;
+        height: 100px;
+        background: rebeccapurple;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        color: white;
+        text-align: center;
+        line-height: 100px;
+      }
+
+      .box-relative {
+        width: 300px;
+        height: 50px;
+        background: lightblue;
+        position: relative;
+        top: 10px;
+        left: 20px;
+        border: 1px solid blue;
+      }
+
+      .box-fixed {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: red;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      /* ========== 3. FORM STYLING ========== */
+      .group {
+        margin-bottom: 15px;
+      }
+      .group label {
+        display: inline-block;
+        width: 120px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        border: 3px solid #555;
+        padding: 8px;
+        border-radius: 5px;
+        width: 250px;
+      }
+      select {
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #555;
+      }
+      textarea {
+        width: 300px;
+        height: 100px;
+        border: 2px solid #555;
+        border-radius: 5px;
+        padding: 10px;
+        resize: vertical;
+      }
+      button {
+        background: rebeccapurple;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #663399;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Homework - All Topics</h1>
+
+    <!-- ========== SECTION 1: ATTRIBUTE SELECTOR ========== -->
+    <section>
+      <h2>1. Attribute Selector</h2>
+
+      <input type="text" placeholder="type=text - black border" />
+      <input type="email" placeholder="type=email" />
+      <input type="password" placeholder="type=password" />
+      <input type="submit" value="Submit Button" />
+
+      <div class="paral">Class starts with "para" - Orange Border</div>
+      <div class="hello para2">
+        Class ends with "2" - Black Border + Purple Text
+      </div>
+      <div class="description">Class contains "desc" - Green Border + Text</div>
+      <div class="header">Class starts with "h" - Blue Border</div>
+    </section>
+
+    <!-- ========== SECTION 2: POSITION ========== -->
+    <section>
+      <h2>2. Position Property</h2>
+
+      <div class="box-relative">
+        Ye RELATIVE hai - apni jagah se 10px neeche 20px right
+      </div>
+
+      <div class="container">
+        Parent - position: relative
+        <div class="box-absolute">ABSOLUTE</div>
+      </div>
+
+      <div class="box-fixed">FIXED - Scroll karo, ye yahin rahega</div>
+
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
+        voluptates.
+      </p>
+    </section>
+
+    <!-- ========== SECTION 3: FORM ========== -->
+    <section>
+      <h2>3. Form</h2>
+      <form action="">
+        <div class="group">
+          <label>Name:</label>
+          <input type="text" placeholder="enter your name..." />
+        </div>
+        <div class="group">
+          <label>Email:</label>
+          <input type="email" placeholder="enter your email..." />
+        </div>
+        <div class="group">
+          <label>Password:</label>
+          <input type="password" placeholder="enter your password...." />
+        </div>
+        <div class="group">
+          <label>Gender:</label>
+          <input type="radio" name="gender" /> Male
+          <input type="radio" name="gender" /> Female
+        </div>
+        <div class="group">
+          <label>Select Class:</label>
+          <select name="">
+            <option value="">First</option>
+            <option value="">Second</option>
+            <option value="">Third</option>
+            <option value="">Fourth</option>
+          </select>
+        </div>
+        <div class="group">
+          <label>Details:</label>
+          <textarea name="" maxlength="100" placeholder="details..."></textarea>
+        </div>
+        <div class="group">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

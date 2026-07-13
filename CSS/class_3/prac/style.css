@@ -1,0 +1,12 @@
+/* EXTERNAL CSS - Sab se kam priority */
+
+body {
+  background: #fafafa;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  color: green; /* Internal se override ho jayega */
+  text-align: center;
+}

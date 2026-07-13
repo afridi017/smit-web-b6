@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attribute + Form + Position</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #f5f5f5;
+        padding: 20px;
+      }
+      section {
+        background: white;
+        padding: 30px;
+        margin-bottom: 40px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* ========== 1. ATTRIBUTE SELECTOR ========== */
+      /* Existance - jis div me id ho */
+      div[id] {
+        color: red;
+      }
+      /* jis div me style attribute ho */
+      div[style] {
+        color: blue;
+      }
+      /* Starts with - class "para" se start */
+      div[class^="para"] {
+        border: 2px solid orange;
+        padding: 10px;
+        margin: 5px 0;
+      }
+      /* Starts with h */
+      div[class^="h"] {
+        border: 2px dashed purple;
+        padding: 10px;
+        margin: 5px 0;
+      }
+      /* Ends with 2 */
+      div[class$="2"] {
+        border: 2px solid black;
+        color: darkorange;
+        font-weight: bold;
+      }
+      /* Contains desc */
+      div[class*="desc"] {
+        border: 2px solid green;
+        color: green;
+      }
+      /* Equality - sirf text wale input */
+      input[type="text"] {
+        border: 3px solid black;
+        padding: 8px;
+      }
+
+      /* ========== 2. FORM ========== */
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        border: 2px solid #ccc;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        margin-top: 5px;
+      }
+      input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+      select {
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        border-radius: 5px;
+        resize: vertical; /* sirf upar neeche bara chota ho */
+      }
+      .group {
+        margin-bottom: 20px;
+      }
+      label {
+        font-weight: bold;
+      }
+
+      /* ========== 3. POSITION ========== */
+      .position-demo {
+        border: 1px solid #333;
+        height: 200px;
+        background-color: #e0e0e0;
+        margin: 20px 0;
+        position: relative; /* parent relative */
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: rebeccapurple;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .relative {
+        position: relative;
+        top: 20px;
+        left: 20px; /* apni jagah se 20px neeche right */
+      }
+      .absolute {
+        position: absolute;
+        top: 10px;
+        right: 10px; /* parent ke hisab se */
+      }
+      .fixed {
+        position: fixed;
+        bottom: 20px;
+        right: 20px; /* screen ke hisab se */
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Advanced Topics</h1>
+
+    <!-- SECTION 1: ATTRIBUTE SELECTOR -->
+    <section>
+      <h2>1. Attribute Selector</h2>
+      <input type="text" placeholder="Text input - black border" />
+      <input type="email" placeholder="Email input" />
+      <input type="password" placeholder="Password input" />
+      <input type="submit" value="Submit" />
+
+      <div class="paral">I am IB Afridi - starts with para</div>
+      <div class="hello para2">One-sided - ends with 2</div>
+      <div class="description">This has desc - contains desc</div>
+      <div id="test">I have id - color red</div>
+      <div style="font-size: 20px">I have style - color blue</div>
+    </section>
+
+    <!-- SECTION 2: FORM -->
+    <section>
+      <h2>2. Form</h2>
+      <form action="">
+        <div class="group">
+          <label>Name</label>
+          <input type="text" placeholder="enter your name..." />
+        </div>
+        <div class="group">
+          <label>Email:</label>
+          <input type="email" placeholder="enter your email..." />
+        </div>
+        <div class="group">
+          <label>Password:</label>
+          <input type="password" placeholder="enter your password...." />
+        </div>
+        <div class="group">
+          <label>Gender:</label><br />
+          <input type="radio" name="gender" id="male" />
+          <label for="male">Male</label>
+          <input type="radio" name="gender" id="female" />
+          <label for="female">Female</label>
+        </div>
+        <div class="group">
+          <label>Select Class:</label>
+          <select>
+            <option value="">first</option>
+            <option value="">second</option>
+            <option value="">third</option>
+            <option value="">fourth</option>
+          </select>
+        </div>
+        <div class="group">
+          <label>Details:</label>
+          <textarea maxlength="100" placeholder="details..."></textarea>
+        </div>
+      </form>
+    </section>
+
+    <!-- SECTION 3: POSITION -->
+    <section>
+      <h2>3. CSS Position</h2>
+      <p>Normal text upar</p>
+
+      <div class="position-demo">
+        <div class="box relative">Relative</div>
+        <div class="box absolute">Absolute</div>
+      </div>
+
+      <div class="box fixed">Fixed</div>
+
+      <p>Normal text neeche - scroll karo to red wala wahi rahega</p>
+      <p style="height: 300px">Scroll test ke liye space</p>
+    </section>
+  </body>
+</html>
