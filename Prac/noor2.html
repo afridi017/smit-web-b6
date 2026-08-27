@@ -1,0 +1,1942 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Noor — A Universe Made For You</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              lavender: "#C8A2C8",
+              blush: "#FFD1DC",
+              pearl: "#FDFDFD",
+              gold: "#FFD700",
+              navy: "#1A1A2E",
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CDNs for Animations and 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f0f1e;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c8a2c8;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ffd1dc;
+      }
+
+      /* Glassmorphism Styles */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .glass-btn {
+        background: rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .glass-btn:hover {
+        background: rgba(255, 209, 220, 0.2);
+        border-color: rgba(255, 215, 0, 0.4);
+        box-shadow: 0 0 25px rgba(255, 209, 220, 0.3);
+        transform: translateY(-2px);
+      }
+
+      /* Custom 3D Card Flips & Hover Effects */
+      .polaroid-wrapper {
+        perspective: 1000px;
+      }
+      .polaroid-card {
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform-style: preserve-3d;
+      }
+      .polaroid-wrapper:hover .polaroid-card {
+        transform: rotateY(180deg) rotateZ(2deg);
+      }
+      .polaroid-front,
+      .polaroid-back {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+      .polaroid-back {
+        transform: rotateY(180deg);
+      }
+
+      /* Twinkle & Pulse Keyframe Animations */
+      @keyframes subtleFloat {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(2deg);
+        }
+      }
+      .floating {
+        animation: subtleFloat 6s ease-in-out infinite;
+      }
+
+      .text-glow {
+        text-shadow:
+          0 0 15px rgba(200, 162, 200, 0.5),
+          0 0 30px rgba(255, 209, 220, 0.3);
+      }
+
+      .gold-glow {
+        text-shadow:
+          0 0 10px rgba(255, 215, 0, 0.5),
+          0 0 20px rgba(255, 215, 0, 0.2);
+      }
+
+      /* Letter Styling */
+      .letter-content {
+        background: radial-gradient(circle, #fcfaf2 0%, #f4f0db 100%);
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Navigation indicator dot styling */
+      .dot-nav-active {
+        background-color: #ffd1dc !important;
+        box-shadow: 0 0 10px #ffd1dc;
+        transform: scale(1.3);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-navy text-pearl font-sans overflow-x-hidden relative selection:bg-blush/30 selection:text-gold"
+  >
+    <!-- 1. LOADING SCREEN -->
+    <div
+      id="loader"
+      class="fixed inset-0 z-[9999] bg-[#0A0A16] flex flex-col justify-center items-center transition-all duration-1000"
+    >
+      <div class="relative w-40 h-40 flex items-center justify-center">
+        <!-- Outermost Glow Ring -->
+        <div
+          class="absolute inset-0 rounded-full border-2 border-dashed border-lavender/30 animate-spin"
+          style="animation-duration: 15s"
+        ></div>
+        <!-- Middle Pulsing Ring -->
+        <div
+          class="absolute inset-2 rounded-full border border-double border-blush/50 animate-pulse"
+        ></div>
+        <!-- Inner Spinning Ring -->
+        <div
+          class="absolute inset-4 rounded-full border-t-2 border-r-2 border-gold animate-spin"
+          style="animation-duration: 3s"
+        ></div>
+        <!-- Center Heart -->
+        <i class="fa-solid fa-heart text-blush text-3xl animate-bounce"></i>
+      </div>
+      <h2
+        class="mt-8 font-serif text-2xl tracking-widest text-glow text-pearl/90"
+      >
+        Preparing Noor's Universe...
+      </h2>
+      <div
+        class="w-64 bg-white/5 h-[2px] mt-4 rounded-full overflow-hidden border border-white/5"
+      >
+        <div
+          id="load-bar"
+          class="bg-gradient-to-r from-lavender via-blush to-gold h-full w-0 transition-all duration-300"
+        ></div>
+      </div>
+      <p
+        id="load-text"
+        class="text-xs text-pearl/40 font-sans tracking-widest mt-2 uppercase"
+      >
+        Synthesizing Dreams
+      </p>
+    </div>
+
+    <!-- BACKGROUND MUSIC TOGGLE -->
+    <div class="fixed top-6 right-6 z-[100] flex items-center gap-3">
+      <button
+        id="music-toggle"
+        class="glass-btn w-12 h-12 rounded-full flex items-center justify-center text-pearl/80 hover:text-gold focus:outline-none transition-transform active:scale-95"
+        title="Toggle Magical Soundscape"
+      >
+        <i id="music-icon" class="fa-solid fa-music"></i>
+      </button>
+    </div>
+
+    <!-- PERSISTENT VERTICAL FLOATING DOT NAVIGATION -->
+    <div
+      class="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4"
+    >
+      <a
+        href="#hero"
+        class="dot-nav w-3 h-3 rounded-full bg-white/20 transition-all hover:bg-blush"
+        data-target="hero"
+      ></a>
+      <a
+        href="#about"
+        class="dot-nav w-3 h-3 rounded-full bg-white/20 transition-all hover:bg-blush"
+        data-target="about"
+      ></a>
+      <a
+        href="#gallery"
+        class="dot-nav w-3 h-3 rounded-full bg-white/20 transition-all hover:bg-blush"
+        data-target="gallery"
+      ></a>
+      <a
+        href="#special"
+        class="dot-nav w-3 h-3 rounded-full bg-white/20 transition-all hover:bg-blush"
+        data-target="special"
+      ></a>
+      <a
+        href="#letter"
+        class="dot-nav w-3 h-3 rounded-full bg-white/20 transition-all hover:bg-blush"
+        data-target="letter"
+      ></a>
+      <a
+        href="#wish"
+        class="dot-nav w-3 h-3 rounded-full bg-white/20 transition-all hover:bg-blush"
+        data-target="wish"
+      ></a>
+    </div>
+
+    <!-- SECTION 1: HERO 3D SECTION -->
+    <section
+      id="hero"
+      class="relative w-screen h-screen flex flex-col justify-between overflow-hidden"
+    >
+      <!-- 3D Canvas Container -->
+      <div id="hero-canvas-container" class="absolute inset-0 z-0"></div>
+
+      <!-- Subtle Top Overlay -->
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-navy/80 via-transparent to-navy z-10 pointer-events-none"
+      ></div>
+
+      <!-- Custom Navbar Layer inside Hero -->
+      <header
+        class="w-full px-6 py-6 lg:px-16 z-20 flex justify-between items-center relative"
+      >
+        <span
+          class="font-serif text-xl tracking-widest text-glow font-semibold select-none"
+          >NOOR'S UNIVERSE</span
+        >
+        <div
+          class="flex gap-6 text-sm tracking-widest font-light text-pearl/80"
+        >
+          <a
+            href="#about"
+            class="hover:text-blush transition-colors hidden md:inline"
+            >THE REASON</a
+          >
+          <a
+            href="#gallery"
+            class="hover:text-blush transition-colors hidden md:inline"
+            >MOMENTS</a
+          >
+          <a
+            href="#special"
+            class="hover:text-blush transition-colors hidden md:inline"
+            >YOUR LIGHT</a
+          >
+        </div>
+      </header>
+
+      <!-- Main Hero content -->
+      <div
+        class="w-full max-w-6xl mx-auto px-6 z-20 flex flex-col items-center justify-center text-center mt-auto mb-auto relative"
+      >
+        <div class="floating flex flex-col items-center">
+          <!-- Glowing Aura Behind Title -->
+          <div
+            class="absolute w-80 h-80 bg-blush/10 rounded-full blur-[100px] pointer-events-none -z-10"
+          ></div>
+
+          <h1
+            class="font-serif text-6xl md:text-8xl lg:text-9xl text-glow mb-4 tracking-tight leading-none text-white select-none"
+          >
+            For Noor
+          </h1>
+          <p
+            class="font-sans text-sm md:text-lg lg:text-xl font-light text-pearl/90 tracking-[0.3em] max-w-2xl mx-auto leading-relaxed select-none mb-10"
+          >
+            The world became brighter the day you were born
+          </p>
+          <a
+            href="#about"
+            class="glass-btn px-8 py-4 rounded-full font-sans tracking-[0.2em] text-xs font-semibold uppercase flex items-center gap-3"
+          >
+            Enter My World <span class="animate-pulse">✨</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator Footer -->
+      <div
+        class="w-full py-8 text-center z-20 flex flex-col items-center justify-center text-pearl/40 text-xs tracking-widest pointer-events-none"
+      >
+        <span class="uppercase">Scroll Down to Explore</span>
+        <div
+          class="w-[1px] h-12 bg-gradient-to-b from-pearl/40 to-transparent mt-3 animate-pulse"
+        ></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ABOUT NOOR -->
+    <section
+      id="about"
+      class="relative min-h-screen py-24 lg:py-32 flex items-center overflow-hidden"
+    >
+      <!-- background lights -->
+      <div
+        class="absolute -left-48 top-1/4 w-96 h-96 bg-lavender/10 rounded-full blur-[120px] pointer-events-none"
+      ></div>
+      <div
+        class="absolute right-0 bottom-1/4 w-96 h-96 bg-blush/15 rounded-full blur-[150px] pointer-events-none"
+      ></div>
+
+      <div
+        class="w-full max-w-6xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center"
+      >
+        <!-- Left Side: 3D Polaroid Frame Flipping on Hover -->
+        <div
+          class="col-span-1 lg:col-span-5 flex justify-center polaroid-wrapper relative z-20"
+        >
+          <div
+            class="polaroid-card w-72 h-[410px] relative cursor-pointer shadow-2xl"
+          >
+            <!-- Card Front -->
+            <div
+              class="polaroid-front absolute inset-0 bg-[#fbfbf9] p-4 flex flex-col justify-between border border-white/20 rounded-[4px] shadow-lg"
+            >
+              <div
+                class="relative w-full h-[300px] overflow-hidden bg-zinc-900 rounded-[2px]"
+              >
+                <!-- Glow aura inside image wrapper -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-blush/20 via-transparent to-transparent mix-blend-color-burn z-10"
+                ></div>
+                <img
+                  src="https://i.ibb.co/mVkj8JHk/IMG-20260423-WA0122.jpg"
+                  alt="Noor Front"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="py-3 text-center">
+                <span class="font-serif text-xl italic text-navy/80 select-none"
+                  >Noor ✨</span
+                >
+              </div>
+            </div>
+
+            <!-- Card Back -->
+            <div
+              class="polaroid-back absolute inset-0 bg-[#fbfbf9] p-6 flex flex-col justify-between border border-white/20 rounded-[4px] shadow-lg"
+            >
+              <div
+                class="h-full flex flex-col justify-center text-center items-center gap-6"
+              >
+                <!-- Golden elegant vector border -->
+                <div class="w-12 h-12 border-t border-l border-gold/40"></div>
+                <i
+                  class="fa-solid fa-star text-gold text-2xl animate-spin"
+                  style="animation-duration: 10s"
+                ></i>
+                <p
+                  class="font-serif text-base italic text-navy/70 leading-relaxed px-2"
+                >
+                  "The universe of my happiness is complete within the
+                  boundaries of your presence."
+                </p>
+                <div class="w-12 h-12 border-b border-r border-gold/40"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side Poetic description -->
+        <div
+          class="col-span-1 lg:col-span-7 flex flex-col justify-center relative"
+        >
+          <!-- Twinkling floating elements in section background -->
+          <i
+            class="fa-solid fa-sparkles absolute -top-8 -left-8 text-gold/30 text-3xl animate-pulse"
+          ></i>
+          <i
+            class="fa-solid fa-moon absolute -right-12 top-12 text-lavender/20 text-4xl animate-bounce"
+            style="animation-duration: 8s"
+          ></i>
+
+          <h2
+            class="font-serif text-3xl md:text-5xl lg:text-6xl text-glow mb-8 tracking-tight leading-tight text-white"
+          >
+            The Reason For <br /><span class="text-blush">This Universe</span>
+          </h2>
+
+          <div
+            class="w-20 h-[1px] bg-gradient-to-r from-gold via-blush to-transparent mb-8"
+          ></div>
+
+          <div
+            class="font-sans text-pearl/80 font-light space-y-6 text-sm md:text-base leading-relaxed tracking-wider"
+          >
+            <p>
+              <span
+                class="text-glow text-white font-serif text-xl italic font-semibold"
+                >Noor</span
+              >, your name itself carries the essence of light. To the worlds
+              out there, you are just one person, but to me, you are the cosmic
+              spark that illuminated my entire sky. Your laughter is the music
+              my heart listens to, and your gentle presence is a peaceful harbor
+              in a turbulent universe.
+            </p>
+            <p>
+              This digital sanctuary, crafted block by block from cold lines of
+              code, was created with a single warm intent: to give back a
+              fraction of the brightness you naturally bring into existence.
+              Within this universe built just for you, everything behaves with
+              pure devotion. The stars pulse, the colors flow, and the cosmic
+              dust orbits around you.
+            </p>
+            <p class="font-serif text-gold/95 italic gold-glow text-base">
+              "In a sky full of infinite galaxies, my eyes will always find your
+              constellations."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: 3D MEMORY GALLERY -->
+    <section
+      id="gallery"
+      class="relative min-h-screen py-24 bg-[#111124] overflow-hidden flex flex-col justify-center"
+    >
+      <!-- Section Lights -->
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,162,200,0.05)_0%,transparent_70%)] pointer-events-none"
+      ></div>
+
+      <div
+        class="w-full max-w-6xl mx-auto px-6 relative z-10 text-center mb-16"
+      >
+        <h2 class="font-serif text-3xl md:text-5xl text-glow mb-4 text-white">
+          Our Shared Moments
+        </h2>
+        <p
+          class="font-sans text-xs md:text-sm text-pearl/40 tracking-[0.3em] uppercase"
+        >
+          Memories locked inside the constellations
+        </p>
+        <div
+          class="w-24 h-[1px] bg-gradient-to-r from-transparent via-blush to-transparent mx-auto mt-6"
+        ></div>
+      </div>
+
+      <!-- 3D Interactive WebGL Frame Carousel Canvas -->
+      <div
+        class="relative w-full max-w-7xl mx-auto h-[450px] z-20 flex justify-center items-center"
+      >
+        <!-- Fallback standard dynamic carousel UI in case WebGL initialization slows -->
+        <div
+          id="gallery-webgl-wrapper"
+          class="absolute inset-0 w-full h-full"
+        ></div>
+
+        <!-- Controls Over WebGL Layer -->
+        <div
+          class="absolute inset-x-6 flex justify-between z-30 pointer-events-none"
+        >
+          <button
+            id="gal-prev"
+            class="pointer-events-auto glass-btn w-12 h-12 rounded-full flex items-center justify-center text-pearl/80 hover:text-gold"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button
+            id="gal-next"
+            class="pointer-events-auto glass-btn w-12 h-12 rounded-full flex items-center justify-center text-pearl/80 hover:text-gold"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="gallery-caption" class="w-full text-center mt-8 px-6 z-20 h-12">
+        <h3
+          class="font-serif text-xl text-glow text-blush tracking-wide transition-all duration-500 transform opacity-100"
+          id="gal-title"
+        >
+          First Impression
+        </h3>
+        <p
+          class="font-sans text-xs text-pearl/50 tracking-widest mt-1 uppercase"
+          id="gal-desc"
+        >
+          When our orbits first crossed paths
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 4: "WHY YOU ARE SPECIAL" -->
+    <section
+      id="special"
+      class="relative min-h-screen py-24 flex items-center overflow-hidden"
+    >
+      <!-- Lights -->
+      <div
+        class="absolute right-0 top-1/4 w-96 h-96 bg-gold/5 rounded-full blur-[120px] pointer-events-none"
+      ></div>
+      <div
+        class="absolute left-12 bottom-1/4 w-96 h-96 bg-lavender/10 rounded-full blur-[150px] pointer-events-none"
+      ></div>
+
+      <div class="w-full max-w-6xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <h2 class="font-serif text-3xl md:text-5xl text-glow mb-4 text-white">
+            Why You Are So Special
+          </h2>
+          <p
+            class="font-sans text-xs md:text-sm text-pearl/40 tracking-[0.3em] uppercase"
+          >
+            The divine traits that set you apart
+          </p>
+          <div
+            class="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-6"
+          ></div>
+        </div>
+
+        <!-- Dynamic 3D Lift Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <!-- Card 1 -->
+          <div
+            class="special-card glass-panel p-8 rounded-2xl flex flex-col items-center text-center relative overflow-hidden group transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_15px_40px_rgba(200,162,200,0.15)] cursor-pointer"
+            data-tilt
+          >
+            <!-- Background Soft Aura Inside Card -->
+            <div
+              class="absolute -right-20 -top-20 w-40 h-40 bg-lavender/5 rounded-full blur-2xl group-hover:bg-lavender/10 transition-all duration-500"
+            ></div>
+
+            <div class="w-16 h-12 flex items-center justify-center mb-6">
+              <!-- Custom Web Audio/Canvas Star Node Placeholder -->
+              <i
+                class="fa-solid fa-heart text-blush text-4xl group-hover:scale-110 transition-transform duration-500 text-glow"
+              ></i>
+            </div>
+            <h3
+              class="font-serif text-2xl text-white mb-4 group-hover:text-blush transition-colors"
+            >
+              Your Heart
+            </h3>
+            <p
+              class="font-sans text-pearl/70 font-light text-sm leading-relaxed tracking-wider"
+            >
+              The absolute kindest soul I have ever had the fortune of knowing.
+              Your heart is an endless ocean of pure selflessness and gentle
+              empathy, where anyone can find warmth.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="special-card glass-panel p-8 rounded-2xl flex flex-col items-center text-center relative overflow-hidden group transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_15px_40px_rgba(255,215,0,0.12)] cursor-pointer"
+            data-tilt
+          >
+            <!-- Background Soft Aura Inside Card -->
+            <div
+              class="absolute -right-20 -top-20 w-40 h-40 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/10 transition-all duration-500"
+            ></div>
+
+            <div class="w-16 h-12 flex items-center justify-center mb-6">
+              <i
+                class="fa-solid fa-moon text-gold text-4xl group-hover:scale-110 transition-transform duration-500 text-glow"
+              ></i>
+            </div>
+            <h3
+              class="font-serif text-2xl text-white mb-4 group-hover:text-gold transition-colors"
+            >
+              Your Soul
+            </h3>
+            <p
+              class="font-sans text-pearl/70 font-light text-sm leading-relaxed tracking-wider"
+            >
+              Radiant inside and infinitely elegant on the outside. Your essence
+              sparkles with a rare spiritual purity, turning standard days into
+              magical chapters of memory.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="special-card glass-panel p-8 rounded-2xl flex flex-col items-center text-center relative overflow-hidden group transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_15px_40px_rgba(255,209,220,0.15)] cursor-pointer"
+            data-tilt
+          >
+            <!-- Background Soft Aura Inside Card -->
+            <div
+              class="absolute -right-20 -top-20 w-40 h-40 bg-blush/5 rounded-full blur-2xl group-hover:bg-blush/10 transition-all duration-500"
+            ></div>
+
+            <div class="w-16 h-12 flex items-center justify-center mb-6">
+              <i
+                class="fa-solid fa-wand-magic-sparkles text-blush text-4xl group-hover:scale-110 transition-transform duration-500 text-glow"
+              ></i>
+            </div>
+            <h3
+              class="font-serif text-2xl text-white mb-4 group-hover:text-blush transition-colors"
+            >
+              Your Light
+            </h3>
+            <p
+              class="font-sans text-pearl/70 font-light text-sm leading-relaxed tracking-wider"
+            >
+              You hold an effortless spark that brightens up any room. Your
+              laughter is an energetic light, lifting the shadows off my
+              shoulders and making this universe alive.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: LOVE LETTER SECTION -->
+    <section
+      id="letter"
+      class="relative min-h-screen py-24 bg-[#0e0e1a] flex items-center overflow-hidden"
+    >
+      <!-- Cosmic envelope background layout elements -->
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,209,220,0.06)_0%,transparent_50%)] pointer-events-none"
+      ></div>
+
+      <div
+        class="w-full max-w-4xl mx-auto px-6 relative z-10 flex flex-col items-center"
+      >
+        <div class="text-center mb-12">
+          <h2 class="font-serif text-3xl md:text-5xl text-glow mb-4 text-white">
+            A Letter For You
+          </h2>
+          <p
+            class="font-sans text-xs md:text-sm text-pearl/40 tracking-[0.3em] uppercase"
+          >
+            Locked inside the vault of this cosmic box
+          </p>
+          <div
+            class="w-24 h-[1px] bg-gradient-to-r from-transparent via-blush to-transparent mx-auto mt-6"
+          ></div>
+        </div>
+
+        <!-- Envelope / Card Shell Dynamic System -->
+        <div
+          id="envelope-container"
+          class="relative w-full max-w-xl h-[480px] bg-white/5 border border-white/10 rounded-2xl glass-panel p-4 overflow-hidden shadow-2xl flex items-center justify-center transition-all duration-500"
+        >
+          <!-- Unopened State Layer -->
+          <div
+            id="envelope-sealed"
+            class="absolute inset-0 flex flex-col justify-center items-center p-8 text-center transition-all duration-500 z-30"
+          >
+            <i
+              class="fa-solid fa-envelope-open-text text-blush text-6xl mb-6 floating text-glow"
+            ></i>
+            <h3 class="font-serif text-2xl mb-2 text-white">
+              Written In Sincere Devotion
+            </h3>
+            <p
+              class="font-sans text-xs text-pearl/50 tracking-wider max-w-sm mx-auto mb-8 leading-relaxed"
+            >
+              To unfold the silent lines within, click the magical envelope
+              wax-seal below.
+            </p>
+            <button
+              id="open-envelope-btn"
+              class="glass-btn px-6 py-3 rounded-full font-sans tracking-[0.25em] text-xs font-semibold uppercase flex items-center gap-2"
+            >
+              Read Letter
+              <i class="fa-solid fa-heart text-blush animate-pulse"></i>
+            </button>
+          </div>
+
+          <!-- Opened State Sheet: sliding up inside card framework -->
+          <div
+            id="envelope-sheet"
+            class="absolute inset-x-4 bottom-4 top-4 rounded-xl letter-content p-6 md:p-8 text-navy overflow-y-auto transform translate-y-[120%] opacity-0 scale-95 transition-all duration-700 ease-out z-20 flex flex-col justify-between"
+          >
+            <div class="flex-grow flex flex-col justify-center">
+              <span class="font-serif text-lg italic text-navy/40 mb-2"
+                >My Dearest Noor,</span
+              >
+              <div
+                class="font-serif text-sm md:text-base leading-relaxed tracking-wider text-navy/90 italic space-y-4 pr-1"
+              >
+                <p>
+                  I don't know if human languages ever built words pure enough
+                  to tell you what your presence means, but I chose code as my
+                  silent messenger to construct this quiet space just for you.
+                  Something beautiful that exists in this digital expanse simply
+                  because you exist.
+                </p>
+                <p>
+                  Every color selected, every mathematical coordinate mapping
+                  these rotating stars, and every soft glowing nebula in this
+                  space is a quiet tribute to your goodness. You are the grace
+                  in my lines, the harbor to my drift, and the gentle sun that
+                  stays long after day breaks.
+                </p>
+                <p>
+                  Thank you for simply being who you are. Thank you for making
+                  my small universe feel absolutely magical and deeply
+                  beautiful.
+                </p>
+              </div>
+            </div>
+            <div
+              class="mt-6 pt-4 border-t border-navy/10 flex justify-between items-end"
+            >
+              <div>
+                <span
+                  class="block font-sans text-[10px] tracking-widest text-navy/40 uppercase font-bold"
+                  >Written with all my devotion</span
+                >
+                <span class="font-serif text-sm font-semibold text-navy/80"
+                  >From Someone Who Loves You</span
+                >
+              </div>
+              <button
+                id="close-envelope-btn"
+                class="w-8 h-8 rounded-full bg-navy/5 hover:bg-navy/10 text-navy/60 hover:text-navy flex items-center justify-center transition-colors"
+              >
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: 3D WISHING STAR -->
+    <section
+      id="wish"
+      class="relative min-h-screen py-24 flex items-center overflow-hidden"
+    >
+      <!-- Interactive Wishing Star Canvas inside framework -->
+      <div id="wish-canvas-container" class="absolute inset-0 z-0"></div>
+
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-navy via-transparent to-navy z-10 pointer-events-none"
+      ></div>
+
+      <div
+        class="w-full max-w-md mx-auto px-6 relative z-20 flex flex-col items-center"
+      >
+        <div class="text-center mb-10">
+          <!-- Golden Twinkling Heart Icon -->
+          <i
+            class="fa-solid fa-star text-gold text-4xl mb-4 floating text-glow"
+          ></i>
+          <h2 class="font-serif text-3xl md:text-5xl text-glow mb-4 text-white">
+            Make A Wish
+          </h2>
+          <p
+            class="font-sans text-xs text-pearl/50 tracking-[0.2em] uppercase leading-relaxed"
+          >
+            Click the starry sky backplane to release a glowing star of wish for
+            Noor.
+          </p>
+        </div>
+
+        <!-- Interactive input widget overlay panel -->
+        <div class="glass-panel p-6 rounded-2xl w-full">
+          <div class="flex flex-col gap-4">
+            <input
+              type="text"
+              id="wish-input"
+              placeholder="Type a beautiful wish for Noor..."
+              class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-pearl focus:outline-none focus:border-blush focus:ring-1 focus:ring-blush/30 transition-all font-sans tracking-wide"
+            />
+            <button
+              id="launch-star-btn"
+              class="glass-btn w-full py-3 rounded-xl font-sans tracking-[0.25em] text-xs font-semibold uppercase flex items-center justify-center gap-2"
+            >
+              Launch Star <i class="fa-solid fa-paper-plane text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Real-time wish fly-away status log inside panel -->
+        <div
+          id="wish-log"
+          class="mt-4 text-center text-[10px] text-pearl/35 font-mono uppercase tracking-widest min-h-[1.5rem]"
+        ></div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: FOOTER -->
+    <footer
+      class="relative bg-[#06060c] pt-24 pb-12 border-t border-white/5 overflow-hidden"
+    >
+      <!-- canvas wrapper specifically for 3D moon rendering -->
+      <div
+        id="footer-moon-canvas"
+        class="absolute -right-24 top-0 w-80 h-80 z-0 opacity-80 pointer-events-none"
+      ></div>
+
+      <div class="w-full max-w-6xl mx-auto px-6 relative z-10">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12"
+        >
+          <div class="text-center md:text-left">
+            <span
+              class="font-serif text-2xl tracking-widest text-glow font-semibold block text-white mb-2"
+              >NOOR</span
+            >
+            <span
+              class="font-sans text-xs text-pearl/40 tracking-[0.3em] uppercase"
+              >My sanctuary of pure peace</span
+            >
+          </div>
+
+          <div class="flex gap-6 text-xl text-pearl/60">
+            <a
+              href="https://instagram.com/ishaqafridi017"
+              target="_blank"
+              class="hover:text-blush transition-colors hover:-translate-y-1 transform duration-300"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a
+              href="https://facebook.com/ishaqafridi017"
+              target="_blank"
+              class="hover:text-blush transition-colors hover:-translate-y-1 transform duration-300"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a
+              href="https://github.com/afridi017"
+              target="_blank"
+              class="hover:text-blush transition-colors hover:-translate-y-1 transform duration-300"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-pearl/30 uppercase gap-4"
+        >
+          <span>© 2026 — Built With Absolute Devotion For Noor</span>
+          <span class="flex items-center gap-1"
+            >Made with love
+            <i
+              class="fa-solid fa-heart text-blush text-[10px] animate-pulse"
+            ></i
+          ></span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- EASTER EGG POPUP NOTIFICATION MODAL -->
+    <div
+      id="egg-modal"
+      class="fixed inset-0 z-[10000] bg-navy/95 backdrop-blur-md flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-1000"
+    >
+      <div class="text-center px-6 max-w-lg">
+        <i
+          class="fa-solid fa-wand-magic-sparkles text-gold text-6xl mb-6 floating text-glow"
+        ></i>
+        <h2 class="font-serif text-3xl md:text-5xl text-glow mb-4 text-white">
+          Unlocking Secrets...
+        </h2>
+        <p
+          class="font-sans text-base text-blush/90 tracking-widest leading-relaxed mb-4 italic"
+        >
+          "NOOR" keyboard lock decrypted. You activated the starry heart rain!
+        </p>
+        <p class="font-sans text-xs text-pearl/40 tracking-wider">
+          This website loves you, just as its creator does.
+        </p>
+      </div>
+    </div>
+
+    <!-- MAIN INTERACTIVE EMBEDDED ENGINE CODE -->
+    <script>
+      // -------------------------------------------------------------
+      // I. THE AUDIO SYNTHESIZER ENGINE (Pure Web Audio API)
+      // Highly robust procedural soundtrack logic.
+      // -------------------------------------------------------------
+      class AmbientSoundscape {
+        constructor() {
+          this.audioCtx = null;
+          this.isPlaying = false;
+          this.bassOsc = null;
+          this.chordOscs = [];
+          this.timerId = null;
+          this.masterVolume = null;
+
+          // Dreamy romantic chords progression in C Major / A Minor
+          // Cmaj9 - Am9 - Fmaj7 - G6
+          this.progression = [
+            [130.81, 164.81, 196.0, 246.94, 293.66], // Cmaj9 (C3, E3, G3, B3, D4)
+            [110.0, 146.83, 174.61, 220.0, 261.63], // Am9 (A2, D3, F3, A3, C4)
+            [87.31, 130.81, 174.61, 218.08, 261.63], // Fmaj7 (F2, C3, F3, A3, C4)
+            [98.0, 146.83, 196.0, 246.94, 293.66], // G6 (G2, D3, G3, B3, D4)
+          ];
+          this.chordIndex = 0;
+        }
+
+        init() {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.audioCtx = new AudioContext();
+
+          // Master Limiter and Gain Node
+          this.masterVolume = this.audioCtx.createGain();
+          this.masterVolume.gain.setValueAtTime(
+            0.0001,
+            this.audioCtx.currentTime,
+          );
+          this.masterVolume.connect(this.audioCtx.destination);
+
+          // Smooth envelope fade-in
+          this.masterVolume.gain.exponentialRampToValueAtTime(
+            0.12,
+            this.audioCtx.currentTime + 3,
+          );
+        }
+
+        start() {
+          if (this.isPlaying) return;
+          if (!this.audioCtx) this.init();
+
+          this.audioCtx.resume();
+          this.isPlaying = true;
+          this.playNextChord();
+          this.triggerTwinkleLoop();
+        }
+
+        stop() {
+          if (!this.isPlaying) return;
+
+          if (this.masterVolume) {
+            this.masterVolume.gain.exponentialRampToValueAtTime(
+              0.0001,
+              this.audioCtx.currentTime + 1.5,
+            );
+          }
+
+          setTimeout(() => {
+            if (this.timerId) clearTimeout(this.timerId);
+            this.chordOscs.forEach((o) => {
+              try {
+                o.stop();
+              } catch (e) {}
+            });
+            this.chordOscs = [];
+            this.isPlaying = false;
+          }, 1600);
+        }
+
+        playNextChord() {
+          if (!this.isPlaying) return;
+
+          const chord = this.progression[this.chordIndex];
+          const now = this.audioCtx.currentTime;
+
+          // Stop previous nodes smoothly
+          this.chordOscs.forEach((osc) => {
+            osc.gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 1.5);
+            setTimeout(() => {
+              try {
+                osc.stop();
+              } catch (e) {}
+            }, 2000);
+          });
+          this.chordOscs = [];
+
+          // Play the warm lush pads
+          chord.forEach((freq, i) => {
+            const osc = this.audioCtx.createOscillator();
+            const gainNode = this.audioCtx.createGain();
+
+            // Waveform combination for cozy vintage sound
+            osc.type = i === 0 ? "triangle" : "sine";
+            osc.frequency.setValueAtTime(freq, now);
+
+            // Add subtle detune for warmth
+            osc.detune.setValueAtTime((Math.random() - 0.5) * 8, now);
+
+            gainNode.gain.setValueAtTime(0.0001, now);
+            // Slow attack
+            gainNode.gain.linearRampToValueAtTime(0.035, now + 2);
+
+            osc.connect(gainNode);
+            gainNode.connect(this.masterVolume);
+
+            osc.gainNode = gainNode;
+            osc.start(now);
+            this.chordOscs.push(osc);
+          });
+
+          this.chordIndex = (this.chordIndex + 1) % this.progression.length;
+
+          // Loop pads dynamically every 8 seconds
+          this.timerId = setTimeout(() => this.playNextChord(), 8000);
+        }
+
+        triggerTwinkleLoop() {
+          if (!this.isPlaying) return;
+
+          const now = this.audioCtx.currentTime;
+          // High crystalline frequencies pentatonic scale C6 to C7
+          const pentatonic = [
+            1046.5, 1174.66, 1318.51, 1567.98, 1760.0, 2093.0,
+          ];
+          const randomFreq =
+            pentatonic[Math.floor(Math.random() * pentatonic.length)];
+
+          const osc = this.audioCtx.createOscillator();
+          const gainNode = this.audioCtx.createGain();
+
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(randomFreq, now);
+
+          gainNode.gain.setValueAtTime(0.0001, now);
+          // Glassy attack
+          gainNode.gain.linearRampToValueAtTime(0.015, now + 0.05);
+          // Long echo release
+          gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 4);
+
+          osc.connect(gainNode);
+          gainNode.connect(this.masterVolume);
+
+          osc.start(now);
+          osc.stop(now + 4.1);
+
+          // Twinkle randomly every 1.5 to 4 seconds
+          setTimeout(
+            () => this.triggerTwinkleLoop(),
+            1500 + Math.random() * 2500,
+          );
+        }
+      }
+
+      const soundscape = new AmbientSoundscape();
+
+      // Music toggle visual controller
+      const musicBtn = document.getElementById("music-toggle");
+      const musicIcon = document.getElementById("music-icon");
+      let musicStarted = false;
+
+      musicBtn.addEventListener("click", () => {
+        if (!musicStarted) {
+          soundscape.start();
+          musicIcon.className = "fa-solid fa-volume-high text-blush text-glow";
+          musicStarted = true;
+        } else {
+          soundscape.stop();
+          musicIcon.className = "fa-solid fa-volume-xmark";
+          musicStarted = false;
+        }
+      });
+
+      // -------------------------------------------------------------
+      // II. THREE.JS STARFIELD & HERO 3D MODEL
+      // -------------------------------------------------------------
+      let heroScene, heroCamera, heroRenderer, heartMesh, starParticles;
+      const heroContainer = document.getElementById("hero-canvas-container");
+
+      function initHero3D() {
+        // Setup scene
+        heroScene = new THREE.Scene();
+        heroScene.fog = new THREE.FogExp2(0x1a1a2e, 0.008);
+
+        // Camera
+        heroCamera = new THREE.PerspectiveCamera(
+          60,
+          heroContainer.clientWidth / heroContainer.clientHeight,
+          0.1,
+          1000,
+        );
+        heroCamera.position.z = 15;
+
+        // Renderer
+        heroRenderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+        });
+        heroRenderer.setSize(
+          heroContainer.clientWidth,
+          heroContainer.clientHeight,
+        );
+        heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        heroContainer.appendChild(heroRenderer.domElement);
+
+        // Ambient & Point Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        heroScene.add(ambientLight);
+
+        const crystalLight = new THREE.PointLight(0xffd1dc, 2, 50);
+        crystalLight.position.set(5, 5, 5);
+        heroScene.add(crystalLight);
+
+        const goldGlowLight = new THREE.PointLight(0xffd700, 1.5, 30);
+        goldGlowLight.position.set(-5, -5, 2);
+        heroScene.add(goldGlowLight);
+
+        // Generative Parametric Heart Shape Geometry
+        const heartShape = new THREE.Shape();
+        const x = 0,
+          y = 0;
+        heartShape.moveTo(x + 2.5, y + 2.5);
+        heartShape.bezierCurveTo(x + 2.5, y + 2.5, x + 2, y, x, y);
+        heartShape.bezierCurveTo(x - 3, y, x - 3, y + 3.5, x - 3, y + 3.5);
+        heartShape.bezierCurveTo(
+          x - 3,
+          y + 5.5,
+          x - 1.5,
+          y + 7.7,
+          x + 2.5,
+          y + 9.5,
+        );
+        heartShape.bezierCurveTo(
+          x + 6,
+          y + 7.7,
+          x + 8,
+          y + 5.5,
+          x + 8,
+          y + 3.5,
+        );
+        heartShape.bezierCurveTo(x + 8, y + 3.5, x + 8, y, x + 5, y);
+        heartShape.bezierCurveTo(
+          x + 3.5,
+          y,
+          x + 2.5,
+          y + 2.5,
+          x + 2.5,
+          y + 2.5,
+        );
+
+        const extrudeSettings = {
+          depth: 1.5,
+          bevelEnabled: true,
+          bevelSegments: 8,
+          steps: 2,
+          bevelSize: 0.6,
+          bevelThickness: 0.6,
+        };
+
+        const geometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+        geometry.center(); // Center mathematically inside scene coordinates
+
+        // Dreamy translucent crystal glass material
+        const material = new THREE.MeshPhysicalMaterial({
+          color: 0xffd1dc,
+          roughness: 0.1,
+          metalness: 0.1,
+          transmission: 0.9, // Liquid glass factor
+          ior: 1.5, // Reflection factor
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          transparent: true,
+          opacity: 0.85,
+        });
+
+        heartMesh = new THREE.Mesh(geometry, material);
+        heartMesh.scale.set(0.6, 0.6, 0.6);
+        heartMesh.rotation.z = Math.PI; // Correct default heart vertical alignment
+        heroScene.add(heartMesh);
+
+        // Floating Background 3D Twinkling Star Particles
+        const starsCount = window.innerWidth < 768 ? 800 : 2000;
+        const starsGeometry = new THREE.BufferGeometry();
+        const starPositions = new Float32Array(starsCount * 3);
+
+        for (let i = 0; i < starsCount * 3; i += 3) {
+          starPositions[i] = (Math.random() - 0.5) * 60; // X
+          starPositions[i + 1] = (Math.random() - 0.5) * 60; // Y
+          starPositions[i + 2] = (Math.random() - 0.5) * 50; // Z
+        }
+
+        starsGeometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(starPositions, 3),
+        );
+
+        // Custom soft star texture shader
+        const pCanvas = document.createElement("canvas");
+        pCanvas.width = 16;
+        pCanvas.height = 16;
+        const pCtx = pCanvas.getContext("2d");
+        const pGlow = pCtx.createRadialGradient(8, 8, 0, 8, 8, 8);
+        pGlow.addColorStop(0, "rgba(255,255,255,1)");
+        pGlow.addColorStop(1, "rgba(255,255,255,0)");
+        pCtx.fillStyle = pGlow;
+        pCtx.fillRect(0, 0, 16, 16);
+        const pTexture = new THREE.CanvasTexture(pCanvas);
+
+        const starMaterial = new THREE.PointsMaterial({
+          color: 0xffffff,
+          size: 0.28,
+          map: pTexture,
+          transparent: true,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+        });
+
+        starParticles = new THREE.Points(starsGeometry, starMaterial);
+        heroScene.add(starParticles);
+
+        // Mouse parallax tracker
+        window.addEventListener("mousemove", onHeroMouseMove);
+        window.addEventListener("resize", onHeroWindowResize);
+      }
+
+      let mouseX = 0,
+        mouseY = 0;
+      function onHeroMouseMove(e) {
+        mouseX = (e.clientX - window.innerWidth / 2) / 100;
+        mouseY = (e.clientY - window.innerHeight / 2) / 100;
+      }
+
+      function onHeroWindowResize() {
+        heroCamera.aspect =
+          heroContainer.clientWidth / heroContainer.clientHeight;
+        heroCamera.updateProjectionMatrix();
+        heroRenderer.setSize(
+          heroContainer.clientWidth,
+          heroContainer.clientHeight,
+        );
+      }
+
+      // Hero Frame Tick loop
+      const clock = new THREE.Clock();
+      function animateHero() {
+        requestAnimationFrame(animateHero);
+
+        const time = clock.getElapsedTime();
+
+        // Heart Mesh Slow Cinematic Rotations
+        if (heartMesh) {
+          heartMesh.rotation.y = time * 0.45;
+          heartMesh.rotation.x = Math.PI + Math.sin(time * 0.3) * 0.15; // smooth wave sway
+
+          // Apply soft parallax
+          heartMesh.position.x += (mouseX - heartMesh.position.x) * 0.05;
+          heartMesh.position.y += (-mouseY - heartMesh.position.y) * 0.05;
+        }
+
+        // Star Particle background drift
+        if (starParticles) {
+          starParticles.rotation.y = time * 0.02;
+          starParticles.rotation.x = time * 0.01;
+        }
+
+        heroRenderer.render(heroScene, heroCamera);
+      }
+
+      // -------------------------------------------------------------
+      // III. GALLERY CAROUSEL DATA & THREE.JS LOGIC
+      // -------------------------------------------------------------
+      const memoryData = [
+        {
+          id: 1,
+          img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800",
+          title: "First Impression",
+          desc: "When our orbits first crossed paths",
+        },
+        {
+          id: 2,
+          img: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=800",
+          title: "Unspoken Resonance",
+          desc: "Unseen strings tied our hearts",
+        },
+        {
+          id: 3,
+          img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800",
+          title: "That Beautiful Day",
+          desc: "When your laughter cleared the storm",
+        },
+        {
+          id: 4,
+          img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800",
+          title: "The Cosmic Promise",
+          desc: "A pledge made under star witnesses",
+        },
+        {
+          id: 5,
+          img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800",
+          title: "Gilded Memories",
+          desc: "Precious seconds stored inside forever",
+        },
+        {
+          id: 6,
+          img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800",
+          title: "Perfect Harmony",
+          desc: "Two distinct paths, one beautiful sky",
+        },
+      ];
+
+      let galIndex = 0;
+      let galScene, galCamera, galRenderer, galMeshGroup;
+      const galContainer = document.getElementById("gallery-webgl-wrapper");
+
+      function initGallery3D() {
+        galScene = new THREE.Scene();
+        galCamera = new THREE.PerspectiveCamera(
+          50,
+          galContainer.clientWidth / galContainer.clientHeight,
+          0.1,
+          1000,
+        );
+        galCamera.position.z = 10;
+
+        galRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        galRenderer.setSize(
+          galContainer.clientWidth,
+          galContainer.clientHeight,
+        );
+        galRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        galContainer.appendChild(galRenderer.domElement);
+
+        galMeshGroup = new THREE.Group();
+        galScene.add(galMeshGroup);
+
+        // Create memory planes rotating in a circle
+        const radius = 4.2;
+        const textureLoader = new THREE.TextureLoader();
+
+        // Symmetrical Ambient light for photo display
+        const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+        galScene.add(ambient);
+
+        const spotlight = new THREE.PointLight(0xffd1dc, 1.5, 30);
+        spotlight.position.set(0, 0, 6);
+        galScene.add(spotlight);
+
+        memoryData.forEach((data, index) => {
+          const angle = (index / memoryData.length) * Math.PI * 2;
+
+          // Photo texture loading with cross-origin bypass standard
+          const texture = textureLoader.load(data.img);
+
+          const planeGeom = new THREE.PlaneGeometry(2.4, 3.1);
+          const planeMat = new THREE.MeshBasicMaterial({
+            map: texture,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.9,
+          });
+
+          const mesh = new THREE.Mesh(planeGeom, planeMat);
+
+          // Geometric positioning in circle
+          mesh.position.x = Math.sin(angle) * radius;
+          mesh.position.z = Math.cos(angle) * radius;
+          mesh.rotation.y = angle; // Face outward from center rotation
+
+          mesh.userData = { id: index };
+          galMeshGroup.add(mesh);
+        });
+
+        window.addEventListener("resize", onGalResize);
+        animateGallery();
+      }
+
+      function rotateGalleryToActive() {
+        const targetRotation = -(galIndex / memoryData.length) * Math.PI * 2;
+
+        gsap.to(galMeshGroup.rotation, {
+          y: targetRotation,
+          duration: 1.2,
+          ease: "power2.out",
+          onComplete: () => {
+            // Update descriptions safely
+            const activeData = memoryData[galIndex];
+            const tEl = document.getElementById("gal-title");
+            const dEl = document.getElementById("gal-desc");
+
+            gsap.to([tEl, dEl], {
+              opacity: 0,
+              duration: 0.3,
+              onComplete: () => {
+                tEl.innerText = activeData.title;
+                dEl.innerText = activeData.desc;
+                gsap.to([tEl, dEl], { opacity: 1, duration: 0.3 });
+              },
+            });
+          },
+        });
+      }
+
+      // Slide buttons listeners
+      document.getElementById("gal-prev").addEventListener("click", () => {
+        galIndex = (galIndex - 1 + memoryData.length) % memoryData.length;
+        rotateGalleryToActive();
+      });
+
+      document.getElementById("gal-next").addEventListener("click", () => {
+        galIndex = (galIndex + 1) % memoryData.length;
+        rotateGalleryToActive();
+      });
+
+      function onGalResize() {
+        galCamera.aspect = galContainer.clientWidth / galContainer.clientHeight;
+        galCamera.updateProjectionMatrix();
+        galRenderer.setSize(
+          galContainer.clientWidth,
+          galContainer.clientHeight,
+        );
+      }
+
+      function animateGallery() {
+        requestAnimationFrame(animateGallery);
+        // Floating ambient oscillation
+        galMeshGroup.position.y = Math.sin(Date.now() * 0.0015) * 0.15;
+        galRenderer.render(galScene, galCamera);
+      }
+
+      // -------------------------------------------------------------
+      // IV. WISHING STAR FIELD (Interactive Scene)
+      // -------------------------------------------------------------
+      let wishScene, wishCamera, wishRenderer, wishStarsGroup;
+      const wishContainer = document.getElementById("wish-canvas-container");
+
+      function initWishingScene() {
+        wishScene = new THREE.Scene();
+        wishCamera = new THREE.PerspectiveCamera(
+          60,
+          wishContainer.clientWidth / wishContainer.clientHeight,
+          0.1,
+          1000,
+        );
+        wishCamera.position.z = 20;
+
+        wishRenderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+        });
+        wishRenderer.setSize(
+          wishContainer.clientWidth,
+          wishContainer.clientHeight,
+        );
+        wishRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        wishContainer.appendChild(wishRenderer.domElement);
+
+        wishStarsGroup = new THREE.Group();
+        wishScene.add(wishStarsGroup);
+
+        // Standard Star Array creation
+        const starCount = 300;
+        const geom = new THREE.SphereGeometry(0.12, 8, 8);
+        const mat = new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0.8,
+        });
+
+        for (let i = 0; i < starCount; i++) {
+          const mesh = new THREE.Mesh(geom, mat);
+          mesh.position.set(
+            (Math.random() - 0.5) * 60,
+            (Math.random() - 0.5) * 40,
+            (Math.random() - 0.5) * 40,
+          );
+          // Custom random twinkling speed attribute
+          mesh.userData = { twinkleSpeed: 0.02 + Math.random() * 0.08 };
+          wishStarsGroup.add(mesh);
+        }
+
+        window.addEventListener("resize", onWishResize);
+        animateWishScene();
+
+        // Click listener specifically on the wish section space to spawn massive particles
+        wishContainer.addEventListener("click", triggerInteractiveStarLaunch);
+      }
+
+      function onWishResize() {
+        wishCamera.aspect =
+          wishContainer.clientWidth / wishContainer.clientHeight;
+        wishCamera.updateProjectionMatrix();
+        wishRenderer.setSize(
+          wishContainer.clientWidth,
+          wishContainer.clientHeight,
+        );
+      }
+
+      function triggerInteractiveStarLaunch(event) {
+        // Standard Audio synthesis chime cue
+        if (soundscape.isPlaying && soundscape.audioCtx) {
+          const now = soundscape.audioCtx.currentTime;
+          const osc = soundscape.audioCtx.createOscillator();
+          const gain = soundscape.audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(880 + Math.random() * 440, now); // Sweet glassy scale
+          gain.gain.setValueAtTime(0.015, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+          osc.connect(gain);
+          gain.connect(soundscape.masterVolume);
+          osc.start(now);
+          osc.stop(now + 1.3);
+        }
+
+        // confetti trigger standard
+        confetti({
+          particleCount: 20,
+          spread: 40,
+          origin: {
+            x: event.clientX / window.innerWidth,
+            y: event.clientY / window.innerHeight,
+          },
+          colors: ["#FFD1DC", "#FFD700", "#C8A2C8"],
+        });
+      }
+
+      function animateWishScene() {
+        requestAnimationFrame(animateWishScene);
+
+        const time = Date.now() * 0.001;
+        wishStarsGroup.children.forEach((star) => {
+          // Pulsate starry glow opacities randomly
+          star.material.opacity =
+            0.3 +
+            Math.abs(Math.sin(time * star.userData.twinkleSpeed * 10)) * 0.7;
+        });
+
+        wishRenderer.render(wishScene, wishCamera);
+      }
+
+      // -------------------------------------------------------------
+      // V. GLOWING MOON THREE.JS SECTION (Footer)
+      // -------------------------------------------------------------
+      let moonScene, moonCamera, moonRenderer, moonMesh;
+      const moonContainer = document.getElementById("footer-moon-canvas");
+
+      function initMoon3D() {
+        moonScene = new THREE.Scene();
+        moonCamera = new THREE.PerspectiveCamera(
+          45,
+          moonContainer.clientWidth / moonContainer.clientHeight,
+          0.1,
+          100,
+        );
+        moonCamera.position.z = 8;
+
+        moonRenderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+        });
+        moonRenderer.setSize(
+          moonContainer.clientWidth,
+          moonContainer.clientHeight,
+        );
+        moonContainer.appendChild(moonRenderer.domElement);
+
+        // Sphere geometry
+        const geom = new THREE.SphereGeometry(2.5, 32, 32);
+
+        // Highly elegant procedurally simulated glowing moon surface texture using high level canvas
+        const canvas = document.createElement("canvas");
+        canvas.width = 512;
+        canvas.height = 256;
+        const ctx = canvas.getContext("2d");
+
+        // Base fill
+        ctx.fillStyle = "#f4f0db";
+        ctx.fillRect(0, 0, 512, 256);
+
+        // Generate simulated moon craters
+        for (let i = 0; i < 35; i++) {
+          const x = Math.random() * 512;
+          const y = Math.random() * 256;
+          const r = 10 + Math.random() * 30;
+          const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+          grad.addColorStop(0, "rgba(218,206,170,0.5)");
+          grad.addColorStop(1, "rgba(218,206,170,0)");
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        const texture = new THREE.CanvasTexture(canvas);
+        const mat = new THREE.MeshBasicMaterial({
+          map: texture,
+          transparent: true,
+          opacity: 0.95,
+        });
+
+        moonMesh = new THREE.Mesh(geom, mat);
+        moonScene.add(moonMesh);
+
+        animateMoon();
+      }
+
+      function animateMoon() {
+        requestAnimationFrame(animateMoon);
+        if (moonMesh) {
+          // Moon rotation speed matching orbital reality
+          moonMesh.rotation.y = Date.now() * 0.00012;
+        }
+        moonRenderer.render(moonScene, moonCamera);
+      }
+
+      // -------------------------------------------------------------
+      // VI. GSAP TIMELINES, SCROLLTRIGGER, & SURPRISE EFFECTS
+      // -------------------------------------------------------------
+      function initGSAPScrollAnimations() {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Progress bar and section transition states
+        const sections = document.querySelectorAll("section");
+        const navDots = document.querySelectorAll(".dot-nav");
+
+        const observerOptions = {
+          threshold: 0.4,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const targetId = entry.target.id;
+              navDots.forEach((dot) => {
+                if (dot.getAttribute("data-target") === targetId) {
+                  dot.classList.add("dot-nav-active");
+                } else {
+                  dot.classList.remove("dot-nav-active");
+                }
+              });
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach((sec) => observer.observe((entry = sec)));
+
+        // Section 2 Reveal Animation
+        gsap.from("#about h2, #about .w-20, #about p", {
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top 70%",
+            toggleActions: "play none none none",
+          },
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          stagger: 0.15,
+          ease: "power3.out",
+        });
+
+        // S2 Polaroid frame entrance
+        gsap.from("#about .polaroid-wrapper", {
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top 70%",
+          },
+          opacity: 0,
+          scale: 0.8,
+          rotation: -10,
+          duration: 1.4,
+          ease: "elastic.out(1, 0.75)",
+        });
+
+        // Section 4 Card entrance
+        gsap.from(".special-card", {
+          scrollTrigger: {
+            trigger: "#special",
+            start: "top 75%",
+          },
+          opacity: 0,
+          y: 60,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power4.out",
+        });
+
+        // Section 5 Letter frame reveal
+        gsap.from("#envelope-container", {
+          scrollTrigger: {
+            trigger: "#letter",
+            start: "top 75%",
+          },
+          opacity: 0,
+          scale: 0.9,
+          duration: 1.2,
+          ease: "power2.out",
+        });
+
+        // Footer Confetti Blast surprise check
+        ScrollTrigger.create({
+          trigger: "footer",
+          start: "top 95%",
+          onEnter: () => {
+            confetti({
+              particleCount: 150,
+              spread: 80,
+              origin: { y: 0.6 },
+              colors: ["#FFD1DC", "#FFD700", "#C8A2C8", "#FDFDFD"],
+            });
+          },
+        });
+      }
+
+      // -------------------------------------------------------------
+      // VII. LETTER ENVELOPE CONTROLLER
+      // -------------------------------------------------------------
+      const openBtn = document.getElementById("open-envelope-btn");
+      const closeBtn = document.getElementById("close-envelope-btn");
+      const sealedDiv = document.getElementById("envelope-sealed");
+      const sheetDiv = document.getElementById("envelope-sheet");
+
+      openBtn.addEventListener("click", () => {
+        // Trigger beautiful synthesized scale cue
+        if (soundscape.isPlaying && soundscape.audioCtx) {
+          const now = soundscape.audioCtx.currentTime;
+          const notes = [261.63, 329.63, 392.0, 523.25]; // Warm Arpeggio (C, E, G, C)
+          notes.forEach((f, i) => {
+            const osc = soundscape.audioCtx.createOscillator();
+            const g = soundscape.audioCtx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(f, now + i * 0.12);
+            g.gain.setValueAtTime(0.02, now + i * 0.12);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.12 + 1.5);
+            osc.connect(g);
+            g.connect(soundscape.masterVolume);
+            osc.start(now + i * 0.12);
+            osc.stop(now + i * 0.12 + 1.6);
+          });
+        }
+
+        gsap.to(sealedDiv, {
+          opacity: 0,
+          scale: 0.95,
+          duration: 0.5,
+          onComplete: () => {
+            sealedDiv.style.pointerEvents = "none";
+            gsap.to(sheetDiv, {
+              y: "0%",
+              opacity: 1,
+              scale: 1,
+              duration: 0.8,
+              ease: "back.out(1.1)",
+            });
+          },
+        });
+      });
+
+      closeBtn.addEventListener("click", () => {
+        gsap.to(sheetDiv, {
+          y: "120%",
+          opacity: 0,
+          scale: 0.95,
+          duration: 0.7,
+          ease: "power3.in",
+          onComplete: () => {
+            sealedDiv.style.pointerEvents = "auto";
+            gsap.to(sealedDiv, { opacity: 1, scale: 1, duration: 0.5 });
+          },
+        });
+      });
+
+      // -------------------------------------------------------------
+      // VIII. INTERACTIVE STAR WISH SYSTEM
+      // -------------------------------------------------------------
+      const wishInput = document.getElementById("wish-input");
+      const launchBtn = document.getElementById("launch-star-btn");
+      const wishLog = document.getElementById("wish-log");
+
+      launchBtn.addEventListener("click", () => {
+        const val = wishInput.value.trim();
+        if (!val) {
+          wishLog.innerText = "Please write a real wish first... ✨";
+          setTimeout(() => {
+            wishLog.innerText = "";
+          }, 2500);
+          return;
+        }
+
+        // Create temporary flying HTML element representing star projection wish
+        const starEl = document.createElement("div");
+        starEl.innerHTML = `<i class="fa-solid fa-star text-gold text-lg"></i> <span class="text-xs ml-2 font-serif text-white tracking-widest">${val}</span>`;
+        starEl.className =
+          "fixed z-[9999] pointer-events-none p-3 rounded-full glass-panel flex items-center shadow-xl transition-all duration-1000 transform scale-0";
+
+        // Position directly above user interaction center point
+        const rect = launchBtn.getBoundingClientRect();
+        starEl.style.left = rect.left + rect.width / 2 - 100 + "px";
+        starEl.style.top = rect.top + "px";
+        document.body.appendChild(starEl);
+
+        // GSAP flight trajectory animations into stellar space
+        gsap.to(starEl, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.4,
+        });
+
+        gsap.to(starEl, {
+          y: -300,
+          x: (Math.random() - 0.5) * 200,
+          scale: 0.4,
+          opacity: 0,
+          duration: 2.2,
+          delay: 0.4,
+          ease: "power2.inOut",
+          onComplete: () => {
+            document.body.removeChild(starEl);
+          },
+        });
+
+        // Trigger starry blast
+        confetti({
+          particleCount: 30,
+          spread: 60,
+          origin: { y: 0.75 },
+          colors: ["#FFD1DC", "#FFD700"],
+        });
+
+        wishLog.innerText = "STAR LAUNCHED CARRYING YOUR WISH! 🚀";
+        wishInput.value = "";
+        setTimeout(() => {
+          wishLog.innerText = "";
+        }, 4000);
+      });
+
+      // -------------------------------------------------------------
+      // IX. UNLOCK EASTER EGG (N-O-O-R Keys)
+      // -------------------------------------------------------------
+      const keysPressed = [];
+      const targetString = "noor";
+
+      window.addEventListener("keydown", (e) => {
+        keysPressed.push(e.key.toLowerCase());
+        // Keep buffer limited to matching size length
+        if (keysPressed.length > targetString.length) {
+          keysPressed.shift();
+        }
+
+        if (keysPressed.join("") === targetString) {
+          const modal = document.getElementById("egg-modal");
+          gsap.to(modal, { opacity: 1, pointerEvents: "auto", duration: 0.8 });
+
+          // Continuous beautiful golden fireworks confetti
+          const duration = 4.5 * 1000;
+          const end = Date.now() + duration;
+
+          (function frame() {
+            confetti({
+              particleCount: 5,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0 },
+              colors: ["#FFD1DC", "#FFD700", "#C8A2C8"],
+            });
+            confetti({
+              particleCount: 5,
+              angle: 120,
+              spread: 55,
+              origin: { x: 1 },
+              colors: ["#FFD1DC", "#FFD700", "#C8A2C8"],
+            });
+
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            } else {
+              // Smoothly close after completion
+              setTimeout(() => {
+                gsap.to(modal, {
+                  opacity: 0,
+                  pointerEvents: "none",
+                  duration: 1,
+                });
+              }, 1000);
+            }
+          })();
+        }
+      });
+
+      // -------------------------------------------------------------
+      // X. INITIALIZATION LIFECYCLE
+      // -------------------------------------------------------------
+      window.addEventListener("DOMContentLoaded", () => {
+        // Fake progressive loader timer to load and display WebGL instances cleanly
+        const loadBar = document.getElementById("load-bar");
+        const loadText = document.getElementById("load-text");
+        const steps = [
+          "Synthesizing Dreams",
+          "Calibrating Stars",
+          "Aligning Constellations",
+          "Opening Portals",
+        ];
+        let progress = 0;
+
+        const interval = setInterval(() => {
+          progress += Math.random() * 15;
+          if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+
+            // Kill loader layer with GSAP elegant fade out
+            const loader = document.getElementById("loader");
+            gsap.to(loader, {
+              opacity: 0,
+              duration: 1.2,
+              ease: "power2.out",
+              onComplete: () => {
+                loader.style.display = "none";
+              },
+            });
+          }
+          loadBar.style.width = progress + "%";
+          loadText.innerText =
+            steps[Math.floor((progress / 100) * (steps.length - 1))];
+        }, 250);
+
+        // Execute WebGL engines creation
+        initHero3D();
+        animateHero();
+
+        initGallery3D();
+        initWishingScene();
+        initMoon3D();
+
+        initGSAPScrollAnimations();
+      });
+    </script>
+  </body>
+</html>

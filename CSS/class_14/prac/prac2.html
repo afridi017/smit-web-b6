@@ -1,0 +1,1589 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Transition Pro Showcase</title>
+    <style>
+      /* ==========================================
+         RESET
+         Clean base is liye rakha gaya hai taake
+         har browser me layout consistent aaye
+      ========================================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #050505;
+        --card: #111111;
+        --card-2: #161616;
+        --border: #232323;
+        --gold: #d4af37;
+        --gold-soft: rgba(212, 175, 55, 0.18);
+        --white: #ffffff;
+        --muted: #a1a1aa;
+        --muted-2: #71717a;
+        --success: #22c55e;
+        --danger: #ef4444;
+        --blue: #3b82f6;
+        --purple: #8b5cf6;
+        --pink: #ec4899;
+        --cyan: #06b6d4;
+      }
+
+      body {
+        min-height: 100vh;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(212, 175, 55, 0.08),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(59, 130, 246, 0.08),
+            transparent 30%
+          ),
+          linear-gradient(135deg, #050505 0%, #0a0a0a 35%, #090909 100%);
+        color: var(--white);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* ==========================================
+         Decorative background
+         Ye subtle feel deta hai taake page dead na lage
+      ========================================== */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px
+          );
+        background-size: 40px 40px;
+        pointer-events: none;
+        z-index: -2;
+      }
+
+      .glow-orb {
+        position: fixed;
+        border-radius: 999px;
+        filter: blur(80px);
+        opacity: 0.25;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .orb-1 {
+        width: 220px;
+        height: 220px;
+        background: var(--gold);
+        top: 60px;
+        left: 60px;
+      }
+
+      .orb-2 {
+        width: 260px;
+        height: 260px;
+        background: var(--purple);
+        right: 40px;
+        top: 180px;
+      }
+
+      .orb-3 {
+        width: 220px;
+        height: 220px;
+        background: var(--cyan);
+        left: 40%;
+        bottom: 40px;
+      }
+
+      .page {
+        width: min(1200px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 48px 0 80px;
+      }
+
+      /* ==========================================
+         HERO
+         Strong first impression dene ke liye
+      ========================================== */
+      .hero {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        background: rgba(212, 175, 55, 0.08);
+        color: var(--gold);
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        transition: all 0.35s ease;
+      }
+
+      .badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(212, 175, 55, 0.12);
+        border-color: rgba(212, 175, 55, 0.45);
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 6vw, 64px);
+        font-weight: 900;
+        line-height: 1.08;
+        letter-spacing: -1px;
+        margin-bottom: 14px;
+      }
+
+      .hero h1 span {
+        color: var(--gold);
+      }
+
+      .hero p {
+        max-width: 760px;
+        margin: 0 auto;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.8;
+      }
+
+      /* ==========================================
+         Info card
+         Original mistake explain karne ke liye
+      ========================================== */
+      .tip-card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        margin: 36px 0 50px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      }
+
+      .tip-card h2 {
+        font-size: 20px;
+        margin-bottom: 14px;
+      }
+
+      .tip-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .mini-box {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 18px;
+        transition: all 0.35s ease;
+      }
+
+      .mini-box:hover {
+        border-color: rgba(212, 175, 55, 0.35);
+        transform: translateY(-4px);
+      }
+
+      .mini-box h3 {
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+
+      .mini-box p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 10px;
+      }
+
+      pre {
+        background: #0a0a0a;
+        border: 1px solid #1c1c1c;
+        border-radius: 14px;
+        padding: 14px;
+        overflow-x: auto;
+        color: #e4e4e7;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      /* ==========================================
+         Section titles
+         Content ko visually break karne ke liye
+      ========================================== */
+      .section {
+        margin-bottom: 56px;
+      }
+
+      .section-head {
+        margin-bottom: 24px;
+      }
+
+      .section-head p.top {
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(24px, 4vw, 36px);
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+
+      .section-head p.sub {
+        color: var(--muted);
+        max-width: 680px;
+        line-height: 1.8;
+        font-size: 15px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(24, 24, 27, 0.98),
+          rgba(15, 15, 18, 0.98)
+        );
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        min-height: 280px;
+        transition:
+          transform 0.45s ease,
+          border-color 0.45s ease,
+          box-shadow 0.45s ease,
+          background 0.45s ease;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent 0%,
+          rgba(212, 175, 55, 0.06) 50%,
+          transparent 100%
+        );
+        transform: translateX(-120%);
+        transition: transform 0.75s ease;
+      }
+
+      .card:hover::before {
+        transform: translateX(120%);
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(212, 175, 55, 0.3);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      }
+
+      .card-label {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        color: var(--gold);
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        background: rgba(212, 175, 55, 0.08);
+        margin-bottom: 18px;
+      }
+
+      .demo {
+        height: 130px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        position: relative;
+      }
+
+      .card h3 {
+        font-size: 19px;
+        margin-bottom: 8px;
+      }
+
+      .card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      /* ==========================================
+         DEMO 1
+         Why: multiple transform combine karna seekhne ke liye
+      ========================================== */
+      .move-box {
+        width: 84px;
+        height: 84px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, var(--gold), #f4db84);
+        box-shadow: 0 18px 35px rgba(212, 175, 55, 0.22);
+        transition:
+          transform 0.8s ease,
+          border-radius 0.8s ease,
+          box-shadow 0.8s ease;
+      }
+
+      .card:hover .move-box {
+        transform: translateX(60px) scale(1.2) rotate(18deg);
+        border-radius: 999px;
+        box-shadow: 0 26px 48px rgba(212, 175, 55, 0.35);
+      }
+
+      /* ==========================================
+         DEMO 2
+         Why: hover pe visual energy barh jaye
+      ========================================== */
+      .tilt-box {
+        width: 110px;
+        height: 110px;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #111827, #1e293b);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: grid;
+        place-items: center;
+        color: var(--white);
+        font-weight: 700;
+        transition:
+          transform 0.55s ease,
+          box-shadow 0.55s ease,
+          border-color 0.55s ease;
+      }
+
+      .card:hover .tilt-box {
+        transform: rotate(14deg) scale(1.08) skew(-4deg);
+        border-color: rgba(59, 130, 246, 0.35);
+        box-shadow: 0 24px 45px rgba(59, 130, 246, 0.16);
+      }
+
+      /* ==========================================
+         DEMO 3
+         Why: CTA ko premium feel dene ke liye
+      ========================================== */
+      .gold-btn {
+        position: relative;
+        padding: 16px 34px;
+        border: none;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--gold), #f4db84);
+        color: #000;
+        font-weight: 900;
+        letter-spacing: 1px;
+        overflow: hidden;
+        cursor: pointer;
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease,
+          filter 0.35s ease;
+      }
+
+      .gold-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -120%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.55),
+          transparent
+        );
+        transition: left 0.65s ease;
+      }
+
+      .gold-btn:hover {
+        transform: translateY(-4px) scale(1.04);
+        box-shadow: 0 18px 45px rgba(212, 175, 55, 0.28);
+        filter: saturate(1.1);
+      }
+
+      .gold-btn:hover::before {
+        left: 120%;
+      }
+
+      /* ==========================================
+         DEMO 4
+         Why: button hover ka modern border-fill pattern dikhana
+      ========================================== */
+      .outline-btn {
+        position: relative;
+        padding: 15px 30px;
+        border-radius: 16px;
+        border: 1px solid rgba(212, 175, 55, 0.35);
+        color: var(--gold);
+        font-weight: 800;
+        background: transparent;
+        overflow: hidden;
+        cursor: pointer;
+        transition:
+          color 0.45s ease,
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+        z-index: 1;
+      }
+
+      .outline-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--gold), #f4db84);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.45s ease;
+        z-index: -1;
+      }
+
+      .outline-btn:hover {
+        color: #000;
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(212, 175, 55, 0.18);
+      }
+
+      .outline-btn:hover::after {
+        transform: scaleX(1);
+      }
+
+      /* ==========================================
+         DEMO 5
+         Why: image hover cards bohat common hote hain UI me
+      ========================================== */
+      .image-card {
+        width: 210px;
+        height: 130px;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+      }
+
+      .image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition:
+          transform 0.75s ease,
+          filter 0.75s ease;
+      }
+
+      .image-card::after {
+        content: "Premium View";
+        position: absolute;
+        left: 14px;
+        bottom: 14px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.45s ease,
+          opacity 0.45s ease;
+      }
+
+      .card:hover .image-card img {
+        transform: scale(1.14) rotate(1deg);
+        filter: brightness(0.85);
+      }
+
+      .card:hover .image-card::after {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* ==========================================
+         DEMO 6
+         Why: overlay reveal se product/info better lagti hai
+      ========================================== */
+      .overlay-box {
+        width: 200px;
+        height: 120px;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #111827, #1f2937, #0f172a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .overlay-box .base-text {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        letter-spacing: 1px;
+      }
+
+      .overlay-box .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(212, 175, 55, 0.96),
+          rgba(244, 219, 132, 0.95)
+        );
+        color: #000;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        transform: translateY(100%);
+        transition: transform 0.55s ease;
+      }
+
+      .card:hover .overlay-box .overlay {
+        transform: translateY(0);
+      }
+
+      /* ==========================================
+         DEMO 7
+         Why: links me subtle sophistication achhi lagti hai
+      ========================================== */
+      .link-demo {
+        display: inline-block;
+        position: relative;
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--white);
+        text-decoration: none;
+        transition: color 0.35s ease;
+      }
+
+      .link-demo::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--gold), #f4db84);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s ease;
+        border-radius: 999px;
+      }
+
+      .card:hover .link-demo {
+        color: var(--gold);
+      }
+
+      .card:hover .link-demo::after {
+        transform: scaleX(1);
+      }
+
+      /* ==========================================
+         DEMO 8
+         Why: icon hover interactions UI ko zinda banati hain
+      ========================================== */
+      .icon-row {
+        display: flex;
+        gap: 14px;
+      }
+
+      .icon-pill {
+        width: 52px;
+        height: 52px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        color: var(--white);
+        font-size: 20px;
+        background: #101010;
+        border: 1px solid #222;
+        transition:
+          transform 0.35s ease,
+          background 0.35s ease,
+          border-color 0.35s ease,
+          color 0.35s ease;
+      }
+
+      .card:hover .icon-pill:nth-child(1) {
+        transform: translateY(-10px);
+        background: rgba(59, 130, 246, 0.16);
+        border-color: rgba(59, 130, 246, 0.35);
+        color: #60a5fa;
+      }
+
+      .card:hover .icon-pill:nth-child(2) {
+        transform: translateY(-10px);
+        background: rgba(139, 92, 246, 0.16);
+        border-color: rgba(139, 92, 246, 0.35);
+        color: #a78bfa;
+        transition-delay: 0.05s;
+      }
+
+      .card:hover .icon-pill:nth-child(3) {
+        transform: translateY(-10px);
+        background: rgba(236, 72, 153, 0.16);
+        border-color: rgba(236, 72, 153, 0.35);
+        color: #f472b6;
+        transition-delay: 0.1s;
+      }
+
+      /* ==========================================
+         DEMO 9
+         Why: progress hover user ko instant feedback deta hai
+      ========================================== */
+      .progress-wrap {
+        width: 100%;
+        max-width: 240px;
+      }
+
+      .progress-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .progress-track {
+        width: 100%;
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .progress-fill {
+        width: 38%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--gold), #f4db84);
+        transition:
+          width 0.8s ease,
+          box-shadow 0.8s ease;
+      }
+
+      .card:hover .progress-fill {
+        width: 88%;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+      }
+
+      /* ==========================================
+         DEMO 10
+         Why: pricing/stat card hover e-commerce me useful hota hai
+      ========================================== */
+      .stat-card {
+        width: 180px;
+        padding: 18px;
+        border-radius: 22px;
+        background: linear-gradient(
+          180deg,
+          rgba(212, 175, 55, 0.08),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(212, 175, 55, 0.12);
+        transition:
+          transform 0.55s ease,
+          box-shadow 0.55s ease,
+          border-color 0.55s ease;
+      }
+
+      .stat-card .emoji {
+        font-size: 34px;
+        margin-bottom: 10px;
+      }
+
+      .stat-card .title {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+
+      .stat-card .value {
+        color: var(--white);
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .card:hover .stat-card {
+        transform: translateY(-10px) scale(1.04);
+        box-shadow: 0 24px 50px rgba(212, 175, 55, 0.14);
+        border-color: rgba(212, 175, 55, 0.28);
+      }
+
+      /* ==========================================
+         DEMO 11
+         Why: focused input form ko modern aur premium dikhata hai
+      ========================================== */
+      .input-shell {
+        width: 100%;
+        max-width: 260px;
+      }
+
+      .input-shell label {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .input-shell input {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 16px;
+        border: 1px solid #242424;
+        background: #0a0a0a;
+        color: #fff;
+        outline: none;
+        transition:
+          border-color 0.35s ease,
+          box-shadow 0.35s ease,
+          transform 0.35s ease,
+          background 0.35s ease;
+      }
+
+      .input-shell input::placeholder {
+        color: #666;
+      }
+
+      .input-shell input:hover {
+        border-color: #343434;
+      }
+
+      .input-shell input:focus {
+        transform: translateY(-2px);
+        border-color: rgba(212, 175, 55, 0.7);
+        box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+        background: #0d0d0d;
+      }
+
+      /* ==========================================
+         DEMO 12
+         Why: profile card me hover pe extra info reveal useful hoti hai
+      ========================================== */
+      .profile-card {
+        width: 210px;
+        border-radius: 24px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #171717, #0e0e0e);
+        border: 1px solid #242424;
+        transition:
+          transform 0.55s ease,
+          box-shadow 0.55s ease,
+          border-color 0.55s ease;
+      }
+
+      .profile-top {
+        height: 78px;
+        background: linear-gradient(
+          135deg,
+          rgba(212, 175, 55, 0.25),
+          rgba(59, 130, 246, 0.2)
+        );
+        position: relative;
+      }
+
+      .avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 4px solid #101010;
+        background: linear-gradient(135deg, var(--gold), #f4db84);
+        color: #000;
+        font-weight: 900;
+        display: grid;
+        place-items: center;
+        position: absolute;
+        left: 18px;
+        bottom: -22px;
+        transition: transform 0.5s ease;
+      }
+
+      .profile-body {
+        padding: 34px 18px 18px;
+      }
+
+      .profile-body h4 {
+        font-size: 17px;
+        margin-bottom: 4px;
+      }
+
+      .profile-body p {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+
+      .profile-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .meta-box {
+        flex: 1;
+        padding: 10px;
+        text-align: center;
+        border-radius: 14px;
+        background: #121212;
+        border: 1px solid #202020;
+        transition:
+          transform 0.35s ease,
+          border-color 0.35s ease,
+          background 0.35s ease;
+      }
+
+      .meta-box strong {
+        display: block;
+        color: var(--white);
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      .meta-box span {
+        color: var(--muted-2);
+        font-size: 11px;
+      }
+
+      .card:hover .profile-card {
+        transform: translateY(-8px);
+        box-shadow: 0 28px 55px rgba(0, 0, 0, 0.35);
+        border-color: rgba(212, 175, 55, 0.22);
+      }
+
+      .card:hover .avatar {
+        transform: scale(1.08) rotate(-8deg);
+      }
+
+      .card:hover .meta-box {
+        transform: translateY(-3px);
+        border-color: rgba(212, 175, 55, 0.18);
+        background: #141414;
+      }
+
+      /* ==========================================
+         DEMO 13
+         Why: side panel reveal transitions layout practice ke liye useful
+      ========================================== */
+      .panel-demo {
+        width: 230px;
+        height: 130px;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #242424;
+        position: relative;
+        background: #0d0d0d;
+      }
+
+      .panel-main {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-weight: 800;
+        transition: transform 0.55s ease;
+      }
+
+      .panel-side {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 72px;
+        height: 100%;
+        background: linear-gradient(
+          180deg,
+          rgba(212, 175, 55, 0.95),
+          rgba(244, 219, 132, 0.95)
+        );
+        color: #000;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        transform: translateX(100%);
+        transition: transform 0.55s ease;
+      }
+
+      .card:hover .panel-main {
+        transform: translateX(-26px);
+      }
+
+      .card:hover .panel-side {
+        transform: translateX(0);
+      }
+
+      /* ==========================================
+         DEMO 14
+         Why: layered depth transitions se premium feel aati hai
+      ========================================== */
+      .layer-stage {
+        width: 180px;
+        height: 110px;
+        position: relative;
+      }
+
+      .layer {
+        position: absolute;
+        inset: 0;
+        border-radius: 22px;
+        transition:
+          transform 0.5s ease,
+          opacity 0.5s ease,
+          box-shadow 0.5s ease;
+      }
+
+      .layer.one {
+        background: rgba(59, 130, 246, 0.18);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+      }
+
+      .layer.two {
+        background: rgba(139, 92, 246, 0.16);
+        border: 1px solid rgba(139, 92, 246, 0.25);
+      }
+
+      .layer.three {
+        background: linear-gradient(
+          135deg,
+          rgba(212, 175, 55, 0.9),
+          rgba(244, 219, 132, 0.95)
+        );
+        color: #000;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+      }
+
+      .card:hover .layer.one {
+        transform: translate(-16px, -12px) rotate(-5deg);
+      }
+
+      .card:hover .layer.two {
+        transform: translate(16px, 12px) rotate(5deg);
+      }
+
+      .card:hover .layer.three {
+        transform: translateY(-8px) scale(1.04);
+        box-shadow: 0 24px 48px rgba(212, 175, 55, 0.25);
+      }
+
+      /* ==========================================
+         DEMO 15
+         Why: menu items me line-slide bohat classy lagti hai
+      ========================================== */
+      .menu-list {
+        width: 100%;
+        max-width: 220px;
+      }
+
+      .menu-item {
+        position: relative;
+        padding: 12px 14px;
+        border-radius: 14px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        margin-bottom: 10px;
+        overflow: hidden;
+        transition:
+          color 0.35s ease,
+          transform 0.35s ease,
+          border-color 0.35s ease;
+      }
+
+      .menu-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(180deg, var(--gold), #f4db84);
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform 0.35s ease;
+      }
+
+      .menu-item:hover {
+        color: var(--white);
+        transform: translateX(6px);
+        border-color: rgba(212, 175, 55, 0.18);
+      }
+
+      .menu-item:hover::before {
+        transform: scaleY(1);
+      }
+
+      /* ==========================================
+         DEMO 16
+         Why: card reveal product UIs me kaafi common hai
+      ========================================== */
+      .product {
+        width: 220px;
+        height: 140px;
+        border-radius: 22px;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(135deg, #111827, #0f172a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .product .product-name {
+        position: absolute;
+        left: 16px;
+        bottom: 16px;
+        font-size: 18px;
+        font-weight: 800;
+        transition:
+          transform 0.45s ease,
+          opacity 0.45s ease;
+      }
+
+      .product .product-actions {
+        position: absolute;
+        inset: auto 16px 16px 16px;
+        display: flex;
+        gap: 10px;
+        transform: translateY(50px);
+        opacity: 0;
+        transition:
+          transform 0.45s ease,
+          opacity 0.45s ease;
+      }
+
+      .product .pill {
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(0, 0, 0, 0.45);
+      }
+
+      .card:hover .product .product-name {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+
+      .card:hover .product .product-actions {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .footer {
+        margin-top: 24px;
+        text-align: center;
+        color: var(--muted-2);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .footer span {
+        color: var(--gold);
+        font-weight: 800;
+      }
+
+      /* ==========================================
+         Responsive
+         Mobile pe layout tootne na paaye
+      ========================================== */
+      @media (max-width: 992px) {
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .tip-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: min(100% - 20px, 1200px);
+          padding-top: 28px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          min-height: auto;
+        }
+
+        .hero p,
+        .section-head p.sub {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <main class="page">
+      <header class="hero">
+        <div class="badge">✨ CSS Transition Pro Edition</div>
+        <h1>Transitions ko <span>Premium Style</span> me samjho</h1>
+        <p>
+          Jani ye page simple hover se leke modern UI transition patterns tak
+          sab dikhata hai. Yahan focus animation pe nahi, balkay
+          <strong>smooth state change</strong> pe hai — yani hover, focus,
+          reveal, fill, slide aur premium interaction feel.
+        </p>
+      </header>
+
+      <section class="tip-card">
+        <h2>🔧 Tumhare original code ka professional fix</h2>
+
+        <div class="tip-grid">
+          <div class="mini-box">
+            <h3>❌ Problem</h3>
+            <p>
+              Do alag <code>transform</code> likhne se sirf last wala apply hota
+              hai. Isi liye scale gayab ho jata hai aur sirf move hota hai.
+            </p>
+            <pre>
+.container:hover {
+  transform: scale(1.5);
+  transform: translate(500px);
+}</pre
+            >
+          </div>
+
+          <div class="mini-box">
+            <h3>✅ Better Version</h3>
+            <p>
+              Saare transform ek hi line me combine karo. Delay kam rakho taake
+              UI responsive lage.
+            </p>
+            <pre>
+.container {
+  transition: transform 0.8s ease;
+}
+
+.container:hover {
+  transform: scale(1.2) translateX(120px);
+}</pre
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="top">Basic Transform</p>
+          <h2>Move, Scale, Rotate aur Shape Change</h2>
+          <p class="sub">
+            Ye transitions tumhe base strong karne me help karenge. Yehi
+            concepts baad me buttons, cards, menus aur modern UI interactions me
+            use hote hain.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <span class="card-label">Transform Combo</span>
+            <div class="demo">
+              <div class="move-box"></div>
+            </div>
+            <h3>Move + Scale + Rotate</h3>
+            <p>
+              Hover pe box right side move karta hai, thora scale hota hai aur
+              rotate bhi karta hai. Yahan ek hi transform me sab effects combine
+              kiye gaye hain.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Tilt Effect</span>
+            <div class="demo">
+              <div class="tilt-box">Hover</div>
+            </div>
+            <h3>Tilted Card Motion</h3>
+            <p>
+              Ye effect cards, gallery items ya CTA blocks ke liye bohat classy
+              lagta hai. Zyada sharp motion ke bajaye soft easing use ki gayi
+              hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Stat Lift</span>
+            <div class="demo">
+              <div class="stat-card">
+                <div class="emoji">💎</div>
+                <div class="title">Premium Sales</div>
+                <div class="value">Rs. 48K</div>
+              </div>
+            </div>
+            <h3>Floating Stat Card</h3>
+            <p>
+              Hover pe card elevate hota hai taake user ko lage ye element
+              interactive aur important hai.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="top">Buttons & CTA</p>
+          <h2>Professional Hover Buttons</h2>
+          <p class="sub">
+            Buttons website ka sabse important interactive part hote hain. Inka
+            transition responsive bhi hona chahiye aur premium bhi.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <span class="card-label">Gold CTA</span>
+            <div class="demo">
+              <button class="gold-btn">Buy Now</button>
+            </div>
+            <h3>Gold Glow Button</h3>
+            <p>
+              Shine sweep aur lift effect is liye use kiya gaya hai taake button
+              zyada alive lage aur click-worthy feel de.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Outline Fill</span>
+            <div class="demo">
+              <button class="outline-btn">Learn More</button>
+            </div>
+            <h3>Border Fill Transition</h3>
+            <p>
+              Hover pe background left se fill hota hai aur text dark ho jata
+              hai. Ye style modern landing pages me bohat use hoti hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Underline Link</span>
+            <div class="demo">
+              <a href="#" class="link-demo">Explore Deals</a>
+            </div>
+            <h3>Elegant Link Hover</h3>
+            <p>
+              Saaf aur subtle underline transition long text links ke liye
+              perfect hoti hai, especially minimalist UI me.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="top">Media & Reveal</p>
+          <h2>Image, Overlay aur Action Reveal</h2>
+          <p class="sub">
+            Cards me hidden info ko softly show karna UX ko better banata hai.
+            Yahan wahi modern reveal techniques dikhayi gayi hain.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <span class="card-label">Image Zoom</span>
+            <div class="demo">
+              <div class="image-card">
+                <img
+                  src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80"
+                  alt="Demo"
+                />
+              </div>
+            </div>
+            <h3>Image Zoom Card</h3>
+            <p>
+              Hover pe image zoom aur slightly dark hoti hai, jis se badge aur
+              overlay zyada readable ho jata hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Overlay Reveal</span>
+            <div class="demo">
+              <div class="overlay-box">
+                <div class="base-text">Product Card</div>
+                <div class="overlay">Quick View</div>
+              </div>
+            </div>
+            <h3>Slide-Up Overlay</h3>
+            <p>
+              Product actions ko pehle hidden rakhna interface ko clean banata
+              hai, aur hover pe reveal karna premium feel deta hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Action Reveal</span>
+            <div class="demo">
+              <div class="product">
+                <div class="product-name">Luxury Watch</div>
+                <div class="product-actions">
+                  <div class="pill">Add to Cart</div>
+                  <div class="pill">Wishlist</div>
+                </div>
+              </div>
+            </div>
+            <h3>Product Hover Actions</h3>
+            <p>
+              Name hide hota hai aur actions appear hote hain — yeh marketplace
+              aur e-commerce UIs me bohat useful pattern hai.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="top">Icons & Navigation</p>
+          <h2>Interactive Icons, Menus aur Panels</h2>
+          <p class="sub">
+            Choti transitions bhi overall product quality ko bohat improve karti
+            hain. Yeh section usi refinement ko show karta hai.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <span class="card-label">Icon Hover</span>
+            <div class="demo">
+              <div class="icon-row">
+                <div class="icon-pill">📦</div>
+                <div class="icon-pill">💬</div>
+                <div class="icon-pill">❤️</div>
+              </div>
+            </div>
+            <h3>Staggered Icon Lift</h3>
+            <p>
+              Har icon slight delay ke saath lift hota hai. Is se interaction me
+              depth aur rhythm aati hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Menu Hover</span>
+            <div class="demo">
+              <div class="menu-list">
+                <div class="menu-item">Dashboard</div>
+                <div class="menu-item">Orders</div>
+                <div class="menu-item">Products</div>
+                <div class="menu-item">Settings</div>
+              </div>
+            </div>
+            <h3>Sidebar Menu Transition</h3>
+            <p>
+              Left accent line aur slight horizontal move navigation ko active
+              aur responsive feel deta hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Side Reveal</span>
+            <div class="demo">
+              <div class="panel-demo">
+                <div class="panel-main">Main Panel</div>
+                <div class="panel-side">GO</div>
+              </div>
+            </div>
+            <h3>Sliding Utility Panel</h3>
+            <p>
+              Hidden action ko poori jagah liye baghair reveal karna clean
+              dashboards ke liye acha approach hota hai.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="top">Forms & Data</p>
+          <h2>Focus States aur Data Presentation</h2>
+          <p class="sub">
+            Forms boring nahi hone chahiye. Focus, progress aur profile style
+            transitions user ko product quality ka feel dete hain.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <span class="card-label">Input Focus</span>
+            <div class="demo">
+              <div class="input-shell">
+                <label>Email Address</label>
+                <input type="email" placeholder="enter@example.com" />
+              </div>
+            </div>
+            <h3>Premium Focus Input</h3>
+            <p>
+              Border glow aur slight lift focus state ko clear banati hai, jis
+              se form modern aur polished lagta hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Progress Fill</span>
+            <div class="demo">
+              <div class="progress-wrap">
+                <div class="progress-top">
+                  <span>Checkout Progress</span>
+                  <span>Hover to Fill</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill"></div>
+                </div>
+              </div>
+            </div>
+            <h3>Hover Progress Bar</h3>
+            <p>
+              Width transition users ko instant visual feedback deti hai.
+              Dashboard, analytics aur checkout UIs me bohat kaam aati hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Profile Card</span>
+            <div class="demo">
+              <div class="profile-card">
+                <div class="profile-top">
+                  <div class="avatar">IA</div>
+                </div>
+                <div class="profile-body">
+                  <h4>Ishaq Afridi</h4>
+                  <p>Premium Seller</p>
+                  <div class="profile-meta">
+                    <div class="meta-box">
+                      <strong>124</strong>
+                      <span>Orders</span>
+                    </div>
+                    <div class="meta-box">
+                      <strong>4.9</strong>
+                      <span>Rating</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3>Profile Interaction Card</h3>
+            <p>
+              Avatar, border aur stats ko softly react karwaya gaya hai taake
+              card static na lage.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="top">Advanced Layering</p>
+          <h2>Depth, Layer aur Fancy Transition Patterns</h2>
+          <p class="sub">
+            Jab tum base transitions samajh jao, phir layered interactions se
+            premium UI build karna asaan ho jata hai.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <span class="card-label">Layer Stack</span>
+            <div class="demo">
+              <div class="layer-stage">
+                <div class="layer one"></div>
+                <div class="layer two"></div>
+                <div class="layer three">Hover Me</div>
+              </div>
+            </div>
+            <h3>Layered Depth Effect</h3>
+            <p>
+              Multiple layers alag directions me move karte hain, jis se
+              pseudo-3D premium feel create hoti hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Transition Timing</span>
+            <div class="demo">
+              <div class="icon-row">
+                <div class="icon-pill">1</div>
+                <div class="icon-pill">2</div>
+                <div class="icon-pill">3</div>
+              </div>
+            </div>
+            <h3>Stagger via Delay</h3>
+            <p>
+              Choti choti delays interaction ko natural banati hain. Sab kuch ek
+              saath jump kare to UI harsh lag sakti hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-label">Best Practice</span>
+            <div class="demo">
+              <div class="tilt-box">Ease</div>
+            </div>
+            <h3>Use the Right Easing</h3>
+            <p>
+              Har jagah linear transition use mat karo. Hover aur focus ke liye
+              <strong>ease</strong> ya custom cubic timing zyada natural lagti
+              hai.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          Made in <span>Professional Style</span> — Black + Gold premium
+          transition showcase 🚀
+        </p>
+        <p>
+          Agar chaho to main iska next version bhi bana deta hoon:
+          <span>“CSS Transition + Animation Combined Master Demo”</span>
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>

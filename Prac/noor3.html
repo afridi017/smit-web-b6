@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Noor — A Universe Made For You</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              lavender: "#C8A2C8",
+              blush: "#FFD1DC",
+              pearl: "#FDFD",
+              gold: "#FFD700",
+              navy: "#1A1A2E",
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', "serif"],
+              sans: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f0f1e;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c8a2c8;
+        border-radius: 4px;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .glass-btn {
+        background: rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: all.4s;
+      }
+      .glass-btn:hover {
+        background: rgba(255, 209, 220, 0.2);
+        border-color: rgba(255, 215, 0, 0.4);
+        box-shadow: 0 0 25px rgba(255, 209, 220, 0.3);
+        transform: translateY(-2px);
+      }
+      .text-glow {
+        text-shadow:
+          0 0 15px rgba(200, 162, 200, 0.5),
+          0 0 30px rgba(255, 209, 220, 0.3);
+      }
+      .gold-glow {
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      }
+      .floating {
+        animation: subtleFloat 6s ease-in-out infinite;
+      }
+      @keyframes subtleFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      .quote-card {
+        transition: all.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .quote-card:hover {
+        transform: translateY(-8px) scale(1.02);
+      }
+    </style>
+  </head>
+  <body class="bg-navy text-pearl font-sans overflow-x-hidden">
+    <!-- LOADER -->
+    <div
+      id="loader"
+      class="fixed inset-0 z-[9999] bg-[#0A0A16] flex-col justify-center items-center"
+    >
+      <div class="relative w-40 h-40 flex items-center justify-center">
+        <div
+          class="absolute inset-0 rounded-full border-2 border-dashed border-lavender/30 animate-spin"
+          style="animation-duration: 15s"
+        ></div>
+        <i class="fa-solid fa-heart text-blush text-3xl animate-bounce"></i>
+      </div>
+      <h2 class="mt-8 font-serif text-2xl text-glow">
+        Preparing Noor's Universe...
+      </h2>
+    </div>
+
+    <!-- MUSIC -->
+    <div class="fixed top-6 right-6 z-[100]">
+      <button
+        id="music-toggle"
+        class="glass-btn w-12 h-12 rounded-full flex items-center justify-center"
+      >
+        <i id="music-icon" class="fa-solid fa-music"></i>
+      </button>
+    </div>
+
+    <!-- HERO -->
+    <section
+      id="hero"
+      class="relative w-screen h-screen flex flex-col justify-center items-center overflow-hidden"
+    >
+      <div id="hero-canvas-container" class="absolute inset-0 z-0"></div>
+      <div class="z-20 text-center">
+        <h1 class="font-serif text-7xl md:text-9xl text-glow mb-4">For Noor</h1>
+        <p class="font-sans text-lg tracking-[0.3em] text-pearl/90 mb-10">
+          The world became brighter the day you were born
+        </p>
+        <a
+          href="#about"
+          class="glass-btn px-8 py-4 rounded-full tracking-[0.2em] text-xs uppercase"
+          >Enter My World ✨</a
+        >
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="relative min-h-screen py-32 flex items-center">
+      <div class="w-full max-w-5xl mx-auto px-6 text-center z-10">
+        <h2 class="font-serif text-5xl text-glow mb-6">
+          The Reason For <span class="text-blush">This Universe</span>
+        </h2>
+        <p
+          class="font-sans text-pearl/80 leading-relaxed text-base tracking-wider"
+        >
+          <span class="text-glow text-white font-serif text-xl italic"
+            >Noor</span
+          >, your name means light. You are the cosmic spark that illuminated my
+          entire sky. This universe was built just for you. Every star here
+          orbits around you.
+        </p>
+        <p class="font-serif text-gold/95 italic gold-glow text-lg mt-6">
+          "In a sky full of galaxies, my eyes will always find your
+          constellations."
+        </p>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: QUOTES & SHAYARI 3D -->
+    <section
+      id="shayari"
+      class="relative min-h-screen py-24 bg-[#111124] flex items-center overflow-hidden"
+    >
+      <div class="w-full max-w-6xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <h2 class="font-serif text-5xl text-glow mb-4">Words For You</h2>
+          <p class="font-sans text-sm text-pearl/40 tracking-[0.3em] uppercase">
+            Poetry that speaks what my heart can't
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Quote 1 -->
+          <div class="quote-card glass-panel p-8 rounded-2xl">
+            <i class="fa-solid fa-quote-left text-blush text-3xl mb-4"></i>
+            <p class="font-serif text-xl italic text-white mb-3">
+              Tumhari ek muskurahat ke liye,<br />main sara jahan luta sakta
+              hun.
+            </p>
+            <span class="text-xs text-pearl/50 tracking-widest"
+              >- For Noor</span
+            >
+          </div>
+          <!-- Quote 2 -->
+          <div class="quote-card glass-panel p-8 rounded-2xl">
+            <i class="fa-solid fa-quote-left text-gold text-3xl mb-4"></i>
+            <p class="font-serif text-xl italic text-white mb-3">
+              Chand bhi sharma jaye Noor tumhare aage,<br />Tum roshni ki sabse
+              haseen misaal ho.
+            </p>
+            <span class="text-xs text-pearl/50 tracking-widest"
+              >- My Shayari</span
+            >
+          </div>
+          <!-- Quote 3 -->
+          <div class="quote-card glass-panel p-8 rounded-2xl">
+            <i class="fa-solid fa-quote-left text-blush text-3xl mb-4"></i>
+            <p class="font-serif text-xl italic text-white mb-3">
+              You are not just my favorite hello,<br />you are my hardest
+              goodbye.
+            </p>
+            <span class="text-xs text-pearl/50 tracking-widest"
+              >- With Love</span
+            >
+          </div>
+          <!-- Quote 4 -->
+          <div class="quote-card glass-panel p-8 rounded-2xl">
+            <i class="fa-solid fa-quote-left text-gold text-3xl mb-4"></i>
+            <p class="font-serif text-xl italic text-white mb-3">
+              Tum milo to lage ke duaen qubool hui hain,<br />Tumhara naam hi
+              ibadat lagta hai.
+            </p>
+            <span class="text-xs text-pearl/50 tracking-widest"
+              >- From My Heart</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIAL -->
+    <section id="special" class="relative min-h-screen py-24 flex items-center">
+      <div class="w-full max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="font-serif text-5xl text-glow mb-4">
+            Why You Are So Special
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="glass-panel p-8 rounded-2xl text-center hover:-translate-y-3 transition"
+          >
+            <i class="fa-solid fa-heart text-blush text-4xl mb-4 text-glow"></i>
+            <h3 class="font-serif text-2xl text-white mb-4">Your Heart</h3>
+            <p class="text-pearl/70 text-sm">
+              The kindest soul I have ever known.
+            </p>
+          </div>
+          <div
+            class="glass-panel p-8 rounded-2xl text-center hover:-translate-y-3 transition"
+          >
+            <i class="fa-solid fa-moon text-gold text-4xl mb-4 text-glow"></i>
+            <h3 class="font-serif text-2xl text-white mb-4">Your Soul</h3>
+            <p class="text-pearl/70 text-sm">
+              Radiant inside and elegant outside.
+            </p>
+          </div>
+          <div
+            class="glass-panel p-8 rounded-2xl text-center hover:-translate-y-3 transition"
+          >
+            <i
+              class="fa-solid fa-wand-magic-sparkles text-blush text-4xl mb-4 text-glow"
+            ></i>
+            <h3 class="font-serif text-2xl text-white mb-4">Your Light</h3>
+            <p class="text-pearl/70 text-sm">
+              You make everything around you better.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LETTER -->
+    <section
+      id="letter"
+      class="relative min-h-screen py-24 bg-[#0e0e1a] flex items-center"
+    >
+      <div class="w-full max-w-3xl mx-auto px-6 text-center">
+        <h2 class="font-serif text-5xl text-glow mb-8">A Letter For You</h2>
+        <div class="glass-panel p-10 rounded-2xl text-left">
+          <p
+            class="font-serif text-navy/90 italic leading-relaxed space-y-4 text-sm"
+          >
+            Dear Noor,<br /><br />
+            I don't know if words are enough, but I wanted to create something
+            just for you. Something that exists only because you exist. Every
+            line of code, every color, every 3D star in this website reminds me
+            of you.<br /><br />
+            Thank you for being you. Thank you for making my life magical.<br /><br />
+            With all my love
+          </p>
+          <span class="block mt-6 text-right font-semibold text-navy/80"
+            >From Someone Who Loves You</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- WISH -->
+    <section id="wish" class="relative min-h-screen py-24 flex items-center">
+      <div id="wish-canvas-container" class="absolute inset-0 z-0"></div>
+      <div class="w-full max-w-md mx-auto px-6 relative z-20 text-center">
+        <i
+          class="fa-solid fa-star text-gold text-4xl mb-4 floating text-glow"
+        ></i>
+        <h2 class="font-serif text-5xl text-glow mb-4">Make A Wish</h2>
+        <input
+          type="text"
+          id="wish-input"
+          placeholder="Type a beautiful wish for Noor..."
+          class="bg-white/5 border-white/10 rounded-xl px-4 py-3 w-full text-sm mb-4"
+        />
+        <button
+          id="launch-star-btn"
+          class="glass-btn w-full py-3 rounded-xl tracking-[0.25em] text-xs uppercase"
+        >
+          Launch Star
+        </button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer
+      class="relative bg-[#06060c] pt-20 pb-12 text-center border-t border-white/5"
+    >
+      <span class="font-serif text-2xl tracking-widest text-glow text-white"
+        >NOOR</span
+      >
+      <p class="text-xs text-pearl/30 mt-4">
+        © 2026 — Built With Absolute Devotion For Noor
+      </p>
+    </footer>
+
+    <script>
+      // LOADER
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("loader").style.opacity = 0;
+        }, 1500);
+      });
+
+      // HERO 3D HEART
+      let scene, camera, renderer, heart;
+      function initHero() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(
+          60,
+          innerWidth / innerHeight,
+          0.1,
+          1000,
+        );
+        camera.position.z = 15;
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(innerWidth, innerHeight);
+        document
+          .getElementById("hero-canvas-container")
+          .appendChild(renderer.domElement);
+        let light = new THREE.PointLight(0xffd1dc, 2);
+        light.position.set(5, 5, 5);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+        let shape = new THREE.Shape();
+        shape.moveTo(0, 0.6);
+        shape.bezierCurveTo(0.5, 0.5, 1, 0, 0, 0);
+        shape.bezierCurveTo(-1, 0, -0.5, 0.5, 0, 0.6);
+        shape.bezierCurveTo(0.5, 0.5, 1, 0, 0, 0);
+        let geo = new THREE.ExtrudeGeometry(shape, {
+          depth: 0.3,
+          bevelEnabled: true,
+          bevelThickness: 0.1,
+        });
+        let mat = new THREE.MeshPhysicalMaterial({
+          color: 0xffd1dc,
+          transmission: 0.9,
+        });
+        heart = new THREE.Mesh(geo, mat);
+        heart.scale.set(4, 4, 4);
+        scene.add(heart);
+        animate();
+      }
+      function animate() {
+        requestAnimationFrame(animate);
+        if (heart) {
+          heart.rotation.y += 0.01;
+        }
+        renderer.render(scene, camera);
+      }
+      initHero();
+
+      // WISH STARS
+      let wScene, wCamera, wRenderer, wGroup;
+      function initWish() {
+        wScene = new THREE.Scene();
+        wCamera = new THREE.PerspectiveCamera(
+          60,
+          innerWidth / innerHeight,
+          0.1,
+          1000,
+        );
+        wCamera.position.z = 20;
+        wRenderer = new THREE.WebGLRenderer({ alpha: true });
+        wRenderer.setSize(innerWidth, innerHeight);
+        document
+          .getElementById("wish-canvas-container")
+          .appendChild(wRenderer.domElement);
+        wGroup = new THREE.Group();
+        wScene.add(wGroup);
+        for (let i = 0; i < 200; i++) {
+          let m = new THREE.Mesh(
+            new THREE.SphereGeometry(0.1),
+            new THREE.MeshBasicMaterial({ color: 0xffffff }),
+          );
+          m.position.set(
+            (Math.random() - 0.5) * 60,
+            (Math.random() - 0.5) * 40,
+            (Math.random() - 0.5) * 40,
+          );
+          wGroup.add(m);
+        }
+        animateWish();
+      }
+      function animateWish() {
+        requestAnimationFrame(animateWish);
+        wRenderer.render(wScene, wCamera);
+      }
+      initWish();
+
+      document.getElementById("launch-star-btn").onclick = () => {
+        confetti({
+          particleCount: 30,
+          spread: 60,
+          colors: ["#FFD1DC", "#FFD700"],
+        });
+      };
+      gsap.registerPlugin(ScrollTrigger);
+    </script>
+  </body>
+</html>

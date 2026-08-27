@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Animation - Class 14</title>
+    <style>
+      body {
+        background: #f0f0f0;
+        display: flex;
+        flex-direction: column; /* dono box neeche upar aa jaye */
+        justify-content: center;
+        align-items: center;
+        gap: 60px; /* dono ke darmiyan space */
+        height: 100vh;
+        margin: 0;
+        font-family: Arial;
+      }
+
+      .note {
+        position: absolute;
+        top: 20px;
+        text-align: center;
+      }
+
+      /* ===== BOX 1: MOVE + ROTATE + COLOR CHANGE ===== */
+      .container {
+        width: 100px;
+        height: 100px;
+        border: 3px solid #000;
+        background: lightblue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+
+        /* ANIMATION PROPERTIES */
+        animation: moveBox 2s ease-in-out infinite alternate;
+      }
+
+      /* MOUSE LE JAO TO PAUSE */
+      .container:hover {
+        animation-play-state: paused;
+        cursor: pointer;
+      }
+
+      /* KEYFRAMES 1 */
+      @keyframes moveBox {
+        0% {
+          transform: translateX(-200px) rotate(0deg);
+          background: lightblue;
+          border-radius: 0%;
+        }
+        50% {
+          transform: translateX(0) rotate(180deg);
+          background: rebeccapurple;
+          border-radius: 50%;
+        }
+        100% {
+          transform: translateX(200px) rotate(360deg);
+          background: orange;
+          border-radius: 0%;
+        }
+      }
+
+      /* ===== BOX 2: LOADING SPINNER ===== */
+      .loading {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #ddd; /* halka circle */
+        border-top: 5px solid blue; /* upar wala color */
+        background-color: antiquewhite;
+        border-radius: 50%;
+
+        /* SPINNER ANIMATION */
+        animation: loading 1s linear infinite;
+        box-shadow: 0 0 10px blue;
+      }
+
+      /* KEYFRAMES 2 */
+      @keyframes loading {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="note">
+      <h2>CSS Animation - Class 14</h2>
+      <p>Move Box pe mouse le jao = Pause ho jayega</p>
+    </div>
+
+    <div class="container">Hover</div>
+    <div class="loading"></div>
+  </body>
+</html>

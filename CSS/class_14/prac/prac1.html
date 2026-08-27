@@ -1,0 +1,1936 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Animation MEGA Showcase — Class 14 Pro</title>
+    <style>
+      /* ============================================
+         RESET + BASE STYLES
+         Pura page dark premium theme me hai
+      ============================================ */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #0a0a0a;
+        color: #ffffff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* ============================================
+         ANIMATED BACKGROUND — Moving Gradient
+         Pura page ka background slowly shift hota hai
+      ============================================ */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          #0a0a0a 0%,
+          #1a0a2e 25%,
+          #0a0a0a 50%,
+          #0a1a2e 75%,
+          #0a0a0a 100%
+        );
+        background-size: 400% 400%;
+        animation: bgShift 15s ease infinite;
+        z-index: -2;
+      }
+
+      @keyframes bgShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* ============================================
+         FLOATING PARTICLES — Background Decoration
+         Chhote chhote dots float karte hain
+      ============================================ */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #d4af37;
+        border-radius: 50%;
+        opacity: 0;
+        animation: floatParticle 8s ease-in-out infinite;
+      }
+
+      .particle:nth-child(1) {
+        left: 10%;
+        animation-delay: 0s;
+        animation-duration: 7s;
+      }
+      .particle:nth-child(2) {
+        left: 20%;
+        animation-delay: 1s;
+        animation-duration: 9s;
+      }
+      .particle:nth-child(3) {
+        left: 30%;
+        animation-delay: 2s;
+        animation-duration: 6s;
+      }
+      .particle:nth-child(4) {
+        left: 40%;
+        animation-delay: 0.5s;
+        animation-duration: 8s;
+      }
+      .particle:nth-child(5) {
+        left: 50%;
+        animation-delay: 3s;
+        animation-duration: 10s;
+      }
+      .particle:nth-child(6) {
+        left: 60%;
+        animation-delay: 1.5s;
+        animation-duration: 7s;
+      }
+      .particle:nth-child(7) {
+        left: 70%;
+        animation-delay: 2.5s;
+        animation-duration: 9s;
+      }
+      .particle:nth-child(8) {
+        left: 80%;
+        animation-delay: 0.8s;
+        animation-duration: 6s;
+      }
+      .particle:nth-child(9) {
+        left: 90%;
+        animation-delay: 3.5s;
+        animation-duration: 8s;
+      }
+      .particle:nth-child(10) {
+        left: 15%;
+        animation-delay: 4s;
+        animation-duration: 11s;
+      }
+      .particle:nth-child(11) {
+        left: 35%;
+        animation-delay: 1.2s;
+        animation-duration: 7.5s;
+      }
+      .particle:nth-child(12) {
+        left: 55%;
+        animation-delay: 2.8s;
+        animation-duration: 9.5s;
+      }
+      .particle:nth-child(13) {
+        left: 75%;
+        animation-delay: 0.3s;
+        animation-duration: 6.5s;
+      }
+      .particle:nth-child(14) {
+        left: 95%;
+        animation-delay: 3.2s;
+        animation-duration: 8.5s;
+      }
+      .particle:nth-child(15) {
+        left: 5%;
+        animation-delay: 4.5s;
+        animation-duration: 10.5s;
+      }
+
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100vh) scale(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 0.3;
+        }
+        90% {
+          opacity: 0.6;
+        }
+        100% {
+          transform: translateY(-100px) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      /* ============================================
+         HEADER — Animated Title
+         Title slide-in + glow effect ke saath
+      ============================================ */
+      .header {
+        text-align: center;
+        padding: 60px 20px 40px;
+        position: relative;
+      }
+
+      .header-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #d4af37, #f5d778);
+        color: #000;
+        padding: 6px 20px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
+        animation: slideDown 0.8s ease-out;
+      }
+
+      .header h1 {
+        font-size: clamp(28px, 5vw, 56px);
+        font-weight: 900;
+        background: linear-gradient(135deg, #fff 0%, #d4af37 50%, #fff 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation:
+          shimmerText 3s linear infinite,
+          slideDown 1s ease-out;
+        line-height: 1.2;
+      }
+
+      .header p {
+        color: #888;
+        margin-top: 15px;
+        font-size: 16px;
+        animation: slideDown 1.2s ease-out;
+      }
+
+      .header p span {
+        color: #d4af37;
+        font-weight: 600;
+      }
+
+      @keyframes shimmerText {
+        0% {
+          background-position: -200% center;
+        }
+        100% {
+          background-position: 200% center;
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ============================================
+         SECTION LAYOUT
+         Har section properly spaced hai
+      ============================================ */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section {
+        margin-bottom: 80px;
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .section-number {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #d4af37, #b8962e);
+        color: #000;
+        border-radius: 12px;
+        font-weight: 900;
+        font-size: 18px;
+        line-height: 40px;
+        text-align: center;
+        margin-bottom: 10px;
+        animation: bounceIn 0.6s ease-out;
+      }
+
+      .section-title h2 {
+        font-size: 28px;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 5px;
+      }
+
+      .section-title p {
+        color: #666;
+        font-size: 14px;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* ============================================
+         GRID LAYOUT — Responsive Cards
+         Mobile pe 1 column, desktop pe 2-3
+      ============================================ */
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
+
+      /* ============================================
+         CARD STYLE — Glass Morphism
+         Har animation demo card me hai
+      ============================================ */
+      .card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 40px 30px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        transition: all 0.4s ease;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(212, 175, 55, 0.05),
+          transparent
+        );
+        transition: left 0.6s ease;
+      }
+
+      .card:hover {
+        border-color: rgba(212, 175, 55, 0.3);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+      }
+
+      .card:hover::before {
+        left: 100%;
+      }
+
+      .card-label {
+        display: inline-block;
+        background: rgba(212, 175, 55, 0.1);
+        color: #d4af37;
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(212, 175, 55, 0.2);
+      }
+
+      .card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        margin-top: 20px;
+        margin-bottom: 5px;
+      }
+
+      .card .desc {
+        color: #666;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .demo-area {
+        min-height: 120px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      /* ============================================
+         DEMO 1: MORPHING BOX
+         Box shape change + color change + rotate
+      ============================================ */
+      .morph-box {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 10px;
+        animation: morphBox 4s ease-in-out infinite;
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+      }
+
+      .morph-box:hover {
+        animation-play-state: paused;
+        cursor: pointer;
+      }
+
+      @keyframes morphBox {
+        0%,
+        100% {
+          border-radius: 10px;
+          transform: rotate(0deg) scale(1);
+          background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        25% {
+          border-radius: 50% 10px;
+          transform: rotate(90deg) scale(1.1);
+          background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        50% {
+          border-radius: 50%;
+          transform: rotate(180deg) scale(0.9);
+          background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+        75% {
+          border-radius: 10px 50%;
+          transform: rotate(270deg) scale(1.1);
+          background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+      }
+
+      /* ============================================
+         DEMO 2: PULSE RINGS
+         Concentric rings pulse karte hain
+      ============================================ */
+      .pulse-container {
+        position: relative;
+        width: 80px;
+        height: 80px;
+      }
+
+      .pulse-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30px;
+        height: 30px;
+        background: #d4af37;
+        border-radius: 50%;
+        z-index: 3;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+      }
+
+      .pulse-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid #d4af37;
+        border-radius: 50%;
+        animation: pulseRing 2s ease-out infinite;
+      }
+
+      .pulse-ring:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      .pulse-ring:nth-child(3) {
+        animation-delay: 1s;
+      }
+
+      @keyframes pulseRing {
+        0% {
+          width: 30px;
+          height: 30px;
+          opacity: 1;
+        }
+        100% {
+          width: 100px;
+          height: 100px;
+          opacity: 0;
+        }
+      }
+
+      /* ============================================
+         DEMO 3: TYPING TEXT
+         Text type hota hai cursor ke saath
+      ============================================ */
+      .typing-text {
+        font-family: "Courier New", monospace;
+        font-size: 20px;
+        font-weight: 700;
+        color: #d4af37;
+        border-right: 3px solid #d4af37;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+        animation:
+          typing 3s steps(14) 1s forwards,
+          blink 0.7s step-end infinite;
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 14ch;
+        }
+      }
+
+      @keyframes blink {
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      /* ============================================
+         DEMO 4: BOUNCING DOTS — Loading Style
+         Teen dots bounce karte hain
+      ============================================ */
+      .bounce-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .bounce-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        animation: bounceDot 1.4s ease-in-out infinite;
+      }
+
+      .bounce-dot:nth-child(1) {
+        background: #f5576c;
+        animation-delay: 0s;
+      }
+      .bounce-dot:nth-child(2) {
+        background: #d4af37;
+        animation-delay: 0.2s;
+      }
+      .bounce-dot:nth-child(3) {
+        background: #4facfe;
+        animation-delay: 0.4s;
+      }
+
+      @keyframes bounceDot {
+        0%,
+        80%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        40% {
+          transform: translateY(-30px) scale(1.2);
+        }
+      }
+
+      /* ============================================
+         DEMO 5: SPINNER — Premium Loading
+         Gradient border spin karta hai
+      ============================================ */
+      .spinner {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-top-color: #d4af37;
+        border-right-color: #f5576c;
+        animation: spinGlow 1s linear infinite;
+        box-shadow:
+          0 0 20px rgba(212, 175, 55, 0.2),
+          inset 0 0 20px rgba(245, 87, 108, 0.1);
+      }
+
+      @keyframes spinGlow {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ============================================
+         DEMO 6: WAVE BARS — Audio Visualizer Style
+         Bars upar neeche wave me move karte hain
+      ============================================ */
+      .wave-bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        height: 60px;
+      }
+
+      .wave-bar {
+        width: 8px;
+        border-radius: 4px;
+        animation: waveBar 1.2s ease-in-out infinite;
+      }
+
+      .wave-bar:nth-child(1) {
+        background: #667eea;
+        animation-delay: 0s;
+      }
+      .wave-bar:nth-child(2) {
+        background: #764ba2;
+        animation-delay: 0.1s;
+      }
+      .wave-bar:nth-child(3) {
+        background: #f093fb;
+        animation-delay: 0.2s;
+      }
+      .wave-bar:nth-child(4) {
+        background: #f5576c;
+        animation-delay: 0.3s;
+      }
+      .wave-bar:nth-child(5) {
+        background: #d4af37;
+        animation-delay: 0.4s;
+      }
+      .wave-bar:nth-child(6) {
+        background: #43e97b;
+        animation-delay: 0.5s;
+      }
+      .wave-bar:nth-child(7) {
+        background: #4facfe;
+        animation-delay: 0.6s;
+      }
+
+      @keyframes waveBar {
+        0%,
+        100% {
+          height: 15px;
+        }
+        50% {
+          height: 60px;
+        }
+      }
+
+      /* ============================================
+         DEMO 7: FLIP CARD — 3D Flip Effect
+         Hover pe card flip hota hai
+      ============================================ */
+      .flip-card-wrapper {
+        perspective: 1000px;
+        width: 120px;
+        height: 80px;
+        cursor: pointer;
+      }
+
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform-style: preserve-3d;
+      }
+
+      .flip-card-wrapper:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-front,
+      .flip-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 800;
+        font-size: 14px;
+        backface-visibility: hidden;
+      }
+
+      .flip-front {
+        background: linear-gradient(135deg, #d4af37, #f5d778);
+        color: #000;
+      }
+
+      .flip-back {
+        background: linear-gradient(135deg, #f5576c, #ff6b9d);
+        color: #fff;
+        transform: rotateY(180deg);
+      }
+
+      /* ============================================
+         DEMO 8: ORBIT — Planet Orbit Animation
+         Chhota circle bade circle ke gird ghoomta hai
+      ============================================ */
+      .orbit-container {
+        position: relative;
+        width: 100px;
+        height: 100px;
+      }
+
+      .orbit-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 24px;
+        height: 24px;
+        background: #d4af37;
+        border-radius: 50%;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        z-index: 2;
+      }
+
+      .orbit-path {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: orbitSpin 4s linear infinite;
+      }
+
+      .orbit-planet {
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 12px;
+        height: 12px;
+        background: #4facfe;
+        border-radius: 50%;
+        box-shadow: 0 0 15px rgba(79, 172, 254, 0.6);
+      }
+
+      .orbit-path:nth-child(3) {
+        width: 70%;
+        height: 70%;
+        top: 15%;
+        left: 15%;
+        animation-duration: 2.5s;
+        animation-direction: reverse;
+      }
+
+      .orbit-path:nth-child(3) .orbit-planet {
+        background: #f5576c;
+        width: 8px;
+        height: 8px;
+        box-shadow: 0 0 15px rgba(245, 87, 108, 0.6);
+      }
+
+      @keyframes orbitSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ============================================
+         DEMO 9: GLOWING BUTTON — Premium CTA
+         Button glow + shine animation ke saath
+      ============================================ */
+      .glow-btn {
+        padding: 14px 40px;
+        font-size: 15px;
+        font-weight: 800;
+        color: #000;
+        background: linear-gradient(135deg, #d4af37, #f5d778, #d4af37);
+        background-size: 200% 200%;
+        border: none;
+        border-radius: 16px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        animation: btnGlow 3s ease infinite;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .glow-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        animation: btnShine 2s ease-in-out infinite;
+      }
+
+      .glow-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 15px 50px rgba(212, 175, 55, 0.4);
+      }
+
+      .glow-btn:active {
+        transform: translateY(0) scale(0.98);
+      }
+
+      @keyframes btnGlow {
+        0%,
+        100% {
+          background-position: 0% 50%;
+          box-shadow: 0 5px 30px rgba(212, 175, 55, 0.2);
+        }
+        50% {
+          background-position: 100% 50%;
+          box-shadow: 0 5px 50px rgba(212, 175, 55, 0.4);
+        }
+      }
+
+      @keyframes btnShine {
+        0% {
+          left: -100%;
+        }
+        50%,
+        100% {
+          left: 100%;
+        }
+      }
+
+      /* ============================================
+         DEMO 10: SKELETON LOADER
+         Content load hone se pehle ka placeholder
+      ============================================ */
+      .skeleton-card {
+        width: 100%;
+        max-width: 200px;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .skeleton-line {
+        height: 12px;
+        border-radius: 6px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.05) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0.05) 75%
+        );
+        background-size: 200% 100%;
+        animation: skeletonShimmer 1.5s ease-in-out infinite;
+        margin-bottom: 10px;
+      }
+
+      .skeleton-line:nth-child(1) {
+        width: 60%;
+        height: 14px;
+      }
+      .skeleton-line:nth-child(2) {
+        width: 100%;
+      }
+      .skeleton-line:nth-child(3) {
+        width: 80%;
+      }
+      .skeleton-line:nth-child(4) {
+        width: 40%;
+        margin-bottom: 0;
+      }
+
+      .skeleton-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.05) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0.05) 75%
+        );
+        background-size: 200% 100%;
+        animation: skeletonShimmer 1.5s ease-in-out infinite;
+        margin-bottom: 12px;
+      }
+
+      @keyframes skeletonShimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      /* ============================================
+         DEMO 11: NEON TEXT — Glowing Effect
+         Text neon light ki tarah glow karta hai
+      ============================================ */
+      .neon-text {
+        font-size: 32px;
+        font-weight: 900;
+        color: #fff;
+        text-shadow:
+          0 0 10px #d4af37,
+          0 0 20px #d4af37,
+          0 0 40px #d4af37,
+          0 0 80px #b8962e;
+        animation: neonFlicker 3s ease-in-out infinite;
+        letter-spacing: 4px;
+      }
+
+      @keyframes neonFlicker {
+        0%,
+        100% {
+          text-shadow:
+            0 0 10px #d4af37,
+            0 0 20px #d4af37,
+            0 0 40px #d4af37,
+            0 0 80px #b8962e;
+          opacity: 1;
+        }
+        5% {
+          opacity: 0.8;
+          text-shadow: none;
+        }
+        6% {
+          opacity: 1;
+          text-shadow:
+            0 0 10px #d4af37,
+            0 0 20px #d4af37;
+        }
+        50% {
+          text-shadow:
+            0 0 5px #d4af37,
+            0 0 15px #d4af37,
+            0 0 30px #d4af37,
+            0 0 60px #b8962e;
+        }
+        55% {
+          opacity: 0.9;
+          text-shadow: 0 0 2px #d4af37;
+        }
+        56% {
+          opacity: 1;
+          text-shadow:
+            0 0 10px #d4af37,
+            0 0 20px #d4af37,
+            0 0 40px #d4af37,
+            0 0 80px #b8962e;
+        }
+      }
+
+      /* ============================================
+         DEMO 12: PROGRESS BAR — Animated Fill
+         Progress bar smoothly fill hota hai
+      ============================================ */
+      .progress-container {
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+
+      .progress-label span:first-child {
+        color: #888;
+      }
+
+      .progress-label span:last-child {
+        color: #d4af37;
+        font-weight: 700;
+      }
+
+      .progress-track {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: 10px;
+        animation: progressFill 2s ease-out forwards;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-fill::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        animation: progressShine 1.5s ease-in-out infinite;
+      }
+
+      .progress-fill.gold {
+        background: linear-gradient(90deg, #b8962e, #d4af37, #f5d778);
+        width: 0;
+        animation: fillGold 2s ease-out 0.3s forwards;
+      }
+
+      .progress-fill.blue {
+        background: linear-gradient(90deg, #4facfe, #00f2fe);
+        width: 0;
+        animation: fillBlue 2s ease-out 0.5s forwards;
+      }
+
+      .progress-fill.pink {
+        background: linear-gradient(90deg, #f5576c, #ff6b9d);
+        width: 0;
+        animation: fillPink 2s ease-out 0.7s forwards;
+      }
+
+      @keyframes fillGold {
+        to {
+          width: 87%;
+        }
+      }
+      @keyframes fillBlue {
+        to {
+          width: 65%;
+        }
+      }
+      @keyframes fillPink {
+        to {
+          width: 42%;
+        }
+      }
+
+      @keyframes progressShine {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* ============================================
+         DEMO 13: STAGGERED LIST — Items Slide In
+         Items ek ek karke slide hokar aate hain
+      ============================================ */
+      .stagger-list {
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .stagger-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        margin-bottom: 8px;
+        opacity: 0;
+        transform: translateX(-30px);
+        animation: staggerSlide 0.5s ease-out forwards;
+      }
+
+      .stagger-item:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .stagger-item:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .stagger-item:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .stagger-item:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+
+      .stagger-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .stagger-item:nth-child(1) .stagger-dot {
+        background: #d4af37;
+      }
+      .stagger-item:nth-child(2) .stagger-dot {
+        background: #4facfe;
+      }
+      .stagger-item:nth-child(3) .stagger-dot {
+        background: #43e97b;
+      }
+      .stagger-item:nth-child(4) .stagger-dot {
+        background: #f5576c;
+      }
+
+      .stagger-text {
+        font-size: 12px;
+        color: #888;
+      }
+
+      @keyframes staggerSlide {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* ============================================
+         DEMO 14: HEARTBEAT — Heart Pulse Effect
+         Dil ki tarah dhak dhak animation
+      ============================================ */
+      .heart {
+        font-size: 50px;
+        animation: heartBeat 1.2s ease-in-out infinite;
+        filter: drop-shadow(0 0 15px rgba(245, 87, 108, 0.5));
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .heart:hover {
+        animation-duration: 0.4s;
+      }
+
+      @keyframes heartBeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        14% {
+          transform: scale(1.3);
+        }
+        28% {
+          transform: scale(1);
+        }
+        42% {
+          transform: scale(1.3);
+        }
+        70% {
+          transform: scale(1);
+        }
+      }
+
+      /* ============================================
+         DEMO 15: NOTIFICATION BADGE — Shake + Count
+         Badge shake hoke attention grab karta hai
+      ============================================ */
+      .notif-wrapper {
+        position: relative;
+        display: inline-flex;
+        cursor: pointer;
+      }
+
+      .notif-bell {
+        font-size: 40px;
+        animation: bellShake 3s ease-in-out infinite;
+        filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+      }
+
+      .notif-badge {
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        width: 24px;
+        height: 24px;
+        background: #f5576c;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 900;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: badgePulse 2s ease-in-out infinite;
+        box-shadow: 0 0 15px rgba(245, 87, 108, 0.5);
+      }
+
+      @keyframes bellShake {
+        0%,
+        100% {
+          transform: rotate(0);
+        }
+        5% {
+          transform: rotate(15deg);
+        }
+        10% {
+          transform: rotate(-13deg);
+        }
+        15% {
+          transform: rotate(10deg);
+        }
+        20% {
+          transform: rotate(-8deg);
+        }
+        25% {
+          transform: rotate(5deg);
+        }
+        30% {
+          transform: rotate(0);
+        }
+      }
+
+      @keyframes badgePulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      /* ============================================
+         DEMO 16: FLOATING CARD — 3D Hover Levitate
+         Card float karta hai shadow ke saath
+      ============================================ */
+      .float-card {
+        width: 160px;
+        padding: 20px;
+        background: linear-gradient(
+          135deg,
+          rgba(212, 175, 55, 0.1),
+          rgba(212, 175, 55, 0.02)
+        );
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        border-radius: 20px;
+        text-align: center;
+        animation: floatCard 3s ease-in-out infinite;
+      }
+
+      .float-card-emoji {
+        font-size: 36px;
+        margin-bottom: 8px;
+      }
+
+      .float-card-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #d4af37;
+        margin-bottom: 3px;
+      }
+
+      .float-card-value {
+        font-size: 22px;
+        font-weight: 900;
+        color: #fff;
+      }
+
+      @keyframes floatCard {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+          box-shadow: 0 10px 40px rgba(212, 175, 55, 0.1);
+        }
+        50% {
+          transform: translateY(-15px) rotate(1deg);
+          box-shadow: 0 25px 60px rgba(212, 175, 55, 0.2);
+        }
+      }
+
+      /* ============================================
+         DEMO 17: GRADIENT BORDER — Rotating Border
+         Border ka gradient rotate hota hai
+      ============================================ */
+      .gradient-border-box {
+        width: 120px;
+        height: 120px;
+        border-radius: 20px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .gradient-border-box::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+          from 0deg,
+          #d4af37,
+          #f5576c,
+          #4facfe,
+          #43e97b,
+          #d4af37
+        );
+        animation: rotateBorder 3s linear infinite;
+      }
+
+      .gradient-border-box::after {
+        content: "✨";
+        position: absolute;
+        inset: 3px;
+        background: #0a0a0a;
+        border-radius: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        z-index: 1;
+      }
+
+      @keyframes rotateBorder {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ============================================
+         DEMO 18: COUNTER — Number Flip Style
+         Number flip animation
+      ============================================ */
+      .counter-display {
+        display: flex;
+        gap: 4px;
+      }
+
+      .counter-digit {
+        width: 40px;
+        height: 56px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        font-weight: 900;
+        color: #d4af37;
+        animation: digitFlip 1s ease-out;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .counter-digit::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .counter-digit:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .counter-digit:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .counter-digit:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+
+      .counter-sep {
+        font-size: 28px;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        animation: blink 1s step-end infinite;
+      }
+
+      @keyframes digitFlip {
+        0% {
+          transform: rotateX(90deg);
+          opacity: 0;
+        }
+        100% {
+          transform: rotateX(0deg);
+          opacity: 1;
+        }
+      }
+
+      /* ============================================
+         FOOTER — Animated Bottom Section
+      ============================================ */
+      .footer {
+        text-align: center;
+        padding: 60px 20px;
+        position: relative;
+      }
+
+      .footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 10%;
+        width: 80%;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(212, 175, 55, 0.3),
+          transparent
+        );
+      }
+
+      .footer p {
+        color: #444;
+        font-size: 14px;
+      }
+
+      .footer p span {
+        color: #d4af37;
+        font-weight: 700;
+      }
+
+      .footer .heart-footer {
+        display: inline-block;
+        animation: heartBeat 1.2s ease-in-out infinite;
+        color: #f5576c;
+      }
+
+      /* ============================================
+         SCROLL ANIMATIONS — Elements Animate on Scroll
+         Jab scroll karein to elements appear hon
+      ============================================ */
+      .scroll-animate {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .scroll-animate.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ============================================
+         RESPONSIVE — Mobile Optimizations
+      ============================================ */
+      @media (max-width: 768px) {
+        .header {
+          padding: 40px 15px 30px;
+        }
+
+        .demo-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .card {
+          padding: 30px 20px;
+        }
+
+        .section {
+          margin-bottom: 50px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================
+         FLOATING PARTICLES
+    ============================================ -->
+    <div class="particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+
+    <!-- ============================================
+         HEADER
+    ============================================ -->
+    <header class="header">
+      <div class="header-badge">⚡ Class 14 — Pro Edition</div>
+      <h1>CSS Animation Showcase</h1>
+      <p>
+        <span>18 Premium Animations</span> — Hover, Scroll & Interact karein!
+      </p>
+    </header>
+
+    <div class="container">
+      <!-- ============================================
+           SECTION 1: MOTION & TRANSFORM
+      ============================================ -->
+      <div class="section scroll-animate">
+        <div class="section-title">
+          <div class="section-number">1</div>
+          <h2>Motion & Transform</h2>
+          <p>Shape morphing, pulse rings aur orbit animations</p>
+        </div>
+
+        <div class="demo-grid">
+          <!-- Demo 1: Morph Box -->
+          <div class="card">
+            <span class="card-label">Transform</span>
+            <div class="demo-area">
+              <div class="morph-box"></div>
+            </div>
+            <h3>Morphing Box</h3>
+            <p class="desc">
+              Shape, color aur rotation — sab ek saath change hota hai. Hover pe
+              pause!
+            </p>
+          </div>
+
+          <!-- Demo 2: Pulse Rings -->
+          <div class="card">
+            <span class="card-label">Pulse</span>
+            <div class="demo-area">
+              <div class="pulse-container">
+                <div class="pulse-center"></div>
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+              </div>
+            </div>
+            <h3>Pulse Rings</h3>
+            <p class="desc">
+              Concentric rings pulse karte hain — notification ya radar effect!
+            </p>
+          </div>
+
+          <!-- Demo 8: Orbit -->
+          <div class="card">
+            <span class="card-label">Orbit</span>
+            <div class="demo-area">
+              <div class="orbit-container">
+                <div class="orbit-center"></div>
+                <div class="orbit-path">
+                  <div class="orbit-planet"></div>
+                </div>
+                <div class="orbit-path">
+                  <div class="orbit-planet"></div>
+                </div>
+              </div>
+            </div>
+            <h3>Planet Orbit</h3>
+            <p class="desc">
+              Solar system jaisa — planets apne orbit me ghoomte hain!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================
+           SECTION 2: LOADING ANIMATIONS
+      ============================================ -->
+      <div class="section scroll-animate">
+        <div class="section-title">
+          <div class="section-number">2</div>
+          <h2>Loading Animations</h2>
+          <p>Spinners, dots aur wave bars — premium loading states</p>
+        </div>
+
+        <div class="demo-grid">
+          <!-- Demo 4: Bouncing Dots -->
+          <div class="card">
+            <span class="card-label">Dots</span>
+            <div class="demo-area">
+              <div class="bounce-dots">
+                <div class="bounce-dot"></div>
+                <div class="bounce-dot"></div>
+                <div class="bounce-dot"></div>
+              </div>
+            </div>
+            <h3>Bouncing Dots</h3>
+            <p class="desc">
+              Classic loading dots — staggered delay ke saath smooth bounce!
+            </p>
+          </div>
+
+          <!-- Demo 5: Spinner -->
+          <div class="card">
+            <span class="card-label">Spinner</span>
+            <div class="demo-area">
+              <div class="spinner"></div>
+            </div>
+            <h3>Gradient Spinner</h3>
+            <p class="desc">
+              Multi-color border spinner — glow effect ke saath!
+            </p>
+          </div>
+
+          <!-- Demo 6: Wave Bars -->
+          <div class="card">
+            <span class="card-label">Audio</span>
+            <div class="demo-area">
+              <div class="wave-bars">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+              </div>
+            </div>
+            <h3>Audio Wave</h3>
+            <p class="desc">
+              Music visualizer jaisa — bars upar neeche wave me dance karte
+              hain!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================
+           SECTION 3: TEXT ANIMATIONS
+      ============================================ -->
+      <div class="section scroll-animate">
+        <div class="section-title">
+          <div class="section-number">3</div>
+          <h2>Text & Typography</h2>
+          <p>Typing effect, neon glow aur counter animations</p>
+        </div>
+
+        <div class="demo-grid">
+          <!-- Demo 3: Typing -->
+          <div class="card">
+            <span class="card-label">Typing</span>
+            <div class="demo-area">
+              <div class="typing-text">Hello World! 👋</div>
+            </div>
+            <h3>Typewriter Effect</h3>
+            <p class="desc">
+              Real typing effect — cursor blink ke saath ek ek letter aata hai!
+            </p>
+          </div>
+
+          <!-- Demo 11: Neon -->
+          <div class="card">
+            <span class="card-label">Neon</span>
+            <div class="demo-area">
+              <div class="neon-text">GLOW</div>
+            </div>
+            <h3>Neon Glow Text</h3>
+            <p class="desc">
+              Neon sign ki tarah flicker + glow — retro cyberpunk vibes!
+            </p>
+          </div>
+
+          <!-- Demo 18: Counter -->
+          <div class="card">
+            <span class="card-label">Counter</span>
+            <div class="demo-area">
+              <div class="counter-display">
+                <div class="counter-digit">1</div>
+                <div class="counter-digit">2</div>
+                <div class="counter-sep">:</div>
+                <div class="counter-digit">3</div>
+                <div class="counter-digit">4</div>
+              </div>
+            </div>
+            <h3>Flip Counter</h3>
+            <p class="desc">
+              Airport/timer style — digits 3D flip ke saath dikhte hain!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================
+           SECTION 4: INTERACTIVE ELEMENTS
+      ============================================ -->
+      <div class="section scroll-animate">
+        <div class="section-title">
+          <div class="section-number">4</div>
+          <h2>Interactive Elements</h2>
+          <p>Hover karein, click karein — interactive animations!</p>
+        </div>
+
+        <div class="demo-grid">
+          <!-- Demo 7: Flip Card -->
+          <div class="card">
+            <span class="card-label">3D Flip</span>
+            <div class="demo-area">
+              <div class="flip-card-wrapper">
+                <div class="flip-card-inner">
+                  <div class="flip-front">FRONT ✨</div>
+                  <div class="flip-back">BACK 🔥</div>
+                </div>
+              </div>
+            </div>
+            <h3>3D Flip Card</h3>
+            <p class="desc">
+              Mouse hover karo — card 3D me flip hoke peeche wala face dikhata
+              hai!
+            </p>
+          </div>
+
+          <!-- Demo 9: Glow Button -->
+          <div class="card">
+            <span class="card-label">Button</span>
+            <div class="demo-area">
+              <button class="glow-btn">Click Me ✨</button>
+            </div>
+            <h3>Glowing CTA Button</h3>
+            <p class="desc">
+              Premium button — shine sweep + glow pulse + hover lift effect!
+            </p>
+          </div>
+
+          <!-- Demo 14: Heartbeat -->
+          <div class="card">
+            <span class="card-label">Heartbeat</span>
+            <div class="demo-area">
+              <div class="heart">❤️</div>
+            </div>
+            <h3>Heartbeat Pulse</h3>
+            <p class="desc">
+              Dil ki tarah dhak dhak — hover pe fast beat! Like button ke liye
+              perfect!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================
+           SECTION 5: UI COMPONENTS
+      ============================================ -->
+      <div class="section scroll-animate">
+        <div class="section-title">
+          <div class="section-number">5</div>
+          <h2>UI Components</h2>
+          <p>Real-world UI elements with animations</p>
+        </div>
+
+        <div class="demo-grid">
+          <!-- Demo 10: Skeleton -->
+          <div class="card">
+            <span class="card-label">Skeleton</span>
+            <div class="demo-area">
+              <div class="skeleton-card">
+                <div class="skeleton-avatar"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line"></div>
+              </div>
+            </div>
+            <h3>Skeleton Loader</h3>
+            <p class="desc">
+              Content load hone se pehle placeholder — shimmer effect ke saath!
+            </p>
+          </div>
+
+          <!-- Demo 12: Progress -->
+          <div class="card">
+            <span class="card-label">Progress</span>
+            <div class="demo-area">
+              <div class="progress-container">
+                <div class="progress-label">
+                  <span>Revenue</span><span>87%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill gold"></div>
+                </div>
+                <div class="progress-label">
+                  <span>Orders</span><span>65%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill blue"></div>
+                </div>
+                <div class="progress-label">
+                  <span>Returns</span><span>42%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill pink"></div>
+                </div>
+              </div>
+            </div>
+            <h3>Animated Progress</h3>
+            <p class="desc">
+              Smooth fill animation — staggered delay + shine sweep!
+            </p>
+          </div>
+
+          <!-- Demo 15: Notification -->
+          <div class="card">
+            <span class="card-label">Alert</span>
+            <div class="demo-area">
+              <div class="notif-wrapper">
+                <div class="notif-bell">🔔</div>
+                <div class="notif-badge">5</div>
+              </div>
+            </div>
+            <h3>Notification Bell</h3>
+            <p class="desc">
+              Bell shake + badge pulse — attention grab karne ke liye perfect!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================
+           SECTION 6: ADVANCED EFFECTS
+      ============================================ -->
+      <div class="section scroll-animate">
+        <div class="section-title">
+          <div class="section-number">6</div>
+          <h2>Advanced Effects</h2>
+          <p>Floating, gradient borders aur staggered lists</p>
+        </div>
+
+        <div class="demo-grid">
+          <!-- Demo 16: Float Card -->
+          <div class="card">
+            <span class="card-label">Float</span>
+            <div class="demo-area">
+              <div class="float-card">
+                <div class="float-card-emoji">💰</div>
+                <div class="float-card-title">Revenue</div>
+                <div class="float-card-value">Rs. 85K</div>
+              </div>
+            </div>
+            <h3>Floating Card</h3>
+            <p class="desc">
+              Card continuously float karta hai — shadow depth ke saath 3D feel!
+            </p>
+          </div>
+
+          <!-- Demo 17: Gradient Border -->
+          <div class="card">
+            <span class="card-label">Border</span>
+            <div class="demo-area">
+              <div class="gradient-border-box"></div>
+            </div>
+            <h3>Rotating Border</h3>
+            <p class="desc">
+              Conic gradient border continuously rotate karta hai — hypnotic
+              effect!
+            </p>
+          </div>
+
+          <!-- Demo 13: Stagger List -->
+          <div class="card">
+            <span class="card-label">Stagger</span>
+            <div class="demo-area">
+              <div class="stagger-list">
+                <div class="stagger-item">
+                  <div class="stagger-dot"></div>
+                  <span class="stagger-text">Dashboard Ready</span>
+                </div>
+                <div class="stagger-item">
+                  <div class="stagger-dot"></div>
+                  <span class="stagger-text">API Connected</span>
+                </div>
+                <div class="stagger-item">
+                  <div class="stagger-dot"></div>
+                  <span class="stagger-text">Tests Passed</span>
+                </div>
+                <div class="stagger-item">
+                  <div class="stagger-dot"></div>
+                  <span class="stagger-text">Deployed Live</span>
+                </div>
+              </div>
+            </div>
+            <h3>Staggered List</h3>
+            <p class="desc">
+              Items ek ek karke slide-in hote hain — delayed entrance effect!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         FOOTER
+    ============================================ -->
+    <footer class="footer">
+      <p>
+        Made with <span class="heart-footer">❤️</span> by
+        <span>Ishaq Afridi</span> — CSS Animation Class 14 Pro Edition
+      </p>
+    </footer>
+
+    <!-- ============================================
+         SCROLL ANIMATION SCRIPT
+         Jab elements viewport me ayein to animate hon
+    ============================================ -->
+    <script>
+      // Intersection Observer — scroll pe elements animate hon
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      // Sab scroll-animate elements ko observe karo
+      document.querySelectorAll(".scroll-animate").forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

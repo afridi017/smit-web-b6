@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Transform + Transition + Flex - Class 13</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #f5f5f5;
+        padding: 20px;
+      }
+      h2 {
+        text-align: center;
+        margin: 40px 0 20px;
+        color: #333;
+      }
+
+      /* ===== PART 1: TRANSFORM + TRANSITION ===== */
+      .box1 {
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        border: 2px solid #000;
+        background: lightblue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 18px;
+
+        /* STARTING STATE */
+        transform: scale(0.5); /* shuru me chota */
+
+        /* ANIMATION KE LIYE */
+        transition-property: transform, border-radius, background;
+        transition-duration: 1s; /* 4s se 1s kiya taake fast ho */
+        transition-timing-function: ease-in-out;
+      }
+
+      .box1:hover {
+        /* HOVER STATE */
+        transform: rotate(180deg) scale(1.2); /* ghoom + bara */
+        border-radius: 50%; /* gol ho jaye */
+        background: rebeccapurple;
+        color: white;
+      }
+
+      /* ===== PART 2: DIFFERENT TRANSFORMS ===== */
+      .box2 {
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        border: 2px solid #000;
+        background: orange;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        transition: 0.5s;
+      }
+
+      .box2:hover {
+        transform: scale(1.1) rotate(20deg) translateX(30px);
+        /* bara + halka ghoom + right jaye */
+      }
+
+      /* ===== PART 3: FLEX ADVANCED PROPERTIES ===== */
+      .flex-container {
+        display: flex;
+        height: 50vh;
+        border: 3px solid #000;
+        background: white;
+        gap: 10px;
+        padding: 10px;
+        align-items: center; /* sab ko center me rakho */
+      }
+
+      .child {
+        width: 100px;
+        height: 100px;
+        border: 2px solid #333;
+        background: lightgreen;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      /* 1. ORDER = sequence change */
+      .child_1 {
+        order: 2;
+        background: lightcoral;
+      }
+
+      /* 2. FLEX-GROW = extra space le lo */
+      .child_2 {
+        flex-grow: 1;
+        background: lightskyblue;
+      }
+
+      /* 3. FLEX-SHRINK = chota ho jao jab jagah kam ho */
+      .child_3 {
+        flex-basis: 200px; /* starting width 200px */
+        flex-shrink: 0; /* chota nahi hoga */
+        background: gold;
+      }
+
+      /* 4. ALIGN-SELF = 1 item ko alag alignment */
+      .child_4 {
+        align-self: flex-end;
+        background: plum;
+      }
+
+      /* 5. NORMAL */
+      .child_5 {
+        background: lightgray;
+      }
+
+      .notes {
+        background: #333;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">
+      Class 13: CSS Transform + Transition + Flex
+    </h1>
+
+    <!-- PART 1 -->
+    <h2>Part 1: Transform + Transition with Hover</h2>
+    <div class="box1">Hover Me</div>
+
+    <!-- PART 2 -->
+    <h2>Part 2: Different Transform Effects</h2>
+    <div class="box2">Hover Me Too</div>
+
+    <!-- PART 3 -->
+    <h2>Part 3: Flex Advanced - order, grow, shrink, basis, align-self</h2>
+    <div class="flex-container">
+      <div class="child child_1">1<br /><small>order:2</small></div>
+      <div class="child child_2">2<br /><small>grow:1</small></div>
+      <div class="child child_3">3<br /><small>basis:200</small></div>
+      <div class="child child_4">4<br /><small>align-end</small></div>
+      <div class="child child_5">5</div>
+    </div>
+
+    <div class="notes">
+      <h3>Summary for Teacher:</h3>
+      <p>
+        <b>1. Transform:</b> rotate, scale, translate, skew - shape change karta
+        hai
+      </p>
+      <p>
+        <b>2. Transition:</b> smooth animation ke liye `transition-duration` use
+        hota hai
+      </p>
+      <p>
+        <b>3. Flex Advanced:</b> order, flex-grow, flex-shrink, flex-basis,
+        align-self
+      </p>
+    </div>
+  </body>
+</html>

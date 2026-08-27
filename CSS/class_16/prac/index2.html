@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+      :root {
+        --page-bg: #f3f4f6;
+        --card-bg: #ffffff;
+        --header-bg: #ffffff;
+        --sidebar-bg: #1a1a2e;
+        --primary: #7b2ff7;
+        --secondary: #f107a3;
+        --text-dark: #1f2937;
+        --text-light: #ffffff;
+        --border-color: #e5e7eb;
+        --radius: 12px;
+        --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background-color: var(--page-bg);
+        color: var(--text-dark);
+      }
+
+      .container {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        height: 70px;
+        background-color: var(--header-bg);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 30px;
+        box-shadow: var(--shadow);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      header .logo {
+        font-size: 22px;
+        font-weight: bold;
+        color: var(--primary);
+        letter-spacing: 1px;
+      }
+
+      header ul {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+      }
+
+      header ul li a {
+        text-decoration: none;
+        color: var(--text-dark);
+        font-weight: 500;
+        padding: 8px 14px;
+        border-radius: 8px;
+        transition: 0.3s;
+      }
+
+      header ul li a:hover {
+        background-color: var(--primary);
+        color: var(--text-light);
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        min-height: calc(100vh - 70px);
+      }
+
+      aside {
+        width: 220px;
+        background-color: var(--sidebar-bg);
+        padding: 30px 20px;
+        color: var(--text-light);
+      }
+
+      aside h3 {
+        color: var(--secondary);
+        margin-bottom: 20px;
+        font-size: 16px;
+        letter-spacing: 1px;
+      }
+
+      aside ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      aside ul li a {
+        display: block;
+        text-decoration: none;
+        color: var(--text-light);
+        padding: 12px 15px;
+        border-radius: 8px;
+        transition: 0.3s;
+      }
+
+      aside ul li a:hover {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        transform: translateX(5px);
+      }
+
+      .dashboard-body {
+        flex: 1;
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 120px 250px;
+        gap: 20px;
+      }
+
+      .grid-item {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 26px;
+        font-weight: bold;
+        color: var(--text-dark);
+        transition: 0.3s;
+      }
+
+      .grid-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      }
+
+      .grid-item-1 {
+        border-top: 5px solid #2563eb;
+      }
+      .grid-item-2 {
+        border-top: 5px solid #7c3aed;
+      }
+      .grid-item-3 {
+        border-top: 5px solid #db2777;
+      }
+
+      .grid-item-4 {
+        grid-column: 1 / 3;
+        grid-row: 2 / 4;
+        border-top: 5px solid #f59e0b;
+      }
+
+      .grid-item-5 {
+        grid-row: 2 / 4;
+        border-top: 5px solid #0891b2;
+      }
+
+      @media (max-width: 900px) {
+        main {
+          flex-direction: column;
+        }
+        aside {
+          width: 100%;
+        }
+        aside ul {
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+        .dashboard-body {
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: repeat(2, 120px) 220px;
+        }
+        .grid-item-4 {
+          grid-column: 1 / 3;
+          grid-row: auto;
+        }
+        .grid-item-5 {
+          grid-column: 1 / 3;
+          grid-row: auto;
+        }
+      }
+
+      @media (max-width: 520px) {
+        header {
+          flex-direction: column;
+          height: auto;
+          padding: 15px;
+          gap: 10px;
+        }
+        header ul {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+        }
+        .dashboard-body {
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(5, 120px);
+        }
+        .grid-item-4,
+        .grid-item-5 {
+          grid-column: auto;
+          grid-row: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">Dashboard</div>
+        <ul>
+          <li><a href="#">Link 1</a></li>
+          <li><a href="#">Link 2</a></li>
+          <li><a href="#">Link 3</a></li>
+          <li><a href="#">Link 4</a></li>
+        </ul>
+      </header>
+      <main>
+        <aside>
+          <h3>Menu</h3>
+          <ul>
+            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+            <li><a href="#">Link 3</a></li>
+            <li><a href="#">Link 4</a></li>
+          </ul>
+        </aside>
+        <div class="dashboard-body">
+          <div class="grid-item grid-item-1">1</div>
+          <div class="grid-item grid-item-2">2</div>
+          <div class="grid-item grid-item-3">3</div>
+          <div class="grid-item grid-item-4">4</div>
+          <div class="grid-item grid-item-5">5</div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

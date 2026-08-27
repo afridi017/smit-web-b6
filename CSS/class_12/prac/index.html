@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Flexbox - Class 12</title>
+    <style>
+      body {
+        background: #f0f0f0;
+        font-family: Arial;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      /* FLEXBOX PARENT - isko container kehte hain */
+      .container {
+        /* spelling theek ki */
+        border: 3px solid #000;
+        border-radius: 10px;
+        width: 80vw;
+        height: 70vh;
+        margin: auto;
+        background: white;
+        display: flex; /* FLEX ON */
+        gap: 20px;
+        flex-wrap: wrap; /* items neeche chale jayenge agar jagah na ho */
+
+        /* X-AXIS ALIGNMENT - jab flex-direction: row ho */
+        justify-content: center; /* start, end, center, space-between, space-around, space-evenly */
+
+        /* Y-AXIS ALIGNMENT - single line ke liye */
+        align-items: center; /* start, end, center, stretch */
+
+        /* Y-AXIS ALIGNMENT - multiple lines ke liye jab wrap ho */
+        align-content: center; /* start, end, center, space-between */
+      }
+
+      /* FLEX ITEMS - child boxes */
+      .child {
+        width: 100px;
+        height: 100px;
+        border: 2px solid #333;
+        background: lightblue;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      /* CENTER TEXT INSIDE BOX - with Flex */
+      .child_3 {
+        background: rebeccapurple;
+        color: white;
+        display: flex; /* box ke andar center karne ke liye */
+        justify-content: center; /* horizontal center */
+        align-items: center; /* vertical center */
+      }
+
+      /* NOTE SECTION */
+      .notes {
+        width: 80vw;
+        margin: 20px auto;
+        background: #333;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .notes ul {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Class 12: CSS Flexbox Properties</h1>
+
+    <div class="container">
+      <div class="child child_1">1</div>
+      <div class="child child_2">2</div>
+      <div class="child child_3">3</div>
+      <div class="child child_4">4</div>
+      <div class="child child_5">5</div>
+      <div class="child child_6">6</div>
+    </div>
+
+    <div class="notes">
+      <h3>Important Flexbox Points:</h3>
+      <ul>
+        <li><b>display: flex</b> = Parent pe lagta hai</li>
+        <li>
+          <b>justify-content</b> = X-Axis alignment jab `flex-direction: row` ho
+        </li>
+        <li><b>align-items</b> = Y-Axis alignment single line ke liye</li>
+        <li>
+          <b>align-content</b> = Y-Axis alignment multiple lines ke liye jab
+          `flex-wrap: wrap` ho
+        </li>
+        <li><b>gap</b> = Boxes ke darmiyan space</li>
+        <li>
+          <b>flex-wrap: wrap</b> = Items ko neeche bhej deta hai agar jagah kam
+          ho
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

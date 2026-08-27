@@ -1,0 +1,201 @@
+/* =========================
+   RESET & BASE
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #7b2ff7;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  background-color: #7b2ff7;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+  background: linear-gradient(135deg, #7b2ff7, #f107a3);
+  color: #ffffff;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.btn {
+  padding: 12px 30px;
+  background-color: #ffffff;
+  color: #7b2ff7;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #1a1a2e;
+  color: #ffffff;
+}
+
+/* =========================
+   MAIN GRID CONTAINER
+========================= */
+.container {
+  width: 100%;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* =========================
+   CARDS
+========================= */
+.card {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  color: #7b2ff7;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+/* =========================
+   MEDIA QUERIES
+   Mobile first approach!
+========================= */
+
+/* Tablet (426px se upar - 2 columns) */
+@media (min-width: 426px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small Desktop (769px se upar - 3 columns) */
+@media (min-width: 769px) {
+  .container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hero h1 {
+    font-size: 52px;
+  }
+}
+
+/* Large Desktop (1025px se upar - 5 columns) */
+@media (min-width: 1025px) {
+  .container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Mobile Specific (425px se neeche - navbar changes) */
+@media (max-width: 425px) {
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .hero {
+    padding: 50px 15px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+}

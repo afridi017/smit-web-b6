@@ -1,0 +1,1736 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Noor — A Universe Made For You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      async
+      src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"
+    ></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+      :root {
+        --lavender: #c8a2c8;
+        --blush: #ffd1dc;
+        --pearl: #fdfdfd;
+        --gold: #ffd700;
+        --night: #1a1a2e;
+        --glass: rgba(255, 255, 255, 0.08);
+        --glass-border: rgba(255, 255, 255, 0.18);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scrollbar-width: thin;
+        scrollbar-color: var(--lavender) var(--night);
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--pearl);
+        color: var(--night);
+        overflow-x: hidden;
+        cursor: none;
+      }
+      body::selection {
+        background: var(--blush);
+      }
+      a,
+      button {
+        cursor: none;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+      }
+
+      /* Custom Cursor */
+      .cursor {
+        position: fixed;
+        width: 12px;
+        height: 12px;
+        background: var(--gold);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99999;
+        mix-blend-mode: difference;
+        transition: transform 0.15s ease;
+      }
+      .cursor-follower {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(200, 162, 200, 0.6);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99998;
+        transition:
+          transform 0.2s ease,
+          width 0.2s,
+          height 0.2s,
+          background 0.2s;
+      }
+
+      /* Progress */
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: linear-gradient(
+          90deg,
+          var(--lavender),
+          var(--blush),
+          var(--gold)
+        );
+        z-index: 10000;
+      }
+
+      /* Loader */
+      #loader {
+        position: fixed;
+        inset: 0;
+        background: var(--night);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition:
+          opacity 1.2s ease,
+          visibility 1.2s;
+      }
+      #loader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .loader-heart {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        animation: loaderPulse 1.6s ease-in-out infinite;
+      }
+      .loader-heart::before,
+      .loader-heart::after {
+        content: "";
+        position: absolute;
+        width: 52px;
+        height: 80px;
+        background: linear-gradient(180deg, var(--blush), var(--lavender));
+        border-radius: 50px 50px 0 0;
+        top: 0;
+      }
+      .loader-heart::before {
+        left: 20px;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+      }
+      .loader-heart::after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+      }
+      .loader-text {
+        margin-top: 30px;
+        color: var(--pearl);
+        font-family: "Playfair Display";
+        font-size: 1.2rem;
+        letter-spacing: 0.15em;
+        opacity: 0.8;
+      }
+      .loader-bar {
+        margin-top: 16px;
+        width: 140px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+      }
+      .loader-progress {
+        height: 100%;
+        width: 0%;
+        background: var(--gold);
+        box-shadow: 0 0 10px var(--gold);
+      }
+      @keyframes loaderPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      /* Music Toggle */
+      #musicToggle {
+        position: fixed;
+        top: 28px;
+        right: 28px;
+        z-index: 1000;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        display: grid;
+        place-items: center;
+        color: var(--pearl);
+        font-size: 18px;
+        transition: 0.4s;
+      }
+      #musicToggle:hover {
+        transform: scale(1.1);
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      /* Sections Common */
+      section {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        padding: 80px 0;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        position: relative;
+        z-index: 2;
+      }
+      .glass {
+        backdrop-filter: blur(24px);
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(26, 26, 46, 0.08);
+      }
+
+      /* HERO */
+      #hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--night);
+        padding: 0;
+      }
+      #hero-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .hero-content {
+        text-align: center;
+        z-index: 5;
+        pointer-events: none;
+      }
+      .hero-content * {
+        pointer-events: auto;
+      }
+      .hero-eyebrow {
+        display: inline-block;
+        padding: 8px 18px;
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: var(--blush);
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+      .hero-title {
+        font-size: clamp(3.5rem, 10vw, 7.5rem);
+        color: var(--pearl);
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+        font-weight: 600;
+      }
+      .hero-title span {
+        display: block;
+      }
+      .hero-title em {
+        font-style: italic;
+        color: transparent;
+        background: linear-gradient(
+          100deg,
+          var(--blush),
+          var(--lavender),
+          var(--gold)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-weight: 400;
+      }
+      .hero-sub {
+        margin-top: 20px;
+        color: rgba(253, 253, 253, 0.6);
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        font-weight: 300;
+        letter-spacing: 0.02em;
+        max-width: 520px;
+        margin-inline: auto;
+      }
+      .btn-enter {
+        margin-top: 36px;
+        padding: 16px 38px;
+        border-radius: 100px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.12),
+          rgba(255, 255, 255, 0.04)
+        );
+        backdrop-filter: blur(20px);
+        color: var(--pearl);
+        font-family: "Poppins";
+        font-size: 0.9rem;
+        letter-spacing: 0.08em;
+        box-shadow:
+          0 0 0 1px rgba(255, 215, 0, 0.15),
+          0 8px 24px rgba(0, 0, 0, 0.25);
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .btn-enter:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow:
+          0 0 25px rgba(255, 209, 220, 0.3),
+          0 12px 32px rgba(0, 0, 0, 0.3);
+        border-color: var(--blush);
+      }
+      .petals {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .petal {
+        position: absolute;
+        width: 10px;
+        height: 16px;
+        background: radial-gradient(ellipse at 30% 20%, #fff, var(--blush));
+        border-radius: 100% 0 100% 0;
+        opacity: 0.6;
+        animation: petalFall linear infinite;
+      }
+      @keyframes petalFall {
+        0% {
+          transform: translate3d(0, -10vh, 0) rotate(0deg) rotateY(0deg);
+        }
+        100% {
+          transform: translate3d(100px, 110vh, 0) rotate(720deg) rotateY(360deg);
+        }
+      }
+
+      /* ABOUT */
+      #about {
+        background: var(--pearl);
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+      }
+      .polaroid-wrap {
+        perspective: 1200px;
+        display: flex;
+        justify-content: center;
+      }
+      .polaroid {
+        width: 360px;
+        height: 460px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .polaroid-card {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        border-radius: 18px;
+        overflow: hidden;
+        background: white;
+        padding: 12px 12px 54px 12px;
+        box-shadow:
+          0 20px 60px rgba(26, 26, 46, 0.12),
+          0 0 0 1px rgba(0, 0, 0, 0.04);
+      }
+      .polaroid-card.back {
+        transform: rotateY(180deg);
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--lavender), var(--blush));
+      }
+      .polaroid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .polaroid-caption {
+        position: absolute;
+        bottom: 14px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-family: "Playfair Display";
+        font-size: 1.1rem;
+        font-style: italic;
+      }
+      .twinkle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: var(--gold);
+        border-radius: 50%;
+        box-shadow: 0 0 12px var(--gold);
+        animation: twinkle 2s ease-in-out infinite;
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.2;
+          transform: scale(0.6);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.4);
+        }
+      }
+      .about-text h2 {
+        font-size: clamp(2.2rem, 5vw, 3.2rem);
+        line-height: 1.1;
+        margin-bottom: 20px;
+      }
+      .about-text h2 i {
+        color: var(--lavender);
+        font-weight: 400;
+      }
+      .about-text p {
+        color: rgba(26, 26, 46, 0.7);
+        line-height: 1.9;
+        font-weight: 300;
+        font-size: 1.05rem;
+      }
+      .about-quote {
+        margin-top: 28px;
+        padding-left: 20px;
+        border-left: 2px solid var(--blush);
+        font-family: "Playfair Display";
+        font-style: italic;
+        font-size: 1.2rem;
+        color: var(--night);
+      }
+
+      /* MEMORY */
+      #memories {
+        background: linear-gradient(
+          180deg,
+          var(--pearl) 0%,
+          #f6e8f3 40%,
+          #fbe8ee 100%
+        );
+      }
+      .memories-header {
+        text-align: center;
+        max-width: 640px;
+        margin: 0 auto 60px;
+      }
+      .memories-header h2 {
+        font-size: clamp(2.2rem, 5vw, 3.4rem);
+      }
+      .memories-header p {
+        margin-top: 12px;
+        color: rgba(26, 26, 46, 0.6);
+      }
+      .carousel {
+        position: relative;
+        height: 520px;
+        perspective: 1400px;
+        display: grid;
+        place-items: center;
+      }
+      .carousel-track {
+        position: relative;
+        width: 320px;
+        height: 420px;
+        transform-style: preserve-3d;
+        transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .memory-card {
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 20px 50px rgba(26, 26, 46, 0.14);
+        transform-origin: center center;
+        transition:
+          filter 0.5s,
+          box-shadow 0.5s;
+      }
+      .memory-card img {
+        width: 100%;
+        height: 72%;
+        object-fit: cover;
+      }
+      .memory-info {
+        padding: 16px 18px;
+      }
+      .memory-info h4 {
+        font-family: "Playfair Display";
+        font-size: 1.05rem;
+      }
+      .memory-info span {
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--lavender);
+      }
+      .memory-card::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 40%;
+        height: 200%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.6),
+          transparent
+        );
+        transform: rotate(18deg);
+        opacity: 0;
+        transition: 0.6s;
+      }
+      .memory-card:hover::after {
+        left: 140%;
+        opacity: 1;
+      }
+      .memory-card:hover {
+        box-shadow: 0 30px 80px rgba(200, 162, 200, 0.4);
+      }
+
+      /* SPECIAL */
+      #special {
+        background: var(--pearl);
+        padding-bottom: 120px;
+      }
+      .special-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        margin-top: 60px;
+      }
+      @media (max-width: 900px) {
+        .special-grid {
+          grid-template-columns: 1fr;
+          max-width: 420px;
+          margin-inline: auto;
+        }
+      }
+      .special-card {
+        padding: 36px 32px;
+        text-align: center;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        transform-style: preserve-3d;
+      }
+      .special-card .icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 20px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        font-size: 28px;
+        background: linear-gradient(135deg, var(--blush), var(--lavender));
+        box-shadow: 0 8px 20px rgba(200, 162, 200, 0.35);
+      }
+      .special-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+      }
+      .special-card p {
+        color: rgba(26, 26, 46, 0.6);
+        line-height: 1.6;
+        font-size: 0.95rem;
+        font-weight: 300;
+      }
+
+      /* LETTER */
+      #letter {
+        background: linear-gradient(180deg, var(--pearl), #fff6f9);
+        padding: 120px 0;
+      }
+      .letter-wrap {
+        max-width: 720px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .letter-paper {
+        padding: 60px 50px;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.04),
+          0 24px 60px rgba(26, 26, 46, 0.08);
+        position: relative;
+        transform-origin: center bottom;
+        overflow: hidden;
+      }
+      .letter-paper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--blush),
+          var(--lavender),
+          var(--gold)
+        );
+      }
+      .letter-paper p {
+        font-family: "Playfair Display";
+        font-size: 1.08rem;
+        line-height: 2;
+        color: rgba(26, 26, 46, 0.78);
+      }
+      .letter-paper .dear {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        color: var(--night);
+      }
+      .letter-sig {
+        margin-top: 36px;
+        font-style: italic;
+        text-align: right;
+      }
+      .floating-envelope {
+        position: absolute;
+        font-size: 28px;
+        opacity: 0.12;
+        animation: floatEnv 10s ease-in-out infinite;
+      }
+      @keyframes floatEnv {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-5deg);
+        }
+        50% {
+          transform: translateY(-30px) rotate(8deg);
+        }
+      }
+
+      /* WISH */
+      #wish {
+        background: var(--night);
+        min-height: 92vh;
+        display: flex;
+        align-items: center;
+      }
+      #wish-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .wish-content {
+        text-align: center;
+        color: var(--pearl);
+        position: relative;
+        z-index: 3;
+        width: 100%;
+      }
+      .wish-content h2 {
+        font-size: clamp(2.4rem, 6vw, 4rem);
+      }
+      .wish-content p {
+        margin-top: 12px;
+        color: rgba(253, 253, 253, 0.6);
+      }
+      .wish-input-wrap {
+        margin: 36px auto 0;
+        max-width: 460px;
+        display: flex;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(24px);
+        padding: 8px;
+        border-radius: 100px;
+      }
+      .wish-input-wrap input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--pearl);
+        padding: 12px 18px;
+        font-family: "Poppins";
+      }
+      .wish-input-wrap button {
+        padding: 12px 24px;
+        border-radius: 100px;
+        border: none;
+        background: var(--gold);
+        color: var(--night);
+        font-weight: 500;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      }
+      .wishes-list {
+        margin-top: 26px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .wish-bubble {
+        padding: 8px 16px;
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--blush);
+        font-size: 0.85rem;
+        animation: bubbleIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      @keyframes bubbleIn {
+        from {
+          transform: translateY(12px) scale(0.9);
+          opacity: 0;
+        }
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--night);
+        padding: 80px 0 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .moon {
+        width: 86px;
+        height: 86px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #fff,
+          #f5f3d5 50%,
+          #e8d9a8
+        );
+        box-shadow:
+          0 0 30px rgba(255, 215, 0, 0.4),
+          0 0 80px rgba(255, 215, 0, 0.15),
+          inset -10px -8px 16px rgba(0, 0, 0, 0.15);
+      }
+      .footer-stars {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .made {
+        color: rgba(253, 253, 253, 0.7);
+        font-size: 0.95rem;
+        letter-spacing: 0.06em;
+      }
+      .made b {
+        color: var(--blush);
+        font-family: "Playfair Display";
+        font-style: italic;
+      }
+      .copy {
+        margin-top: 10px;
+        color: rgba(253, 253, 253, 0.25);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      /* Confetti & Easter Egg */
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        pointer-events: none;
+        z-index: 9999;
+        animation: confettiFall 3s ease-out forwards;
+      }
+      @keyframes confettiFall {
+        0% {
+          transform: translate3d(0, 0, 0) rotate(0);
+        }
+        100% {
+          transform: translate3d(var(--x), 100vh, 0) rotate(720deg);
+          opacity: 0;
+        }
+      }
+      .easter {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        background: rgba(26, 26, 46, 0.9);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 209, 220, 0.3);
+        padding: 30px 40px;
+        border-radius: 30px;
+        color: var(--pearl);
+        text-align: center;
+        z-index: 10001;
+        transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        pointer-events: none;
+      }
+      .easter.show {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      .easter h3 {
+        font-size: 2rem;
+        background: linear-gradient(90deg, var(--blush), var(--gold));
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          cursor: auto;
+        }
+        .cursor,
+        .cursor-follower {
+          display: none;
+        }
+        a,
+        button {
+          cursor: pointer;
+        }
+        .letter-paper {
+          padding: 36px 26px;
+        }
+        #musicToggle {
+          top: 16px;
+          right: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader">
+      <div class="loader-heart"></div>
+      <div class="loader-text">Preparing Noor's Universe...</div>
+      <div class="loader-bar">
+        <div class="loader-progress" id="loaderBar"></div>
+      </div>
+    </div>
+
+    <div class="progress" id="progress"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="follower"></div>
+
+    <button id="musicToggle" aria-label="Toggle Music">♪</button>
+    <div class="easter" id="easter">
+      <h3>I love you, Noor 💖</h3>
+      <p style="margin-top: 8px; opacity: 0.7">You found the secret words</p>
+    </div>
+
+    <!-- HERO -->
+    <section id="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="petals" id="petals"></div>
+      <div class="container hero-content">
+        <div class="hero-eyebrow" data-hero>For Someone Extraordinary</div>
+        <h1 class="hero-title" data-hero>
+          <span>For</span><span><em>Noor</em></span>
+        </h1>
+        <p class="hero-sub" data-hero>
+          The world became brighter the day you were born
+        </p>
+        <button class="btn-enter" data-hero id="enterBtn">
+          Enter My World ✨
+        </button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container about-grid">
+        <div class="polaroid-wrap">
+          <div class="polaroid" id="polaroid">
+            <div class="polaroid-card front">
+              <img
+                src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=80&auto=format"
+                alt="Noor"
+                loading="lazy"
+              />
+              <div class="polaroid-caption">Noor — my light ✨</div>
+              <span
+                class="twinkle"
+                style="top: 10%; left: 12%; animation-delay: 0s"
+              ></span>
+              <span
+                class="twinkle"
+                style="top: 22%; right: 14%; animation-delay: 0.6s"
+              ></span>
+              <span
+                class="twinkle"
+                style="bottom: 28%; left: 18%; animation-delay: 1.2s"
+              ></span>
+            </div>
+            <div class="polaroid-card back">
+              <div style="text-align: center; color: white">
+                <div
+                  style="
+                    font-family: &quot;Playfair Display&quot;;
+                    font-size: 2.2rem;
+                  "
+                >
+                  N
+                </div>
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    letter-spacing: 0.3em;
+                    text-transform: uppercase;
+                    opacity: 0.8;
+                    margin-top: 8px;
+                  "
+                >
+                  My Universe
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-text">
+          <h2 data-reveal>The reason <i>for this</i> Universe</h2>
+          <p data-reveal>
+            Noor, your name means light, and you truly are the light of my life.
+            Your smile can turn my worst day into the best one. Your kindness,
+            your laugh, the way you care for everyone...
+          </p>
+          <p data-reveal style="margin-top: 16px">
+            this website is just a small universe I built to tell you how much
+            you mean to me. You deserve a world that revolves around you, and
+            here it is.
+          </p>
+          <div class="about-quote" data-reveal>
+            “In a world full of stars, you are my sun.”
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMORIES -->
+    <section id="memories">
+      <div class="container">
+        <div class="memories-header">
+          <h2 data-reveal>Our Moments</h2>
+          <p data-reveal>
+            Every memory with you is a constellation I want to keep forever
+          </p>
+        </div>
+        <div class="carousel" id="carousel">
+          <div class="carousel-track" id="track"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIAL -->
+    <section id="special">
+      <div class="container">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto">
+          <h2 data-reveal style="font-size: clamp(2.2rem, 5vw, 3.4rem)">
+            Why you are Special
+          </h2>
+          <p data-reveal style="margin-top: 12px; color: rgba(26, 26, 46, 0.6)">
+            Three small truths that make my whole world
+          </p>
+        </div>
+        <div class="special-grid">
+          <div class="special-card glass" data-tilt>
+            <div class="icon">💗</div>
+            <h3>Your Heart</h3>
+            <p>The kindest heart I have ever known. You love without limits.</p>
+          </div>
+          <div class="special-card glass" data-tilt>
+            <div class="icon">✧</div>
+            <h3>Your Soul</h3>
+            <p>Beautiful inside and out. A rare kind of magic.</p>
+          </div>
+          <div class="special-card glass" data-tilt>
+            <div class="icon">☀️</div>
+            <h3>Your Light</h3>
+            <p>You make everything around you better just by being there.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LETTER -->
+    <section id="letter">
+      <span class="floating-envelope" style="top: 18%; left: 12%">💌</span>
+      <span
+        class="floating-envelope"
+        style="top: 32%; right: 14%; animation-delay: -2s"
+        >💌</span
+      >
+      <span
+        class="floating-envelope"
+        style="bottom: 22%; left: 18%; animation-delay: -5s"
+        >✉️</span
+      >
+      <div class="container">
+        <div class="letter-wrap">
+          <div class="letter-paper" id="letterPaper">
+            <div class="dear">Dear Noor,</div>
+            <p>
+              I don't know if words are enough, but I wanted to create something
+              just for you. Something that exists only because you exist. Every
+              line of code, every color, every 3D star in this website reminds
+              me of you.
+            </p>
+            <p style="margin-top: 22px">
+              Thank you for being you. Thank you for making my life magical.
+            </p>
+            <p style="margin-top: 22px">This is for you, always.</p>
+            <div class="letter-sig">
+              <div>With all my love,</div>
+              <div
+                style="
+                  font-family: &quot;Playfair Display&quot;;
+                  font-size: 1.25rem;
+                  margin-top: 6px;
+                  color: var(--lavender);
+                "
+              >
+                From Someone Who Loves You
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WISH -->
+    <section id="wish">
+      <canvas id="wish-canvas"></canvas>
+      <div class="container wish-content">
+        <h2 data-reveal>Make a Wish</h2>
+        <p data-reveal>Click the stars and leave a wish for Noor</p>
+        <div class="wish-input-wrap" data-reveal>
+          <input
+            type="text"
+            id="wishInput"
+            placeholder="Write a wish for Noor..."
+            maxlength="80"
+          />
+          <button id="wishBtn">Send Wish ✨</button>
+        </div>
+        <div class="wishes-list" id="wishesList"></div>
+      </div>
+    </section>
+
+    <footer id="footer">
+      <div class="footer-stars" id="footerStars"></div>
+      <div class="container">
+        <div class="moon"></div>
+        <div class="made">Made with <b>love</b> for Noor</div>
+        <div class="copy">© 2026 — A Universe Created For One Person</div>
+      </div>
+    </footer>
+
+    <script type="module">
+      import * as THREE from "three";
+
+      // ---------- UTILS ----------
+      const $ = (s) => document.querySelector(s);
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Cursor
+      const cursor = $("#cursor"),
+        follower = $("#follower");
+      let mouse = { x: 0, y: 0 },
+        fMouse = { x: 0, y: 0 };
+      window.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        cursor.style.left = e.clientX - 6 + "px";
+        cursor.style.top = e.clientY - 6 + "px";
+      });
+      (function loop() {
+        fMouse.x += (mouse.x - fMouse.x) * 0.12;
+        fMouse.y += (mouse.y - fMouse.y) * 0.12;
+        follower.style.left = fMouse.x - 18 + "px";
+        follower.style.top = fMouse.y - 18 + "px";
+        requestAnimationFrame(loop);
+      })();
+      document.querySelectorAll("button,a,[data-tilt]").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          follower.style.transform = "scale(1.8)";
+          follower.style.background = "rgba(200,162,200,0.15)";
+          cursor.style.transform = "scale(2)";
+        });
+        el.addEventListener("mouseleave", () => {
+          follower.style.transform = "scale(1)";
+          follower.style.background = "transparent";
+          cursor.style.transform = "scale(1)";
+        });
+      });
+
+      // Progress bar
+      window.addEventListener("scroll", () => {
+        $("#progress").style.width =
+          (scrollY / (document.body.scrollHeight - innerHeight)) * 100 + "%";
+      });
+
+      // Loader
+      let loadProg = 0;
+      const lBar = $("#loaderBar");
+      let lInt = setInterval(() => {
+        loadProg = Math.min(loadProg + Math.random() * 18, 90);
+        lBar.style.width = loadProg + "%";
+      }, 120);
+      window.addEventListener("load", () => {
+        clearInterval(lInt);
+        lBar.style.width = "100%";
+        setTimeout(() => {
+          $("#loader").classList.add("hidden");
+          startHero();
+        }, 900);
+      });
+
+      // Petals DOM
+      const petalsEl = $("#petals");
+      for (let i = 0; i < 22; i++) {
+        const d = document.createElement("div");
+        d.className = "petal";
+        d.style.left = Math.random() * 100 + "%";
+        d.style.animationDuration = 8 + Math.random() * 12 + "s";
+        d.style.animationDelay = Math.random() * 8 + "s";
+        d.style.transform = `scale(${0.5 + Math.random() * 1})`;
+        petalsEl.appendChild(d);
+      }
+
+      // ---------- HERO THREE.JS ----------
+      let heroRenderer,
+        heroScene,
+        heroCam,
+        heartMesh,
+        stars,
+        petals3D = [];
+      function startHero() {
+        const canvas = $("#hero-canvas");
+        heroScene = new THREE.Scene();
+        heroScene.fog = new THREE.FogExp2(0x1a1a2e, 0.027);
+        heroCam = new THREE.PerspectiveCamera(
+          50,
+          innerWidth / innerHeight,
+          0.1,
+          100,
+        );
+        heroCam.position.set(0, 0, 7);
+        heroRenderer = new THREE.WebGLRenderer({
+          canvas,
+          alpha: true,
+          antialias: true,
+        });
+        heroRenderer.setSize(innerWidth, innerHeight);
+        heroRenderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+        // stars field
+        const starGeo = new THREE.BufferGeometry();
+        const starCount = 2200;
+        const pos = new Float32Array(starCount * 3);
+        const col = new Float32Array(starCount * 3);
+        const c1 = new THREE.Color("#FFD1DC"),
+          c2 = new THREE.Color("#C8A2C8"),
+          c3 = new THREE.Color("#FFD700");
+        for (let i = 0; i < starCount; i++) {
+          const r = 8 + Math.random() * 28;
+          const theta = Math.random() * Math.PI * 2,
+            phi = Math.acos(2 * Math.random() - 1);
+          pos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+          pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+          pos[i * 3 + 2] = r * Math.cos(phi) - 4;
+          const mix = Math.random();
+          const color = mix < 0.33 ? c1 : mix < 0.66 ? c2 : c3;
+          col[i * 3] = color.r;
+          col[i * 3 + 1] = color.g;
+          col[i * 3 + 2] = color.b;
+        }
+        starGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+        starGeo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+        const starMat = new THREE.PointsMaterial({
+          size: 0.06,
+          vertexColors: true,
+          transparent: true,
+          opacity: 0.9,
+          sizeAttenuation: true,
+          blending: THREE.AdditiveBlending,
+        });
+        stars = new THREE.Points(starGeo, starMat);
+        heroScene.add(stars);
+
+        // crystal heart - shape
+        const shape = new THREE.Shape();
+        shape.moveTo(0, 0.8);
+        shape.bezierCurveTo(0.8, 1.4, 1.6, 0.6, 0, -1.2);
+        shape.bezierCurveTo(-1.6, 0.6, -0.8, 1.4, 0, 0.8);
+        const extrude = new THREE.ExtrudeGeometry(shape, {
+          depth: 0.6,
+          bevelEnabled: true,
+          bevelThickness: 0.12,
+          bevelSize: 0.1,
+          bevelSegments: 6,
+        });
+        extrude.center();
+        const heartMat = new THREE.MeshPhysicalMaterial({
+          color: 0xffd1dc,
+          transmission: 0.92,
+          thickness: 1.2,
+          roughness: 0.08,
+          metalness: 0.05,
+          clearcoat: 1,
+          clearcoatRoughness: 0.12,
+          ior: 1.45,
+          iridescence: 1,
+          iridescenceIOR: 1.3,
+          iridescenceThicknessRange: [100, 400],
+          emissive: new THREE.Color(0xff8db0),
+          emissiveIntensity: 0.12,
+        });
+        heartMesh = new THREE.Mesh(extrude, heartMat);
+        heartMesh.scale.set(1.1, 1.1, 1.1);
+        heartMesh.rotation.z = Math.PI;
+        heroScene.add(heartMesh);
+
+        const light1 = new THREE.PointLight(0xffd1dc, 8, 12);
+        light1.position.set(2, 2, 3);
+        heroScene.add(light1);
+        const light2 = new THREE.PointLight(0xc8a2c8, 6, 12);
+        light2.position.set(-2, -1, 2);
+        heroScene.add(light2);
+        const light3 = new THREE.PointLight(0xffd700, 3, 10);
+        light3.position.set(0, 3, 2);
+        heroScene.add(light3);
+        heroScene.add(new THREE.AmbientLight(0xffffff, 0.4));
+
+        // 3D floating petals around heart
+        for (let i = 0; i < 18; i++) {
+          const petalGeo = new THREE.PlaneGeometry(0.18, 0.28);
+          const petalMat = new THREE.MeshBasicMaterial({
+            color: new THREE.Color().setHSL(
+              0.92 + Math.random() * 0.08,
+              0.7,
+              0.78,
+            ),
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.7,
+          });
+          const petal = new THREE.Mesh(petalGeo, petalMat);
+          petal.position.set(
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 8,
+            (Math.random() - 0.5) * 4,
+          );
+          petal.userData = {
+            speed: 0.002 + Math.random() * 0.004,
+            rot: new THREE.Vector3(
+              Math.random() * 0.02,
+              Math.random() * 0.02,
+              Math.random() * 0.01,
+            ),
+          };
+          petals3D.push(petal);
+          heroScene.add(petal);
+        }
+
+        window.addEventListener("resize", () => {
+          heroCam.aspect = innerWidth / innerHeight;
+          heroCam.updateProjectionMatrix();
+          heroRenderer.setSize(innerWidth, innerHeight);
+        });
+
+        animateHero();
+      }
+
+      let t = 0;
+      function animateHero() {
+        requestAnimationFrame(animateHero);
+        t += 0.005;
+        if (!heartMesh) return;
+        heartMesh.rotation.y += 0.004;
+        heartMesh.rotation.x = Math.sin(t * 0.5) * 0.12;
+        heartMesh.position.y = Math.sin(t * 0.8) * 0.18;
+
+        if (stars) {
+          stars.rotation.y += 0.0003;
+          stars.rotation.x += 0.0001;
+        }
+
+        petals3D.forEach((p) => {
+          p.position.y -= p.userData.speed;
+          if (p.position.y < -5) p.position.y = 5;
+          p.rotation.x += p.userData.rot.x;
+          p.rotation.y += p.userData.rot.y;
+          p.rotation.z += p.userData.rot.z;
+        });
+
+        // mouse parallax
+        const mx = (mouse.x / innerWidth - 0.5) * 0.9,
+          my = (mouse.y / innerHeight - 0.5) * 0.6;
+        heroCam.position.x += (mx - heroCam.position.x) * 0.03;
+        heroCam.position.y += (-my - heroCam.position.y) * 0.03;
+        heroCam.lookAt(0, 0, 0);
+
+        heroRenderer.render(heroScene, heroCam);
+      }
+
+      // ---------- POLAROID 3D TILT ----------
+      const polaroid = $("#polaroid");
+      $("#about").addEventListener("mousemove", (e) => {
+        const r = $("#about").getBoundingClientRect();
+        const x = (e.clientX - (r.left + r.width / 2)) / r.width;
+        const y = (e.clientY - (r.top + r.height / 2)) / r.height;
+        polaroid.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 16}deg)`;
+      });
+      $("#about").addEventListener(
+        "mouseleave",
+        () => (polaroid.style.transform = `rotateY(0) rotateX(0)`),
+      );
+      polaroid.addEventListener(
+        "click",
+        () => (polaroid.style.transform += ` rotateY(180deg)`),
+      );
+
+      // ---------- MEMORY CAROUSEL ----------
+      const memories = [
+        {
+          title: "First Smile",
+          date: "The day you smiled at me",
+          img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=700&q=80&auto=format",
+        },
+        {
+          title: "That Day",
+          date: "I knew you were special",
+          img: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?w=700&q=80",
+        },
+        {
+          title: "Forever Memory",
+          date: "Etched in my heart",
+          img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=700&q=80",
+        },
+        {
+          title: "Your Laughter",
+          date: "My favorite sound",
+          img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700&q=80&auto=format",
+        },
+        {
+          title: "Kindness",
+          date: "Your beautiful soul",
+          img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=700&q=80",
+        },
+        {
+          title: "My Light",
+          date: "You are my universe",
+          img: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=700&q=80",
+        },
+      ];
+      const track = $("#track");
+      memories.forEach((m, i) => {
+        const div = document.createElement("div");
+        div.className = "memory-card";
+        div.style.transform = `rotateY(${i * (360 / memories.length)}deg) translateZ(380px)`;
+        div.innerHTML = `<img src="${m.img}" loading="lazy" alt="${m.title}"><div class="memory-info"><span>${m.date}</span><h4>${m.title}</h4></div>`;
+        track.appendChild(div);
+        // tilt on mouse
+        div.addEventListener("mousemove", (ev) => {
+          const r = div.getBoundingClientRect();
+          const rx = ((ev.clientY - r.top) / r.height - 0.5) * -10;
+          const ry = ((ev.clientX - r.left) / r.width - 0.5) * 14;
+          div.style.transform += ` rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        div.addEventListener("mouseleave", () => {
+          div.style.transform = `rotateY(${i * (360 / memories.length)}deg) translateZ(380px)`;
+        });
+      });
+      let rot = 0;
+      function rotateCarousel() {
+        rot -= 0.14;
+        track.style.transform = `rotateY(${rot}deg)`;
+        requestAnimationFrame(rotateCarousel);
+      }
+      rotateCarousel();
+      let drag = false,
+        startX = 0,
+        lastRot = 0;
+      $("#carousel").addEventListener("pointerdown", (e) => {
+        drag = true;
+        startX = e.clientX;
+        lastRot = rot;
+      });
+      window.addEventListener("pointerup", () => (drag = false));
+      window.addEventListener("pointermove", (e) => {
+        if (!drag) return;
+        rot = lastRot + (e.clientX - startX) * 0.2;
+      });
+
+      // ---------- SPECIAL CARDS ----------
+      document.querySelectorAll("[data-tilt]").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5,
+            y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = `perspective(900px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateY(-8px) scale(1.02)`;
+        });
+        card.addEventListener(
+          "mouseleave",
+          () =>
+            (card.style.transform =
+              "perspective(900px) rotateY(0) rotateX(0) translateY(0) scale(1)"),
+        );
+      });
+
+      // ---------- GSAP SCROLL ANIMATIONS ----------
+      gsap.utils.toArray("[data-reveal]").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 84%" },
+          },
+        );
+      });
+      gsap.utils.toArray("[data-hero]").forEach((el, i) => {
+        gsap.fromTo(
+          el,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.4,
+            delay: 0.3 + i * 0.12,
+            ease: "power4.out",
+          },
+        );
+      });
+      gsap.to("#letterPaper", {
+        scrollTrigger: {
+          trigger: "#letter",
+          start: "top 60%",
+          end: "bottom 20%",
+          scrub: 1,
+        },
+        y: -40,
+        rotationX: 2,
+        transformPerspective: 1000,
+        ease: "none",
+      });
+
+      // Enter button
+      $("#enterBtn").addEventListener("click", () => {
+        document.querySelector("#about").scrollIntoView({ behavior: "smooth" });
+      });
+
+      // ---------- WISH - THREE STAR FIELD ----------
+      const wishCanvas = $("#wish-canvas");
+      const wishScene = new THREE.Scene();
+      const wishCam = new THREE.PerspectiveCamera(
+        60,
+        innerWidth / innerHeight,
+        0.1,
+        100,
+      );
+      wishCam.position.z = 6;
+      const wishRenderer = new THREE.WebGLRenderer({
+        canvas: wishCanvas,
+        alpha: true,
+        antialias: true,
+      });
+      wishRenderer.setSize(innerWidth, innerHeight);
+      wishRenderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+      const wStarsGeo = new THREE.BufferGeometry();
+      const wCount = 1200;
+      const wPos = new Float32Array(wCount * 3);
+      for (let i = 0; i < wCount; i++) {
+        wPos[i * 3] = (Math.random() - 0.5) * 18;
+        wPos[i * 3 + 1] = (Math.random() - 0.5) * 12;
+        wPos[i * 3 + 2] = (Math.random() - 0.5) * 8 - 2;
+      }
+      wStarsGeo.setAttribute("position", new THREE.BufferAttribute(wPos, 3));
+      const wStars = new THREE.Points(
+        wStarsGeo,
+        new THREE.PointsMaterial({
+          size: 0.05,
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0.8,
+          sizeAttenuation: true,
+        }),
+      );
+      wishScene.add(wStars);
+
+      let wishStarsMeshes = [];
+      const raycaster = new THREE.Raycaster();
+      const pointer = new THREE.Vector2();
+      wishCanvas.addEventListener("click", (e) => {
+        const rect = wishCanvas.getBoundingClientRect();
+        pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(pointer, wishCam);
+        const point = new THREE.Vector3();
+        raycaster.ray.at(4 + Math.random() * 3, point);
+        const added = addWishStar(
+          point,
+          $("#wishInput").value.trim() || "A wish for Noor ✨",
+        );
+        $("#wishInput").value = "";
+        playChime();
+      });
+
+      function addWishStar(pos, text) {
+        const geo = new THREE.SphereGeometry(0.08, 16, 16);
+        const mat = new THREE.MeshBasicMaterial({ color: 0xffd700 });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.copy(pos);
+        mesh.scale.set(0, 0, 0);
+        wishScene.add(mesh);
+        wishStarsMeshes.push({ mesh, text });
+        gsap.to(mesh.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 0.8,
+          ease: "back.out(2)",
+        });
+        gsap.to(mesh.material, { opacity: 0.6, duration: 0.8 });
+        // light pulse
+        const light = new THREE.PointLight(0xffd700, 3, 2);
+        light.position.copy(pos);
+        wishScene.add(light);
+        gsap.to(light, {
+          intensity: 0,
+          duration: 1.5,
+          onComplete: () => wishScene.remove(light),
+        });
+
+        const bubble = document.createElement("div");
+        bubble.className = "wish-bubble";
+        bubble.textContent = text;
+        $("#wishesList").prepend(bubble);
+        launchConfetti(pos.x, pos.y);
+        return mesh;
+      }
+
+      $("#wishBtn").addEventListener("click", () => {
+        const v = $("#wishInput").value.trim();
+        if (!v) return;
+        const p = new THREE.Vector3(
+          (Math.random() - 0.5) * 4,
+          (Math.random() - 0.5) * 2,
+          0,
+        );
+        addWishStar(p, v);
+        $("#wishInput").value = "";
+        playChime();
+      });
+      $("#wishInput").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") $("#wishBtn").click();
+      });
+
+      (function animateWish() {
+        requestAnimationFrame(animateWish);
+        wStars.rotation.y += 0.0002;
+        wishStarsMeshes.forEach((o, i) => {
+          o.mesh.rotation.y += 0.01;
+          o.mesh.position.y += Math.sin(Date.now() * 0.001 + i) * 0.0008;
+        });
+        wishRenderer.render(wishScene, wishCam);
+      })();
+      window.addEventListener("resize", () => {
+        wishCam.aspect = innerWidth / innerHeight;
+        wishCam.updateProjectionMatrix();
+        wishRenderer.setSize(innerWidth, innerHeight);
+      });
+
+      // ---------- MUSIC & CHIME ----------
+      let audioCtx,
+        masterGain,
+        isPlaying = false;
+      function initAudio() {
+        if (audioCtx) return;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = 0;
+        masterGain.connect(audioCtx.destination);
+        // ambient pad: two oscillators + filter
+        const osc1 = audioCtx.createOscillator();
+        osc1.type = "sine";
+        osc1.frequency.value = 110;
+        const osc2 = audioCtx.createOscillator();
+        osc2.type = "triangle";
+        osc2.frequency.value = 165;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.value = 800;
+        const lfo = audioCtx.createOscillator();
+        lfo.frequency.value = 0.06;
+        const lfoGain = audioCtx.createGain();
+        lfoGain.gain.value = 120;
+        lfo.connect(lfoGain);
+        lfoGain.connect(filter.frequency);
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(masterGain);
+        osc1.start();
+        osc2.start();
+        lfo.start();
+      }
+      function playChime() {
+        if (!audioCtx) initAudio();
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = "sine";
+        o.frequency.setValueAtTime(880, audioCtx.currentTime);
+        o.frequency.exponentialRampToValueAtTime(
+          1320,
+          audioCtx.currentTime + 0.4,
+        );
+        g.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.9);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start();
+        o.stop(audioCtx.currentTime + 1);
+      }
+      $("#musicToggle").addEventListener("click", async () => {
+        initAudio();
+        if (audioCtx.state === "suspended") await audioCtx.resume();
+        isPlaying = !isPlaying;
+        gsap.to(masterGain.gain, {
+          value: isPlaying ? 0.18 : 0,
+          duration: 1.2,
+        });
+        $("#musicToggle").textContent = isPlaying ? "⏸︎" : "♪";
+        $("#musicToggle").style.background = isPlaying
+          ? "rgba(255,215,0,0.18)"
+          : "rgba(255,255,255,0.08)";
+      });
+
+      // ---------- CONFETTI ----------
+      function launchConfetti(cx = 0, cy = 0) {
+        const colors = ["#FFD1DC", "#C8A2C8", "#FFD700", "#FDFDFD"];
+        for (let i = 0; i < 18; i++) {
+          const el = document.createElement("div");
+          el.className = "confetti";
+          el.style.left =
+            innerWidth / 2 + cx * 80 + (Math.random() - 0.5) * 200 + "px";
+          el.style.top = innerHeight / 2 + cy * 40 + "px";
+          el.style.background = colors[i % colors.length];
+          el.style.setProperty("--x", (Math.random() - 0.5) * 400 + "px");
+          el.style.transform = `rotate(${Math.random() * 360}deg)`;
+          el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 3000);
+        }
+      }
+      // footer confetti
+      const footerObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              for (let i = 0; i < 80; i++)
+                setTimeout(
+                  () =>
+                    launchConfetti(
+                      (Math.random() - 0.5) * 6,
+                      (Math.random() - 0.5) * 2,
+                    ),
+                  i * 35,
+                );
+              footerObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.5 },
+      );
+      footerObs.observe($("#footer"));
+
+      // footer stars
+      for (let i = 0; i < 30; i++) {
+        const s = document.createElement("div");
+        s.className = "twinkle";
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.animationDelay = Math.random() * 3 + "s";
+        $("#footerStars").appendChild(s);
+      }
+
+      // ---------- EASTER EGG: N O O R ----------
+      let seq = [];
+      const code = ["n", "o", "o", "r"];
+      window.addEventListener("keydown", (e) => {
+        seq.push(e.key.toLowerCase());
+        seq = seq.slice(-4);
+        if (seq.join("") === code.join("")) {
+          $("#easter").classList.add("show");
+          launchConfetti(0, 0);
+          setTimeout(() => $("#easter").classList.remove("show"), 3200);
+          seq = [];
+        }
+      });
+
+      // Accessibility: reduce motion
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.globalTimeline.timeScale(0.2);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1981 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Flexbox — Class 12 Final Form</title>
+    <style>
+      /* ==========================================
+         RESET + BASE
+         Taake har browser me consistent rahe
+      ========================================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #050505;
+        --card: #111111;
+        --border: #232323;
+        --gold: #d4af37;
+        --gold-soft: rgba(212, 175, 55, 0.12);
+        --white: #ffffff;
+        --muted: #a1a1aa;
+        --muted-2: #52525b;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--white);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* ==========================================
+         BACKGROUND GRID TEXTURE
+         Subtle grid taake page dead na lage
+      ========================================== */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.018) 1px,
+            transparent 1px
+          );
+        background-size: 36px 36px;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* ==========================================
+         PAGE LAYOUT
+      ========================================== */
+      .page {
+        width: min(1280px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 52px 0 100px;
+      }
+
+      /* ==========================================
+         HERO HEADER
+      ========================================== */
+      .hero {
+        text-align: center;
+        margin-bottom: 64px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 18px;
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        background: rgba(212, 175, 55, 0.08);
+        color: var(--gold);
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(30px, 5vw, 58px);
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 16px;
+      }
+
+      .hero h1 span {
+        color: var(--gold);
+      }
+
+      .hero p {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.8;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      /* ==========================================
+         SECTION HEADER
+      ========================================== */
+      .sec-head {
+        margin-bottom: 20px;
+      }
+
+      .sec-head .top-label {
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .sec-head h2 {
+        font-size: clamp(20px, 3vw, 30px);
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+
+      .sec-head p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      /* ==========================================
+         SECTION WRAPPER
+      ========================================== */
+      .section {
+        margin-bottom: 72px;
+      }
+
+      /* ==========================================
+         DEMO CARD — wrapper for each demo
+      ========================================== */
+      .demo-card {
+        background: #0d0d0d;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        transition: border-color 0.35s ease;
+      }
+
+      .demo-card:hover {
+        border-color: rgba(212, 175, 55, 0.25);
+      }
+
+      /* Top bar — shows the property name */
+      .demo-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        background: #0a0a0a;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .demo-bar h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--white);
+      }
+
+      .demo-bar code {
+        font-size: 12px;
+        color: var(--gold);
+        background: rgba(212, 175, 55, 0.08);
+        border: 1px solid rgba(212, 175, 55, 0.15);
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+      }
+
+      /* The actual flex container shown to user */
+      .flex-stage {
+        padding: 24px;
+        min-height: 160px;
+        position: relative;
+      }
+
+      .flex-box {
+        display: flex;
+        background: rgba(255, 255, 255, 0.015);
+        border: 1px dashed rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 16px;
+        min-height: 120px;
+        width: 100%;
+        position: relative;
+      }
+
+      /* Axis guides — visual helper */
+      .axis-label {
+        position: absolute;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--muted-2);
+        pointer-events: none;
+      }
+
+      .axis-label.x {
+        bottom: -18px;
+        right: 0;
+        color: rgba(59, 130, 246, 0.5);
+      }
+
+      .axis-label.y {
+        top: 0;
+        left: -22px;
+        writing-mode: vertical-rl;
+        color: rgba(236, 72, 153, 0.5);
+      }
+
+      /* ==========================================
+         FLEX CHILDREN — styled blocks
+      ========================================== */
+      .fb {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 15px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        min-width: 60px;
+        min-height: 60px;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        cursor: default;
+        user-select: none;
+      }
+
+      .fb:hover {
+        transform: scale(1.07);
+        z-index: 2;
+      }
+
+      /* Color variants for each child */
+      .fb-1 {
+        background: rgba(212, 175, 55, 0.15);
+        border-color: rgba(212, 175, 55, 0.25);
+        color: #d4af37;
+      }
+      .fb-2 {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: rgba(59, 130, 246, 0.25);
+        color: #60a5fa;
+      }
+      .fb-3 {
+        background: rgba(139, 92, 246, 0.15);
+        border-color: rgba(139, 92, 246, 0.25);
+        color: #a78bfa;
+      }
+      .fb-4 {
+        background: rgba(34, 197, 94, 0.15);
+        border-color: rgba(34, 197, 94, 0.25);
+        color: #4ade80;
+      }
+      .fb-5 {
+        background: rgba(236, 72, 153, 0.15);
+        border-color: rgba(236, 72, 153, 0.25);
+        color: #f472b6;
+      }
+
+      /* Description box below each demo */
+      .demo-desc {
+        padding: 14px 20px;
+        border-top: 1px solid var(--border);
+        background: #080808;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .demo-desc .icon {
+        font-size: 16px;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      .demo-desc p {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .demo-desc p strong {
+        color: var(--white);
+        font-weight: 700;
+      }
+
+      /* ==========================================
+         SECTION 1: justify-content demos
+         6 values — row direction
+      ========================================== */
+      .jc-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      /* flex-start */
+      .jc-start .flex-box {
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* flex-end */
+      .jc-end .flex-box {
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* center */
+      .jc-center .flex-box {
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* space-between */
+      .jc-between .flex-box {
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* space-around */
+      .jc-around .flex-box {
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      /* space-evenly */
+      .jc-evenly .flex-box {
+        justify-content: space-evenly;
+        align-items: center;
+      }
+
+      /* ==========================================
+         SECTION 2: align-items demos
+         5 values — vertical in row direction
+      ========================================== */
+      .ai-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .ai-box .flex-box {
+        min-height: 160px;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .ai-start .flex-box {
+        align-items: flex-start;
+      }
+      .ai-end .flex-box {
+        align-items: flex-end;
+      }
+      .ai-center .flex-box {
+        align-items: center;
+      }
+      .ai-stretch .flex-box {
+        align-items: stretch;
+      }
+      .ai-baseline .flex-box {
+        align-items: baseline;
+      }
+
+      /* baseline — different font sizes to show effect */
+      .ai-baseline .flex-box .fb {
+        display: flex;
+        align-items: flex-end;
+      }
+
+      .ai-baseline .flex-box .fb-1 {
+        font-size: 10px;
+        min-height: 40px;
+      }
+      .ai-baseline .flex-box .fb-2 {
+        font-size: 18px;
+        min-height: 60px;
+      }
+      .ai-baseline .flex-box .fb-3 {
+        font-size: 13px;
+        min-height: 50px;
+      }
+
+      /* stretch — children height fills parent */
+      .ai-stretch .flex-box .fb {
+        min-height: unset;
+        height: auto;
+        align-self: stretch;
+      }
+
+      /* ==========================================
+         SECTION 3: flex-direction demos
+      ========================================== */
+      .dir-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .dir-row .flex-box {
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+      }
+      .dir-row-rev .flex-box {
+        flex-direction: row-reverse;
+        gap: 10px;
+        align-items: center;
+      }
+      .dir-col .flex-box {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+        min-height: 180px;
+      }
+      .dir-col-rev .flex-box {
+        flex-direction: column-reverse;
+        gap: 10px;
+        align-items: flex-start;
+        min-height: 180px;
+      }
+
+      /* ==========================================
+         SECTION 4: flex-wrap demos
+      ========================================== */
+      .wrap-nowrap .flex-box {
+        flex-wrap: nowrap;
+        gap: 10px;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .wrap-wrap .flex-box {
+        flex-wrap: wrap;
+        gap: 10px;
+        align-content: flex-start;
+      }
+
+      .wrap-wrap-rev .flex-box {
+        flex-wrap: wrap-reverse;
+        gap: 10px;
+        align-content: flex-start;
+        min-height: 160px;
+      }
+
+      /* Many children for wrap demo */
+      .many-children {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      /* ==========================================
+         SECTION 5: Child properties
+         flex-grow, flex-shrink, flex-basis, order, align-self
+      ========================================== */
+
+      /* flex-grow */
+      .grow-demo .flex-box {
+        gap: 10px;
+        align-items: center;
+      }
+
+      .grow-demo .fb-grow-1 {
+        flex-grow: 1;
+      }
+      .grow-demo .fb-grow-2 {
+        flex-grow: 2;
+      }
+      .grow-demo .fb-grow-3 {
+        flex-grow: 1;
+      }
+
+      /* flex-shrink */
+      .shrink-demo .flex-box {
+        gap: 6px;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .shrink-demo .fb {
+        width: 180px;
+      }
+      .shrink-demo .fb-shrink-2 {
+        flex-shrink: 4;
+      }
+
+      /* flex-basis */
+      .basis-demo .flex-box {
+        gap: 10px;
+        align-items: center;
+      }
+
+      .basis-demo .fb-basis-1 {
+        flex-basis: 80px;
+      }
+      .basis-demo .fb-basis-2 {
+        flex-basis: 200px;
+      }
+      .basis-demo .fb-basis-3 {
+        flex-basis: 120px;
+      }
+
+      /* order */
+      .order-demo .flex-box {
+        gap: 10px;
+        align-items: center;
+      }
+
+      .order-demo .fb-order-1 {
+        order: 3;
+      }
+      .order-demo .fb-order-2 {
+        order: 1;
+      }
+      .order-demo .fb-order-3 {
+        order: 2;
+      }
+
+      /* align-self */
+      .self-demo .flex-box {
+        min-height: 180px;
+        gap: 10px;
+      }
+
+      .self-demo .fb-self-1 {
+        align-self: flex-start;
+      }
+      .self-demo .fb-self-2 {
+        align-self: center;
+      }
+      .self-demo .fb-self-3 {
+        align-self: flex-end;
+      }
+      .self-demo .fb-self-4 {
+        align-self: stretch;
+        min-height: unset;
+        height: auto;
+      }
+
+      /* ==========================================
+         SECTION 6: align-content
+         (works only with flex-wrap: wrap)
+      ========================================== */
+      .ac-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .ac-box .flex-box {
+        flex-wrap: wrap;
+        gap: 8px;
+        min-height: 200px;
+      }
+
+      .ac-start .flex-box {
+        align-content: flex-start;
+      }
+      .ac-end .flex-box {
+        align-content: flex-end;
+      }
+      .ac-center .flex-box {
+        align-content: center;
+      }
+      .ac-between .flex-box {
+        align-content: space-between;
+      }
+      .ac-around .flex-box {
+        align-content: space-around;
+      }
+      .ac-stretch .flex-box {
+        align-content: stretch;
+      }
+
+      /* ==========================================
+         SECTION 7: REAL-WORLD EXAMPLES
+         Navbar, Card Grid, Centered Hero, Sidebar Layout
+      ========================================== */
+
+      /* Navbar */
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        background: #0d0d0d;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        margin-bottom: 16px;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .nav-logo {
+        font-size: 18px;
+        font-weight: 900;
+        color: var(--gold);
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+        flex-wrap: wrap;
+      }
+
+      .nav-links li a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links li a:hover {
+        color: var(--gold);
+      }
+
+      .nav-btn {
+        padding: 10px 20px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--gold), #f4db84);
+        color: #000;
+        font-weight: 800;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
+      }
+
+      /* Product card grid */
+      .products-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: flex-start;
+      }
+
+      .product-card {
+        flex: 1 1 200px;
+        background: #111;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        transition:
+          transform 0.35s ease,
+          border-color 0.35s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(212, 175, 55, 0.25);
+      }
+
+      .product-img {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .product-img.c1 {
+        background: rgba(212, 175, 55, 0.08);
+      }
+      .product-img.c2 {
+        background: rgba(59, 130, 246, 0.08);
+      }
+      .product-img.c3 {
+        background: rgba(139, 92, 246, 0.08);
+      }
+      .product-img.c4 {
+        background: rgba(34, 197, 94, 0.08);
+      }
+
+      .product-info {
+        padding: 14px;
+      }
+
+      .product-info h4 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .product-info .price {
+        color: var(--gold);
+        font-weight: 800;
+        font-size: 16px;
+      }
+
+      /* Centered hero card */
+      .hero-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 220px;
+        background: linear-gradient(
+          135deg,
+          rgba(212, 175, 55, 0.06),
+          rgba(59, 130, 246, 0.04)
+        );
+        border: 1px dashed rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        text-align: center;
+        gap: 14px;
+        padding: 32px;
+        margin-bottom: 16px;
+      }
+
+      .hero-card h3 {
+        font-size: 26px;
+        font-weight: 900;
+      }
+
+      .hero-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 400px;
+      }
+
+      .hero-card .btns {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .btn-primary {
+        padding: 12px 28px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--gold), #f4db84);
+        color: #000;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 30px rgba(212, 175, 55, 0.22);
+      }
+
+      .btn-outline {
+        padding: 12px 28px;
+        border-radius: 14px;
+        background: transparent;
+        color: var(--muted);
+        font-weight: 700;
+        border: 1px solid var(--border);
+        cursor: pointer;
+        font-size: 14px;
+        transition:
+          border-color 0.3s ease,
+          color 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      .btn-outline:hover {
+        border-color: rgba(212, 175, 55, 0.3);
+        color: var(--white);
+        transform: translateY(-3px);
+      }
+
+      /* Sidebar layout */
+      .sidebar-layout {
+        display: flex;
+        gap: 16px;
+        min-height: 240px;
+      }
+
+      .sidebar {
+        width: 180px;
+        flex-shrink: 0;
+        background: #0d0d0d;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .sidebar-item {
+        padding: 10px 14px;
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.3s ease,
+          color 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sidebar-item:hover,
+      .sidebar-item.active {
+        background: var(--gold-soft);
+        color: var(--gold);
+      }
+
+      .main-content {
+        flex: 1;
+        background: #0d0d0d;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .content-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .content-stat {
+        flex: 1 1 140px;
+        background: #111;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        transition:
+          transform 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      .content-stat:hover {
+        transform: translateY(-4px);
+        border-color: rgba(212, 175, 55, 0.2);
+      }
+
+      .content-stat .stat-label {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .content-stat .stat-val {
+        font-size: 22px;
+        font-weight: 900;
+        color: var(--gold);
+      }
+
+      /* ==========================================
+         CHEAT SHEET TABLE
+         Quick reference for all flex properties
+      ========================================== */
+      .cheat-sheet {
+        background: #0d0d0d;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        overflow: hidden;
+      }
+
+      .cheat-sheet table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .cheat-sheet th {
+        background: #0a0a0a;
+        color: var(--gold);
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 800;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .cheat-sheet td {
+        padding: 13px 18px;
+        font-size: 13px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        vertical-align: top;
+        line-height: 1.6;
+      }
+
+      .cheat-sheet tr:last-child td {
+        border-bottom: none;
+      }
+
+      .cheat-sheet tr:hover td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .cheat-sheet td:first-child {
+        font-family: "Courier New", monospace;
+        color: var(--gold);
+        font-weight: 700;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .cheat-sheet td:nth-child(2) {
+        color: var(--muted);
+      }
+
+      .cheat-sheet td:nth-child(3) code {
+        font-size: 11px;
+        color: #a78bfa;
+        background: rgba(139, 92, 246, 0.08);
+        padding: 2px 6px;
+        border-radius: 6px;
+        display: inline-block;
+        margin: 2px;
+        font-family: "Courier New", monospace;
+      }
+
+      /* category separator rows */
+      .cheat-sheet .cat-row td {
+        background: rgba(212, 175, 55, 0.04);
+        color: var(--gold);
+        font-weight: 800;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 8px 18px;
+      }
+
+      /* ==========================================
+         FOOTER
+      ========================================== */
+      .footer {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--muted-2);
+        font-size: 13px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        line-height: 1.8;
+      }
+
+      .footer span {
+        color: var(--gold);
+        font-weight: 700;
+      }
+
+      /* ==========================================
+         RESPONSIVE
+         Mobile pe sab ek column ho jaye
+      ========================================== */
+      @media (max-width: 900px) {
+        .jc-grid,
+        .dir-grid,
+        .ac-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .ai-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .sidebar-layout {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .ai-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ==========================================
+           HERO
+      =========================================== -->
+      <header class="hero">
+        <div class="badge">📦 Class 12 — Flexbox Final Form</div>
+        <h1>CSS <span>Flexbox</span> Complete Showcase</h1>
+        <p>
+          Har property live demo ke saath —
+          <strong
+            >justify-content, align-items, flex-direction, flex-wrap, flex-grow,
+            flex-shrink, flex-basis, order, align-self, align-content</strong
+          >
+          aur real-world use cases. Hover karke elements ko feel karo!
+        </p>
+      </header>
+
+      <!-- ==========================================
+           SECTION 1: justify-content
+      =========================================== -->
+      <section class="section">
+        <div class="sec-head">
+          <p class="top-label">Parent Property</p>
+          <h2>justify-content — Main Axis Alignment</h2>
+          <p>
+            Row direction me yeh horizontal alignment control karta hai. 6
+            values — sab live dekho:
+          </p>
+        </div>
+
+        <div class="jc-grid">
+          <!-- flex-start -->
+          <div class="demo-card jc-start">
+            <div class="demo-bar">
+              <h3>flex-start (default)</h3>
+              <code>justify-content: flex-start</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📌</span>
+              <p>
+                Sab items <strong>left side</strong> se shuru hote hain. Yeh
+                default value hai.
+              </p>
+            </div>
+          </div>
+
+          <!-- flex-end -->
+          <div class="demo-card jc-end">
+            <div class="demo-bar">
+              <h3>flex-end</h3>
+              <code>justify-content: flex-end</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📌</span>
+              <p>
+                Sab items <strong>right side</strong> pe push ho jaate hain.
+              </p>
+            </div>
+          </div>
+
+          <!-- center -->
+          <div class="demo-card jc-center">
+            <div class="demo-bar">
+              <h3>center</h3>
+              <code>justify-content: center</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📌</span>
+              <p>
+                Sab items <strong>horizontally center</strong> ho jaate hain.
+              </p>
+            </div>
+          </div>
+
+          <!-- space-between -->
+          <div class="demo-card jc-between">
+            <div class="demo-bar">
+              <h3>space-between</h3>
+              <code>justify-content: space-between</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📌</span>
+              <p>
+                First item <strong>bilkul left</strong>, last item
+                <strong>bilkul right</strong>, baaki ke darmiyan equal space.
+              </p>
+            </div>
+          </div>
+
+          <!-- space-around -->
+          <div class="demo-card jc-around">
+            <div class="demo-bar">
+              <h3>space-around</h3>
+              <code>justify-content: space-around</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📌</span>
+              <p>
+                Har item ke <strong>dono taraf equal space</strong> hota hai —
+                corners pe space half hoti hai.
+              </p>
+            </div>
+          </div>
+
+          <!-- space-evenly -->
+          <div class="demo-card jc-evenly">
+            <div class="demo-bar">
+              <h3>space-evenly</h3>
+              <code>justify-content: space-evenly</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📌</span>
+              <p>
+                <strong>Har jagah bilkul equal space</strong> — corners pe bhi
+                same gap hota hai.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION 2: align-items
+      =========================================== -->
+      <section class="section">
+        <div class="sec-head">
+          <p class="top-label">Parent Property</p>
+          <h2>align-items — Cross Axis Alignment</h2>
+          <p>Row direction me yeh vertical alignment control karta hai.</p>
+        </div>
+
+        <div class="ai-grid">
+          <div class="demo-card ai-box ai-start">
+            <div class="demo-bar">
+              <h3>flex-start</h3>
+              <code>align-items: flex-start</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="height: 45px">1</div>
+                <div class="fb fb-2" style="height: 75px">2</div>
+                <div class="fb fb-3" style="height: 55px">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">⬆️</span>
+              <p>Sab items <strong>top se</strong> align.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ai-box ai-end">
+            <div class="demo-bar">
+              <h3>flex-end</h3>
+              <code>align-items: flex-end</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="height: 45px">1</div>
+                <div class="fb fb-2" style="height: 75px">2</div>
+                <div class="fb fb-3" style="height: 55px">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">⬇️</span>
+              <p>Sab items <strong>bottom se</strong> align.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ai-box ai-center">
+            <div class="demo-bar">
+              <h3>center</h3>
+              <code>align-items: center</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="height: 45px">1</div>
+                <div class="fb fb-2" style="height: 75px">2</div>
+                <div class="fb fb-3" style="height: 55px">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">↕️</span>
+              <p>Sab items <strong>vertically center</strong>.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ai-box ai-stretch">
+            <div class="demo-bar">
+              <h3>stretch (default)</h3>
+              <code>align-items: stretch</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">↔️</span>
+              <p>Items <strong>parent ki full height</strong> le lete hain.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ai-box ai-baseline">
+            <div class="demo-bar">
+              <h3>baseline</h3>
+              <code>align-items: baseline</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">A</div>
+                <div class="fb fb-2">B</div>
+                <div class="fb fb-3">C</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📏</span>
+              <p>
+                Items ka <strong>text baseline</strong> align hota hai — alag
+                font sizes pe clearly dikhta hai.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION 3: flex-direction
+      =========================================== -->
+      <section class="section">
+        <div class="sec-head">
+          <p class="top-label">Parent Property</p>
+          <h2>flex-direction — Flow Direction</h2>
+          <p>
+            Items kis direction me flow hon — row ya column, normal ya reverse?
+          </p>
+        </div>
+
+        <div class="dir-grid">
+          <div class="demo-card dir-row">
+            <div class="demo-bar">
+              <h3>row (default)</h3>
+              <code>flex-direction: row</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">➡️</span>
+              <p>Items <strong>left se right</strong> row me aate hain.</p>
+            </div>
+          </div>
+
+          <div class="demo-card dir-row-rev">
+            <div class="demo-bar">
+              <h3>row-reverse</h3>
+              <code>flex-direction: row-reverse</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">⬅️</span>
+              <p>
+                Items <strong>right se left</strong> row me aate hain — order
+                ulta.
+              </p>
+            </div>
+          </div>
+
+          <div class="demo-card dir-col">
+            <div class="demo-bar">
+              <h3>column</h3>
+              <code>flex-direction: column</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">⬇️</span>
+              <p>Items <strong>upar se neeche</strong> column me aate hain.</p>
+            </div>
+          </div>
+
+          <div class="demo-card dir-col-rev">
+            <div class="demo-bar">
+              <h3>column-reverse</h3>
+              <code>flex-direction: column-reverse</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1">1</div>
+                <div class="fb fb-2">2</div>
+                <div class="fb fb-3">3</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">⬆️</span>
+              <p>
+                Items <strong>neeche se upar</strong> column me aate hain —
+                order ulta.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION 4: flex-wrap
+      =========================================== -->
+      <section class="section">
+        <div class="sec-head">
+          <p class="top-label">Parent Property</p>
+          <h2>flex-wrap — Overflow Behavior</h2>
+          <p>
+            Jab items container se zyada ho jayein to kya ho — squeeze ya wrap?
+          </p>
+        </div>
+
+        <div class="demo-card wrap-nowrap">
+          <div class="demo-bar">
+            <h3>nowrap (default)</h3>
+            <code>flex-wrap: nowrap</code>
+          </div>
+          <div class="flex-stage">
+            <div class="flex-box">
+              <div class="fb fb-1">1</div>
+              <div class="fb fb-2">2</div>
+              <div class="fb fb-3">3</div>
+              <div class="fb fb-4">4</div>
+              <div class="fb fb-5">5</div>
+            </div>
+          </div>
+          <div class="demo-desc">
+            <span class="icon">🚫</span>
+            <p>
+              Items wrap nahi karte — ek hi line me <strong>squeeze</strong> ho
+              jaate hain.
+            </p>
+          </div>
+        </div>
+
+        <div class="demo-card wrap-wrap">
+          <div class="demo-bar">
+            <h3>wrap</h3>
+            <code>flex-wrap: wrap</code>
+          </div>
+          <div class="flex-stage">
+            <div class="flex-box">
+              <div class="fb fb-1" style="width: 140px">1</div>
+              <div class="fb fb-2" style="width: 140px">2</div>
+              <div class="fb fb-3" style="width: 140px">3</div>
+              <div class="fb fb-4" style="width: 140px">4</div>
+              <div class="fb fb-5" style="width: 140px">5</div>
+            </div>
+          </div>
+          <div class="demo-desc">
+            <span class="icon">↩️</span>
+            <p>
+              Space nahi hoga to items <strong>neeche nyi line pe</strong> aa
+              jaate hain.
+            </p>
+          </div>
+        </div>
+
+        <div class="demo-card wrap-wrap-rev">
+          <div class="demo-bar">
+            <h3>wrap-reverse</h3>
+            <code>flex-wrap: wrap-reverse</code>
+          </div>
+          <div class="flex-stage">
+            <div class="flex-box">
+              <div class="fb fb-1" style="width: 140px">1</div>
+              <div class="fb fb-2" style="width: 140px">2</div>
+              <div class="fb fb-3" style="width: 140px">3</div>
+              <div class="fb fb-4" style="width: 140px">4</div>
+              <div class="fb fb-5" style="width: 140px">5</div>
+            </div>
+          </div>
+          <div class="demo-desc">
+            <span class="icon">↩️</span>
+            <p>
+              Wrap hota hai lekin <strong>upar ki taraf</strong> — rows reverse
+              order me.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION 5: Child Properties
+      =========================================== -->
+      <section class="section">
+        <div class="sec-head">
+          <p class="top-label">Child Properties</p>
+          <h2>flex-grow, flex-shrink, flex-basis, order, align-self</h2>
+          <p>
+            Ye properties individual child pe lagate hain — har child ka apna
+            behavior control.
+          </p>
+        </div>
+
+        <!-- flex-grow -->
+        <div class="demo-card grow-demo" style="margin-bottom: 16px">
+          <div class="demo-bar">
+            <h3>flex-grow — Extra space kaise bantega</h3>
+            <code>flex-grow: 1 | 2 | 1</code>
+          </div>
+          <div class="flex-stage">
+            <div class="flex-box">
+              <div class="fb fb-1 fb-grow-1">grow:1</div>
+              <div class="fb fb-2 fb-grow-2">grow:2</div>
+              <div class="fb fb-3 fb-grow-3">grow:1</div>
+            </div>
+          </div>
+          <div class="demo-desc">
+            <span class="icon">📐</span>
+            <p>
+              Bachne wali space items me
+              <strong>ratio ke hisaab se</strong> banti hai. grow:2 wala item,
+              grow:1 se <strong>double space</strong> leta hai.
+            </p>
+          </div>
+        </div>
+
+        <!-- flex-shrink -->
+        <div class="demo-card shrink-demo" style="margin-bottom: 16px">
+          <div class="demo-bar">
+            <h3>flex-shrink — Compress hone ki kshamta</h3>
+            <code>flex-shrink: 1 | 4 | 1</code>
+          </div>
+          <div class="flex-stage">
+            <div class="flex-box">
+              <div class="fb fb-1">shrink:1</div>
+              <div class="fb fb-2 fb-shrink-2">shrink:4</div>
+              <div class="fb fb-3">shrink:1</div>
+              <div class="fb fb-4">shrink:1</div>
+            </div>
+          </div>
+          <div class="demo-desc">
+            <span class="icon">🗜️</span>
+            <p>
+              Container chota ho to shrink:4 wala item
+              <strong>4 guna zyada compress</strong> hoga baaqi se.
+            </p>
+          </div>
+        </div>
+
+        <!-- flex-basis -->
+        <div class="demo-card basis-demo" style="margin-bottom: 16px">
+          <div class="demo-bar">
+            <h3>flex-basis — Starting size</h3>
+            <code>flex-basis: 80px | 200px | 120px</code>
+          </div>
+          <div class="flex-stage">
+            <div class="flex-box">
+              <div class="fb fb-1 fb-basis-1">80px</div>
+              <div class="fb fb-2 fb-basis-2">200px</div>
+              <div class="fb fb-3 fb-basis-3">120px</div>
+            </div>
+          </div>
+          <div class="demo-desc">
+            <span class="icon">📏</span>
+            <p>
+              Yeh item ki <strong>initial width set</strong> karta hai
+              grow/shrink se pehle. width ki tarah kaam karta hai row direction
+              me.
+            </p>
+          </div>
+        </div>
+
+        <!-- order -->
+        <div class="demo-card order-demo" style="margin-bottom: 16px">
+          <div class="demo-bar">
+            <h3>order — HTML order badlo bina HTML change kiye</h3>
+            <code>order: 3 | 1 | 2 (HTML: 1 2 3)</code>
+          </div>
+          <div class="flex-stage">
+            <div class="flex-box">
+              <div class="fb fb-1 fb-order-1">HTML:1 order:3</div>
+              <div class="fb fb-2 fb-order-2">HTML:2 order:1</div>
+              <div class="fb fb-3 fb-order-3">HTML:3 order:2</div>
+            </div>
+          </div>
+          <div class="demo-desc">
+            <span class="icon">🔀</span>
+            <p>
+              HTML me pehle likh hua bhi order property se
+              <strong>baad me show</strong> ho sakta hai. Default order: 0.
+            </p>
+          </div>
+        </div>
+
+        <!-- align-self -->
+        <div class="demo-card self-demo" style="margin-bottom: 0">
+          <div class="demo-bar">
+            <h3>align-self — Sirf is child ki vertical alignment</h3>
+            <code>flex-start | center | flex-end | stretch</code>
+          </div>
+          <div class="flex-stage">
+            <div class="flex-box">
+              <div class="fb fb-1 fb-self-1">start</div>
+              <div class="fb fb-2 fb-self-2">center</div>
+              <div class="fb fb-3 fb-self-3">end</div>
+              <div class="fb fb-4 fb-self-4">stretch</div>
+            </div>
+          </div>
+          <div class="demo-desc">
+            <span class="icon">🎯</span>
+            <p>
+              Ye <strong>sirf us ek child</strong> ki alignment change karta hai
+              — baaqi children ka align-items wala rule rehta hai.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION 6: align-content
+      =========================================== -->
+      <section class="section">
+        <div class="sec-head">
+          <p class="top-label">Parent Property — Only with flex-wrap: wrap</p>
+          <h2>align-content — Multiple Rows Alignment</h2>
+          <p>
+            Jab items wrap ho ke multiple rows bana lein, tab un rows ko
+            vertically kaise arrange karna hai.
+          </p>
+        </div>
+
+        <div class="ac-grid">
+          <div class="demo-card ac-box ac-start">
+            <div class="demo-bar">
+              <h3>flex-start</h3>
+              <code>align-content: flex-start</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="width: 80px">1</div>
+                <div class="fb fb-2" style="width: 80px">2</div>
+                <div class="fb fb-3" style="width: 80px">3</div>
+                <div class="fb fb-4" style="width: 80px">4</div>
+                <div class="fb fb-5" style="width: 80px">5</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">⬆️</span>
+              <p>Rows <strong>top pe</strong> pack.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ac-box ac-end">
+            <div class="demo-bar">
+              <h3>flex-end</h3>
+              <code>align-content: flex-end</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="width: 80px">1</div>
+                <div class="fb fb-2" style="width: 80px">2</div>
+                <div class="fb fb-3" style="width: 80px">3</div>
+                <div class="fb fb-4" style="width: 80px">4</div>
+                <div class="fb fb-5" style="width: 80px">5</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">⬇️</span>
+              <p>Rows <strong>bottom pe</strong> pack.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ac-box ac-center">
+            <div class="demo-bar">
+              <h3>center</h3>
+              <code>align-content: center</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="width: 80px">1</div>
+                <div class="fb fb-2" style="width: 80px">2</div>
+                <div class="fb fb-3" style="width: 80px">3</div>
+                <div class="fb fb-4" style="width: 80px">4</div>
+                <div class="fb fb-5" style="width: 80px">5</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">↕️</span>
+              <p>Rows <strong>vertically center</strong>.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ac-box ac-between">
+            <div class="demo-bar">
+              <h3>space-between</h3>
+              <code>align-content: space-between</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="width: 80px">1</div>
+                <div class="fb fb-2" style="width: 80px">2</div>
+                <div class="fb fb-3" style="width: 80px">3</div>
+                <div class="fb fb-4" style="width: 80px">4</div>
+                <div class="fb fb-5" style="width: 80px">5</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📐</span>
+              <p>Rows ke <strong>beech equal space</strong>.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ac-box ac-around">
+            <div class="demo-bar">
+              <h3>space-around</h3>
+              <code>align-content: space-around</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="width: 80px">1</div>
+                <div class="fb fb-2" style="width: 80px">2</div>
+                <div class="fb fb-3" style="width: 80px">3</div>
+                <div class="fb fb-4" style="width: 80px">4</div>
+                <div class="fb fb-5" style="width: 80px">5</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">📐</span>
+              <p>Har row ke <strong>dono taraf space</strong>.</p>
+            </div>
+          </div>
+
+          <div class="demo-card ac-box ac-stretch">
+            <div class="demo-bar">
+              <h3>stretch</h3>
+              <code>align-content: stretch</code>
+            </div>
+            <div class="flex-stage">
+              <div class="flex-box">
+                <div class="fb fb-1" style="width: 80px">1</div>
+                <div class="fb fb-2" style="width: 80px">2</div>
+                <div class="fb fb-3" style="width: 80px">3</div>
+                <div class="fb fb-4" style="width: 80px">4</div>
+                <div class="fb fb-5" style="width: 80px">5</div>
+              </div>
+            </div>
+            <div class="demo-desc">
+              <span class="icon">↔️</span>
+              <p>Rows <strong>available height fill</strong> karte hain.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION 7: REAL WORLD EXAMPLES
+      =========================================== -->
+      <section class="section">
+        <div class="sec-head">
+          <p class="top-label">Real-World Practice</p>
+          <h2>Actual UI — Flexbox se banaye gaye layouts</h2>
+          <p>
+            Yahi sab class me sikhaya gaya — real projects me exactly aise use
+            hota hai.
+          </p>
+        </div>
+
+        <!-- Navbar -->
+        <nav class="navbar">
+          <div class="nav-logo">AFRIDI.STORE</div>
+          <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Vendors</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+          <button class="nav-btn">Sign In</button>
+        </nav>
+
+        <!-- Hero -->
+        <div class="hero-card">
+          <h3>Premium Products Store 🛍️</h3>
+          <p>
+            Flexbox use karke yeh centered layout bana hai —
+            <strong>flex-direction: column</strong> +
+            <strong>align-items: center</strong> +
+            <strong>justify-content: center</strong>
+          </p>
+          <div class="btns">
+            <button class="btn-primary">Shop Now</button>
+            <button class="btn-outline">Learn More</button>
+          </div>
+        </div>
+
+        <!-- Product Cards -->
+        <div class="products-flex">
+          <div class="product-card">
+            <div class="product-img c1">👟</div>
+            <div class="product-info">
+              <h4>Premium Sneakers</h4>
+              <div class="price">Rs. 4,500</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img c2">💻</div>
+            <div class="product-info">
+              <h4>Laptop Pro</h4>
+              <div class="price">Rs. 85,000</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img c3">🎧</div>
+            <div class="product-info">
+              <h4>Wireless Headphones</h4>
+              <div class="price">Rs. 12,000</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img c4">📱</div>
+            <div class="product-info">
+              <h4>Smartphone</h4>
+              <div class="price">Rs. 55,000</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Layout -->
+        <div style="margin-top: 16px">
+          <div class="sidebar-layout">
+            <aside class="sidebar">
+              <div class="sidebar-item active">📊 Dashboard</div>
+              <div class="sidebar-item">📦 Products</div>
+              <div class="sidebar-item">🛒 Orders</div>
+              <div class="sidebar-item">💬 Messages</div>
+              <div class="sidebar-item">⚙️ Settings</div>
+            </aside>
+            <main class="main-content">
+              <div class="content-row">
+                <div class="content-stat">
+                  <div class="stat-label">Total Sales</div>
+                  <div class="stat-val">Rs. 48K</div>
+                </div>
+                <div class="content-stat">
+                  <div class="stat-label">Orders Today</div>
+                  <div class="stat-val">24</div>
+                </div>
+                <div class="content-stat">
+                  <div class="stat-label">Products</div>
+                  <div class="stat-val">142</div>
+                </div>
+                <div class="content-stat">
+                  <div class="stat-label">Rating</div>
+                  <div class="stat-val">4.9 ⭐</div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           CHEAT SHEET
+      =========================================== -->
+      <section class="section">
+        <div class="sec-head">
+          <p class="top-label">Quick Reference</p>
+          <h2>Flexbox Cheat Sheet 📋</h2>
+          <p>Sari properties ek jagah — save kar lo!</p>
+        </div>
+
+        <div class="cheat-sheet">
+          <table>
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Kahan lagta hai</th>
+                <th>Values</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="cat-row">
+                <td colspan="3">⬛ Parent (Container) Properties</td>
+              </tr>
+              <tr>
+                <td>display: flex</td>
+                <td>Flexbox on karna</td>
+                <td><code>flex</code> <code>inline-flex</code></td>
+              </tr>
+              <tr>
+                <td>flex-direction</td>
+                <td>Flow direction</td>
+                <td>
+                  <code>row</code> <code>row-reverse</code> <code>column</code>
+                  <code>column-reverse</code>
+                </td>
+              </tr>
+              <tr>
+                <td>justify-content</td>
+                <td>Main axis alignment</td>
+                <td>
+                  <code>flex-start</code> <code>flex-end</code>
+                  <code>center</code> <code>space-between</code>
+                  <code>space-around</code> <code>space-evenly</code>
+                </td>
+              </tr>
+              <tr>
+                <td>align-items</td>
+                <td>Cross axis — single line</td>
+                <td>
+                  <code>flex-start</code> <code>flex-end</code>
+                  <code>center</code> <code>stretch</code> <code>baseline</code>
+                </td>
+              </tr>
+              <tr>
+                <td>align-content</td>
+                <td>Cross axis — multiple rows</td>
+                <td>
+                  <code>flex-start</code> <code>flex-end</code>
+                  <code>center</code> <code>space-between</code>
+                  <code>space-around</code> <code>stretch</code>
+                </td>
+              </tr>
+              <tr>
+                <td>flex-wrap</td>
+                <td>Overflow behavior</td>
+                <td>
+                  <code>nowrap</code> <code>wrap</code>
+                  <code>wrap-reverse</code>
+                </td>
+              </tr>
+              <tr>
+                <td>gap</td>
+                <td>Items ke beech space</td>
+                <td>
+                  <code>10px</code> <code>1rem</code>
+                  <code>row-gap col-gap</code>
+                </td>
+              </tr>
+              <tr class="cat-row">
+                <td colspan="3">🟡 Child (Item) Properties</td>
+              </tr>
+              <tr>
+                <td>flex-grow</td>
+                <td>Extra space lena</td>
+                <td>
+                  <code>0</code> (default) <code>1</code> <code>2</code> ...
+                </td>
+              </tr>
+              <tr>
+                <td>flex-shrink</td>
+                <td>Compress hone ka ratio</td>
+                <td>
+                  <code>1</code> (default) <code>0</code> <code>2</code> ...
+                </td>
+              </tr>
+              <tr>
+                <td>flex-basis</td>
+                <td>Starting size</td>
+                <td><code>auto</code> <code>100px</code> <code>50%</code></td>
+              </tr>
+              <tr>
+                <td>flex</td>
+                <td>Shorthand grow shrink basis</td>
+                <td>
+                  <code>1</code> = <code>1 1 0%</code> &nbsp;
+                  <code>0 0 auto</code>
+                </td>
+              </tr>
+              <tr>
+                <td>order</td>
+                <td>Visual order change</td>
+                <td>
+                  <code>0</code> (default) <code>-1</code> <code>1</code>
+                  <code>2</code>
+                </td>
+              </tr>
+              <tr>
+                <td>align-self</td>
+                <td>Sirf is child ki alignment</td>
+                <td>
+                  <code>auto</code> <code>flex-start</code>
+                  <code>flex-end</code> <code>center</code> <code>stretch</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>
+          CSS Flexbox — Class 12 <span>Final Form</span> ✨ by
+          <span>Ishaq Afridi</span>
+        </p>
+        <p style="margin-top: 6px; font-size: 12px">
+          Sab properties live demo ke saath — hover karo, feel karo, yaad karo!
+          💪
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

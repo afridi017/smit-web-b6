@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Afridi Store - Product Card</title>
+    <style>
+      .section {
+        width: 200px;
+        height: 200px;
+        border: 1px solid;
+        position: absolute;
+      }
+      .section_1 {
+        /* spelling theek ki */
+        background-color: red;
+        top: 50px;
+        z-index: 2;
+      }
+      .section_2 {
+        /* ye add kiya */
+        background-color: yellow;
+        top: 100px;
+        left: 25px;
+        z-index: 1;
+      }
+      .section_3 {
+        background-color: blue;
+        top: 150px;
+        left: 50px;
+      }
+      .section_4 {
+        background-color: black;
+        top: 50px;
+        left: 50px;
+        z-index: 3;
+      }
+
+      .product_card {
+        width: 300px;
+        height: 400px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin: 50px auto; /* center karne ke liye */
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .product_card > img {
+        width: 100%; /* 100px se 100% kiya */
+        height: 250px;
+        object-fit: cover; /* image crop na ho */
+        border-radius: 10px 10px 0 0;
+      }
+      .product_detail {
+        /* spelling theek ki */
+        padding: 10px;
+      }
+      .product_detail > button {
+        width: 100px;
+        padding: 8px 0; /* thora bara kiya */
+        border-radius: 5px;
+        border: none;
+        font-size: 14px; /* readable kiya */
+        background-color: #000;
+        color: white;
+        cursor: pointer;
+      }
+      .product_detail > button:hover {
+        background-color: green;
+        color: white;
+      }
+      #heart {
+        width: 30px; /* 50 se 30 kiya taake chota lage */
+        height: 30px;
+        border: none;
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: white;
+        border-radius: 50%;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Test ke liye sections uncomment kar do
+    <div class="section_1 section"></div>
+    <div class="section_2 section"></div>
+    <div class="section_3 section"></div>
+    <div class="section_4 section"></div> 
+    -->
+
+    <div class="product_card">
+      <img src="/CSS/images/logo.png" alt="Product" />
+      <img id="heart" src="/CSS/images/logo.png" alt="Wishlist" />
+      <div class="product_detail">
+        <!-- spelling theek -->
+        <h2>Product Title</h2>
+        <p>IB Afridi</p>
+        <button>Add to cart</button>
+      </div>
+    </div>
+  </body>
+</html>

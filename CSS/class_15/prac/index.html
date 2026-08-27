@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Class 16 - Grid Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ============================================
+         MAIN DASHBOARD CONTAINER (CSS GRID)
+    ============================================ -->
+    <div class="dashboard">
+      <!-- HEADER (Top Bar) -->
+      <header class="header">
+        <h1>🚀 My Dashboard</h1>
+        <nav class="navbar">
+          <a href="#">Home</a>
+          <a href="#">Projects</a>
+          <a href="#">Team</a>
+          <a href="#">Settings</a>
+        </nav>
+      </header>
+
+      <!-- SIDEBAR (Left Menu) -->
+      <aside class="sidebar">
+        <h3>📂 Menu</h3>
+        <ul>
+          <li><a href="#">🏠 Dashboard</a></li>
+          <li><a href="#">📊 Analytics</a></li>
+          <li><a href="#">👥 Users</a></li>
+          <li><a href="#">💰 Sales</a></li>
+          <li><a href="#">⚙️ Settings</a></li>
+          <li><a href="#">🚪 Logout</a></li>
+        </ul>
+      </aside>
+
+      <!-- MAIN CONTENT AREA -->
+      <main class="main-content">
+        <h2>📈 Overview</h2>
+
+        <!-- STATS CARDS - Nested Grid -->
+        <div class="stats-grid">
+          <div class="card card-1">
+            <h4>Total Sales</h4>
+            <p class="stat">$12,540</p>
+          </div>
+          <div class="card card-2">
+            <h4>New Users</h4>
+            <p class="stat">1,245</p>
+          </div>
+          <div class="card card-3">
+            <h4>Orders</h4>
+            <p class="stat">876</p>
+          </div>
+          <div class="card card-4">
+            <h4>Revenue</h4>
+            <p class="stat">$45,890</p>
+          </div>
+        </div>
+
+        <!-- ADVANCED GRID SECTION - Column & Row Span -->
+        <h2>🎨 Grid Span Example</h2>
+        <div class="span-grid">
+          <div class="grid-item item-1">1 (Tall)</div>
+          <div class="grid-item item-2">2 (Wide)</div>
+          <div class="grid-item item-3">3</div>
+          <div class="grid-item item-4">4</div>
+          <div class="grid-item item-5">5</div>
+          <div class="grid-item item-6">6 (Tall)</div>
+          <div class="grid-item item-7">7</div>
+          <div class="grid-item item-8">8</div>
+        </div>
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <p>© 2026 My Dashboard | Made with ❤️ by Jani</p>
+      </footer>
+    </div>
+  </body>
+</html>

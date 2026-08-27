@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Class 18 - Bootstrap + Tailwind</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ================= NAVBAR (Bootstrap) ================= -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-warning fs-3" href="#">
+          <i class="bi bi-code-slash"></i> MyBrand
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="mainNavbar"
+        >
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#features">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#pricing">Pricing</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                data-bs-toggle="dropdown"
+              >
+                Services
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Web Design</a></li>
+                <li><a class="dropdown-item" href="#">App Development</a></li>
+                <li><a class="dropdown-item" href="#">SEO Marketing</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="btn btn-outline-light me-2" href="#">Sign In</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-warning" href="#">Sign Up</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ================= HERO SECTION (Tailwind) ================= -->
+    <section
+      class="bg-gradient-to-r from-purple-600 to-pink-500 text-white py-16 md:py-24"
+    >
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-[32px] md:text-[48px] lg:text-[60px] font-bold mb-4">
+          Welcome to My Website
+        </h1>
+        <p class="text-[16px] md:text-[20px] mb-8 max-w-2xl mx-auto">
+          Built with Bootstrap 5 and Tailwind CSS — the two most powerful
+          frameworks in web development!
+        </p>
+        <div class="flex flex-col md:flex-row gap-4 justify-center">
+          <button
+            class="bg-white text-purple-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition"
+          >
+            Get Started
+          </button>
+          <button
+            class="border-2 border-white text-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-purple-600 transition"
+          >
+            Learn More
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FEATURES (Bootstrap Grid) ================= -->
+    <section id="features" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-5">Our Features</h2>
+
+        <div class="row g-4">
+          <!-- Feature Card 1 -->
+          <div class="col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center p-4">
+                <div class="text-primary mb-3" style="font-size: 3rem">
+                  <i class="bi bi-laptop"></i>
+                </div>
+                <h5 class="card-title fw-bold">Responsive Design</h5>
+                <p class="card-text text-muted">
+                  Works perfectly on mobile, tablet, and desktop devices.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Card 2 -->
+          <div class="col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center p-4">
+                <div class="text-success mb-3" style="font-size: 3rem">
+                  <i class="bi bi-lightning-charge"></i>
+                </div>
+                <h5 class="card-title fw-bold">Fast Loading</h5>
+                <p class="card-text text-muted">
+                  Optimized for speed and best performance.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Card 3 -->
+          <div class="col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center p-4">
+                <div class="text-danger mb-3" style="font-size: 3rem">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <h5 class="card-title fw-bold">Secure Code</h5>
+                <p class="card-text text-muted">
+                  Built with security best practices in mind.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Card 4 -->
+          <div class="col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body text-center p-4">
+                <div class="text-warning mb-3" style="font-size: 3rem">
+                  <i class="bi bi-palette"></i>
+                </div>
+                <h5 class="card-title fw-bold">Modern Design</h5>
+                <p class="card-text text-muted">
+                  Beautiful UI with latest design trends.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRICING (Tailwind) ================= -->
+    <section id="pricing" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <h2 class="text-center text-[28px] md:text-[36px] font-bold mb-12">
+          Our Pricing Plans
+        </h2>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"
+        >
+          <!-- Basic -->
+          <div
+            class="border-2 border-gray-200 rounded-xl p-8 hover:border-purple-500 transition"
+          >
+            <h3 class="text-2xl font-bold mb-2">Basic</h3>
+            <p class="text-gray-500 mb-4">Perfect for starters</p>
+            <div class="text-[36px] font-bold mb-4">
+              $9<span class="text-[16px] text-gray-500">/month</span>
+            </div>
+            <ul class="space-y-2 mb-6">
+              <li>✅ 5 Projects</li>
+              <li>✅ Basic Support</li>
+              <li>✅ 10GB Storage</li>
+            </ul>
+            <button
+              class="w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-bold hover:bg-gray-300 transition"
+            >
+              Choose Plan
+            </button>
+          </div>
+
+          <!-- Pro (Popular) -->
+          <div
+            class="border-2 border-purple-500 rounded-xl p-8 relative shadow-lg transform lg:scale-105"
+          >
+            <div
+              class="absolute -top-3 right-4 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold"
+            >
+              POPULAR
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Pro</h3>
+            <p class="text-gray-500 mb-4">For professionals</p>
+            <div class="text-[36px] font-bold mb-4">
+              $29<span class="text-[16px] text-gray-500">/month</span>
+            </div>
+            <ul class="space-y-2 mb-6">
+              <li>✅ Unlimited Projects</li>
+              <li>✅ Priority Support</li>
+              <li>✅ 100GB Storage</li>
+              <li>✅ Advanced Analytics</li>
+            </ul>
+            <button
+              class="w-full bg-purple-500 text-white py-3 rounded-lg font-bold hover:bg-purple-600 transition"
+            >
+              Choose Plan
+            </button>
+          </div>
+
+          <!-- Enterprise -->
+          <div
+            class="border-2 border-gray-200 rounded-xl p-8 hover:border-purple-500 transition"
+          >
+            <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+            <p class="text-gray-500 mb-4">For big teams</p>
+            <div class="text-[36px] font-bold mb-4">
+              $99<span class="text-[16px] text-gray-500">/month</span>
+            </div>
+            <ul class="space-y-2 mb-6">
+              <li>✅ Everything in Pro</li>
+              <li>✅ 24/7 Dedicated Support</li>
+              <li>✅ Unlimited Storage</li>
+              <li>✅ Custom Integrations</li>
+            </ul>
+            <button
+              class="w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-bold hover:bg-gray-300 transition"
+            >
+              Choose Plan
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER (Bootstrap) ================= -->
+    <footer class="bg-dark text-white py-4 mt-5">
+      <div class="container text-center">
+        <p class="mb-2">
+          © 2025 MyBrand | Made with ❤️ using Bootstrap & Tailwind
+        </p>
+        <div class="d-flex justify-content-center gap-3 fs-4">
+          <a href="#" class="text-white"><i class="bi bi-github"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Transitions — Premium Masterclass</title>
+    <style>
+      :root {
+        --gold: #d4af37;
+        --gold-dark: #b8962e;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #0a0a0a;
+        color: #ffffff;
+        font-family: "Segoe UI", system-ui, sans-serif;
+        overflow-x: hidden;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      /* Animated Background */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          #0a0a0a 0%,
+          #1a1428 50%,
+          #0a0a0a 100%
+        );
+        background-size: 400% 400%;
+        animation: bgFlow 20s ease infinite;
+        z-index: -2;
+      }
+
+      @keyframes bgFlow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Floating Particles */
+      .particles {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background: var(--gold);
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: floatParticle 12s linear infinite;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+      }
+
+      .badge {
+        display: inline-block;
+        background: linear-gradient(90deg, #d4af37, #f5d778);
+        color: #000;
+        padding: 8px 24px;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: 3px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+      }
+
+      .header h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 900;
+        background: linear-gradient(90deg, #fff, var(--gold), #fff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% auto;
+        animation: titleShimmer 4s linear infinite;
+      }
+
+      .header p {
+        color: #888;
+        font-size: 1.1rem;
+        margin-top: 15px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      @keyframes titleShimmer {
+        0% {
+          background-position: 0% center;
+        }
+        100% {
+          background-position: -200% center;
+        }
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section {
+        margin-bottom: 100px;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease;
+      }
+
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .section-header span {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background: var(--gold);
+        color: #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 1.4rem;
+        margin: 0 auto 15px;
+      }
+
+      .section-header h2 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: white;
+      }
+
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(212, 175, 55, 0.15);
+        border-radius: 24px;
+        padding: 35px 25px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(12px);
+      }
+
+      .card:hover {
+        transform: translateY(-12px);
+        border-color: var(--gold);
+        box-shadow: 0 25px 60px rgba(212, 175, 55, 0.15);
+      }
+
+      .card-label {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(212, 175, 55, 0.1);
+        color: var(--gold);
+        font-size: 10px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        letter-spacing: 1px;
+      }
+
+      .demo-box {
+        width: 90px;
+        height: 90px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border: 3px solid #fff;
+        margin: 30px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 14px;
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        cursor: pointer;
+      }
+
+      .demo-box:hover {
+        transform: scale(1.4) rotate(12deg);
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+        border-color: var(--gold);
+      }
+
+      .card h3 {
+        color: var(--gold);
+        margin: 15px 0 8px;
+        font-size: 1.25rem;
+      }
+
+      .card p {
+        color: #aaa;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      /* Different Transition Examples */
+      .scale-transition .demo-box:hover {
+        transform: scale(1.6);
+      }
+      .translate-transition .demo-box:hover {
+        transform: translateX(120px);
+      }
+      .rotate-transition .demo-box:hover {
+        transform: rotate(360deg);
+      }
+      .color-transition .demo-box:hover {
+        background: linear-gradient(135deg, #43e97b, #38f9d7);
+        color: #000;
+      }
+      .shadow-transition .demo-box:hover {
+        box-shadow: 0 0 60px 20px rgba(212, 175, 55, 0.6);
+        transform: scale(1.2);
+      }
+      .radius-transition .demo-box:hover {
+        border-radius: 50%;
+        transform: scale(1.3);
+      }
+      .multi-transition .demo-box:hover {
+        transform: scale(1.3) rotate(15deg) translateY(-20px);
+        background: linear-gradient(135deg, #f5576c, #f093fb);
+        box-shadow: 0 30px 50px rgba(245, 87, 108, 0.4);
+        border-color: #fff;
+      }
+
+      /* 3D Transitions */
+      .perspective {
+        perspective: 800px;
+      }
+      .flip3d .demo-box {
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .flip3d .demo-box:hover {
+        transform: rotateY(180deg) scale(1.1);
+      }
+
+      /* Button Transitions */
+      .btn {
+        padding: 14px 32px;
+        background: transparent;
+        color: white;
+        border: 2px solid var(--gold);
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        margin: 20px auto;
+        display: inline-block;
+      }
+
+      .btn:hover {
+        background: var(--gold);
+        color: #000;
+        transform: translateY(-4px);
+        box-shadow: 0 15px 35px rgba(212, 175, 55, 0.3);
+      }
+
+      /* Progress Bar */
+      .progress-bar {
+        height: 12px;
+        background: #222;
+        border-radius: 20px;
+        overflow: hidden;
+        margin: 30px auto;
+        width: 80%;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--gold), #f5d778);
+        transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .card:hover .progress-fill {
+        width: 92%;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 80px 20px;
+        color: #555;
+        border-top: 1px solid rgba(212, 175, 55, 0.1);
+      }
+
+      .footer span {
+        color: var(--gold);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="particles" id="particles"></div>
+
+    <div class="header">
+      <div class="badge">✦ CSS TRANSITIONS MASTERCLASS ✦</div>
+      <h1>Premium Transitions</h1>
+      <p>
+        Hover karo aur dekho ke CSS kitna smooth aur premium feel de sakta hai —
+        18+ handcrafted transitions with gold &amp; black aesthetic
+      </p>
+    </div>
+
+    <div class="container">
+      <!-- Section 1 -->
+      <div class="section" id="section1">
+        <div class="section-header">
+          <span>01</span>
+          <h2>Basic Transitions</h2>
+        </div>
+        <div class="demo-grid">
+          <div class="card scale-transition">
+            <div class="card-label">SCALE</div>
+            <div class="demo-box">SCALE</div>
+            <h3>Scale Transition</h3>
+            <p>Hover karte hi box bada ho jata hai with smooth easing.</p>
+          </div>
+
+          <div class="card translate-transition">
+            <div class="card-label">MOVE</div>
+            <div class="demo-box">MOVE</div>
+            <h3>Translate Transition</h3>
+            <p>Box left se right slide hota hai with cubic-bezier bounce.</p>
+          </div>
+
+          <div class="card rotate-transition">
+            <div class="card-label">ROTATE</div>
+            <div class="demo-box">↻</div>
+            <h3>Rotate Transition</h3>
+            <p>360° full rotation with custom timing function.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="section" id="section2">
+        <div class="section-header">
+          <span>02</span>
+          <h2>Color &amp; Visual Effects</h2>
+        </div>
+        <div class="demo-grid">
+          <div class="card color-transition">
+            <div class="card-label">COLOR</div>
+            <div class="demo-box">COLOR</div>
+            <h3>Color + Background</h3>
+            <p>
+              Background gradient aur text color dono transition karte hain.
+            </p>
+          </div>
+
+          <div class="card shadow-transition">
+            <div class="card-label">GLOW</div>
+            <div
+              class="demo-box"
+              style="box-shadow: 0 0 20px rgba(212, 175, 55, 0.3)"
+            >
+              GLOW
+            </div>
+            <h3>Shadow Glow Effect</h3>
+            <p>Box-shadow transition se neon glow effect banta hai.</p>
+          </div>
+
+          <div class="card radius-transition">
+            <div class="card-label">MORPH</div>
+            <div class="demo-box">MORPH</div>
+            <h3>Border Radius Transition</h3>
+            <p>Sharp square se perfect circle ban jata hai smoothly.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="section" id="section3">
+        <div class="section-header">
+          <span>03</span>
+          <h2>Advanced Multi-Property</h2>
+        </div>
+        <div class="demo-grid">
+          <div class="card multi-transition">
+            <div class="card-label">MULTI</div>
+            <div class="demo-box">ALL IN ONE</div>
+            <h3>Multiple Properties</h3>
+            <p>Scale + Rotate + Shadow + Color — sab ek saath transition.</p>
+          </div>
+
+          <div class="card perspective flip3d">
+            <div class="card-label">3D</div>
+            <div
+              class="demo-box"
+              style="width: 110px; height: 110px; font-size: 18px"
+            >
+              3D FLIP
+            </div>
+            <h3>3D Perspective Flip</h3>
+            <p>CSS 3D transform with perspective — modern card flip.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">BUTTON</div>
+            <button class="btn">Hover Me</button>
+            <h3>Premium Button</h3>
+            <p>Border to filled button with lift and shadow transition.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar Demo -->
+      <div class="section" id="section4">
+        <div class="section-header">
+          <span>04</span>
+          <h2>Real World UI Transitions</h2>
+        </div>
+        <div class="demo-grid">
+          <div class="card">
+            <div class="card-label">PROGRESS</div>
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
+            </div>
+            <h3>Progress Bar</h3>
+            <p>Width transition with bouncy cubic-bezier (overshoot effect).</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">CARD LIFT</div>
+            <div
+              style="
+                height: 160px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #d4af37;
+                font-weight: 700;
+                transition: all 0.5s ease;
+              "
+              class="demo-box"
+              onmouseover="
+                this.style.transform = 'translateY(-15px)';
+                this.style.boxShadow = '0 30px 50px rgba(212,175,55,0.2)';
+              "
+              onmouseout="
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+              "
+            >
+              LIFT CARD
+            </div>
+            <h3>Card Hover Lift</h3>
+            <p>Modern e-commerce style card lift with shadow transition.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        Made with <span>❤️</span> for <span>Ishaq Afridi</span> — CSS
+        Transitions Premium Showcase 2026
+      </p>
+      <p style="margin-top: 15px; font-size: 0.9rem">
+        Hover on every box • Smooth transitions with custom cubic-bezier • Gold
+        + Black Aesthetic
+      </p>
+    </div>
+
+    <script>
+      // Create floating particles
+      function createParticles() {
+        const container = document.getElementById("particles");
+        for (let i = 0; i < 25; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+          particle.style.left = Math.random() * 100 + "vw";
+          particle.style.animationDuration = Math.random() * 8 + 8 + "s";
+          particle.style.animationDelay = "-" + Math.random() * 15 + "s";
+          particle.style.opacity = Math.random() * 0.4 + 0.2;
+          container.appendChild(particle);
+        }
+      }
+
+      // Scroll Animation
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      document.querySelectorAll(".section").forEach((section) => {
+        observer.observe(section);
+      });
+
+      // Initialize
+      window.onload = () => {
+        createParticles();
+        console.log(
+          "%cCSS Transitions Premium Showcase Loaded Successfully ✨",
+          "color:#d4af37; font-weight:700",
+        );
+      };
+    </script>
+  </body>
+</html>
